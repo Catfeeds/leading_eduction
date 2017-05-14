@@ -1,0 +1,21 @@
+.form_main{
+	font-size: 16px;
+	line-height: 29px;
+	color: #888;
+}
+h2 {
+	color: #A0A0A0;
+	margin: 0 6px;
+	font-size:20px;
+	font-family: 'Microsoft Yahei' , SimHei , sans-serif;
+	line-height: 37px;
+}
+h3{
+	color: #454545;
+	margin: 0 6px;
+	font-size:30px;
+	font-family: 'Microsoft Yahei' , SimHei , sans-serif;
+	line-height: 37px;
+	text-align: center;
+
+}

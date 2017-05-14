@@ -1,0 +1,83 @@
+
+
+
+
+body{
+	background: ;
+}
+h3{
+	color: #A0A0A0;
+	font-size:30px;
+	font-family: 'Microsoft Yahei' , SimHei , sans-serif;
+	text-align: center;
+}
+/***main_start***/
+.main_left{
+	float: left;
+}
+.main_right{
+	float: right;
+}
+.main_left ul li a{
+	font-size: 16px;
+	line-height: 29px;
+	width: 100px;
+	color: #888;
+	display: block;
+	padding-left: 30px;
+	float: left;                /*由于设置了浮动导致宽度必须手动设置*/
+	background: url(../img/bt1.gif) no-repeat;
+}
+.main_left ul li a:hover{
+	color: white;
+	background: url(../img/dtitle.gif);
+}
+.main_left h2 {
+	color: #A0A0A0;
+	margin: 6px 0 6px 10px;
+	font-size:16px;
+	font-family: 'Microsoft Yahei' , SimHei , sans-serif;
+	line-height: 37px;
+	padding-left: 10px;
+}
+.main_right ul li a{
+	font-size: 16px;
+	line-height: 29px;
+	width: 100px;
+	color: #888;
+	display: block;
+	padding-left: 30px;
+	float: left;                /*由于设置了浮动导致宽度必须手动设置*/
+	background: url(../img/bt1.gif) no-repeat;
+}
+.main_right ul li a:hover{
+	color: white;
+	background: url(../img/dtitle.gif);
+}
+.main_right h2 {
+	color: #A0A0A0;
+	margin: 6px 0 6px 10px;
+	font-size:16px;
+	font-family: 'Microsoft Yahei' , SimHei , sans-serif;
+	line-height: 37px;
+	padding-left: 10px;
+}
+
+
+
+/*footer_start*/
+#footer address{
+	font-size: 10px;
+	font-family: '微软雅黑',sans-serif;
+	font-style: normal;
+	float: left;
+	text-align: center;
+	margin: 30px 10px;
+	color: #888;
+}
+.clr{
+	clear: both;
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+}
