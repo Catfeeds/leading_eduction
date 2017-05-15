@@ -1,0 +1,736 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>leading_education3</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="date" content="Mon, 15 May 2017 17:25:25 +0800">
+	<meta name="generator" content="MySQL-Front 5.4  (Build 4.153)">
+	<style type="text/css"><!--
+		body {font-family: Arial,Helvetica,sans-serif; font-size: 12px;}
+		h1 {font-size: 18px; text-decoration: bold;}
+		h2 {font-size: 16px; text-decoration: bold;}
+		h3 {font-size: 14px; text-decoration: bold;}
+		th,
+		td {font-size: 12px; border-color: #000000; border-style: solid; border-width: 1px; padding: 1px; font-weight: normal;}
+		code {font-size: 12px;}
+		.TableObject {border-collapse: collapse; border-color: #000000; font-family: Microsoft Sans Serif}
+		.TableData {border-collapse: collapse; border-color: #000000; font-family: Microsoft Sans Serif}
+		.TableHeader {border-color: #000000; text-decoration: bold; background-color: #e0e0e0;}
+		.StructureHeader {padding-left: 5px; text-align: left; border-color: #000000; text-decoration: bold;}
+		.Structure {text-align: left; border-color: #aaaaaa;}
+		.DataHeader {padding-left: 5px; text-align: left; border-color: #000000; background-color: #e0e0e0;}
+		.Null {color: #999999;}
+		.PrimaryKey {font-weight: bold;}
+		.RightAlign {text-align: right;}
+	--></style>
+</head>
+<body>
+<h1 class="DatabaseTitle">数据库: leading_education</h1>
+<h2>表格: carousel_figure</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="carousel_figure" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >picId</td><td>picId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="carousel_figure" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>picId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>图id</td>	</tr>
+	<tr class="Structure"><td>picName</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>图片名</td>	</tr>
+	<tr class="Structure"><td>description</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>图片简介</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>图片路径</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-显示|2-隐藏</td>	</tr>
+	<tr class="Structure"><td>pic_type</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-轮播|2-推荐|3-其他</td>	</tr>
+	<tr class="Structure"><td>top</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>1-置顶</td>	</tr>
+</table><br>
+<h2>表格: concern</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="concern" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >concern</td><td>concern</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="concern" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>concern</td><td>varchar(20)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>关注者账号</td>	</tr>
+	<tr class="Structure"><td>concerned</td><td>varchar(20)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>被关注者账号</td>	</tr>
+	<tr class="Structure"><td>conTime</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>关注时间</td>	</tr>
+</table><br>
+<h2>表格: course</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>courseId</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >courseName</td><td>courseName</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>courseName</td><td>varchar(40)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程名</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>课程简介</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(10) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>课程状态</td>	</tr>
+</table><br>
+<h2>表格: course_content</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course_content" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course_content" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>学习内容id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>stageId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学习阶段号</td>	</tr>
+	<tr class="Structure"><td>content</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>主讲内容</td>	</tr>
+	<tr class="Structure"><td>foucus</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>技术要点</td>	</tr>
+</table><br>
+<h2>表格: course_goal_ablity</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course_goal_ablity" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course_goal_ablity" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表编号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>stageId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学习阶段号</td>	</tr>
+	<tr class="Structure"><td>ablity</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>可掌握的能力</td>	</tr>
+</table><br>
+<h2>表格: course_goal_problem</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course_goal_problem" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course_goal_problem" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>解决问题编号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>stageId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学习阶段号</td>	</tr>
+	<tr class="Structure"><td>problem</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>可解决的问题</td>	</tr>
+</table><br>
+<h2>表格: course_goal_value</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course_goal_value" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course_goal_value" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>解决问题编号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>stageId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学习阶段号</td>	</tr>
+	<tr class="Structure"><td>value</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>可实现的价值</td>	</tr>
+</table><br>
+<h2>表格: course_stage</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="course_stage" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>stageId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="course_stage" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">stageId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学习阶段号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>stageName</td><td>varchar(60)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>阶段名</td>	</tr>
+</table><br>
+<h2>表格: leading_address</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_address" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>addressId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_address" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">addressId</td><td>int(3) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>开课地点id</td>	</tr>
+	<tr class="Structure"><td>address</td><td>varchar(20)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>地点</td>	</tr>
+</table><br>
+<h2>表格: leading_class</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_class" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >startTime</td><td>startTime</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_class" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>className</td><td>varchar(40)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>班级名|第12期</td>	</tr>
+	<tr class="Structure"><td>startTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>开班时间</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>varchar(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>授课老师编号</td>	</tr>
+	<tr class="Structure"><td>masterId</td><td>varchar(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>班主任标识</td>	</tr>
+	<tr class="Structure"><td>classType</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-基础2-就业</td>	</tr>
+	<tr class="Structure"><td>addressId</td><td>int(3) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>授课地点编号</td>	</tr>
+</table><br>
+<h2>表格: leading_company</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_company" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >comId</td><td>comId</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >email</td><td>email</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_company" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>comId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司id号</td>	</tr>
+	<tr class="Structure"><td>comName</td><td>varchar(60)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司名</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>email</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>邮箱</td>	</tr>
+	<tr class="Structure"><td>password</td><td>char(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>登陆密码</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>tinyint(3) unsigned</td><td>是</td><td>9</td><td>&nbsp;</td><td>账号类型</td>	</tr>
+	<tr class="Structure"><td>status</td><td>tinyint(3) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>激活状态|1-激活</td>	</tr>
+	<tr class="Structure"><td>token</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码</td>	</tr>
+	<tr class="Structure"><td>token_exptime</td><td>int(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码有效期</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>注册时间</td>	</tr>
+</table><br>
+<h2>表格: leading_company_info</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_company_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >comId</td><td>comId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_company_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>comId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司id号</td>	</tr>
+	<tr class="Structure"><td>unionCode</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>1-会员|0-普通</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>公司简介</td>	</tr>
+	<tr class="Structure"><td>startTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>合作开始日期</td>	</tr>
+	<tr class="Structure"><td>unionTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>合作有效期</td>	</tr>
+	<tr class="Structure"><td>address</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>公司地址</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>公司logo图</td>	</tr>
+	<tr class="Structure"><td>licenseUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>公司营业执照图</td>	</tr>
+	<tr class="Structure"><td>tel</td><td>varchar(13)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>公司电话号码</td>	</tr>
+</table><br>
+<h2>表格: leading_job</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_job" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >compId</td><td>compId</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_job" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>compId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司id</td>	</tr>
+	<tr class="Structure"><td>jobName</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>职位名</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>0-未招满|1-已招满</td>	</tr>
+	<tr class="Structure"><td>people</td><td>int(5) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>招聘人数</td>	</tr>
+	<tr class="Structure"><td>duty</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>岗位职责</td>	</tr>
+	<tr class="Structure"><td>demand</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>岗位需求</td>	</tr>
+	<tr class="Structure"><td>treatment</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>福利待遇</td>	</tr>
+	<tr class="Structure"><td>workAddress</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>招聘地址</td>	</tr>
+	<tr class="Structure"><td>jobDate</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>招聘日期</td>	</tr>
+</table><br>
+<h2>表格: leading_news</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_news" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >news_data</td><td>news_data</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_news" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>title</td><td>varchar(50)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>新闻名</td>	</tr>
+	<tr class="Structure"><td>description</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>简介</td>	</tr>
+	<tr class="Structure"><td>content</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>内容</td>	</tr>
+	<tr class="Structure"><td>news_data</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>发布时间</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>top</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>1-置顶</td>	</tr>
+</table><br>
+<h2>表格: leading_resume_log</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_resume_log" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >compId</td><td>compId</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >resumeDate</td><td>resumeDate</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_resume_log" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>compId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司号</td>	</tr>
+	<tr class="Structure"><td>jobName</td><td>varchar(30)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>职位名</td>	</tr>
+	<tr class="Structure"><td>resumeDate</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>投递时间</td>	</tr>
+	<tr class="Structure"><td>accNumber</td><td>varchar(30)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>投递账号</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>tinyint(3) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>账号类型</td>	</tr>
+</table><br>
+<h2>表格: leading_sign</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_sign" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >signTime</td><td>signTime</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_sign" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>name</td><td>varchar(20)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>姓名</td>	</tr>
+	<tr class="Structure"><td>addressId</td><td>int(3) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>上课地址编号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>qq</td><td>varchar(13)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>qq号</td>	</tr>
+	<tr class="Structure"><td>wechat</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>微信号</td>	</tr>
+	<tr class="Structure"><td>sign_type</td><td>int(1)</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-报名|2-咨询</td>	</tr>
+	<tr class="Structure"><td>signTime</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>报名时间</td>	</tr>
+	<tr class="Structure"><td>classId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>班级号</td>	</tr>
+</table><br>
+<h2>表格: leading_staff_case</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_staff_case" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>caseId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_staff_case" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">caseId</td><td>int(3) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>caseName</td><td>varchar(20)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>角色名</td>	</tr>
+</table><br>
+<h2>表格: leading_staff_info</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_staff_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >accNumber</td><td>accNumber</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >email</td><td>email</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_staff_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>accNumber</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>员工号</td>	</tr>
+	<tr class="Structure"><td>name</td><td>varchar(30)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>姓名</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>otherTel</td><td>varchar(13)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>紧急联系人联系方式</td>	</tr>
+	<tr class="Structure"><td>password</td><td>char(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>登陆密码</td>	</tr>
+	<tr class="Structure"><td>workTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>入职时间</td>	</tr>
+	<tr class="Structure"><td>email</td><td>varchar(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>邮箱</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(2) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>公司角色</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-有效|0-无效</td>	</tr>
+	<tr class="Structure"><td>rangeId</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>0-无|1-有限|2-所有</td>	</tr>
+	<tr class="Structure"><td>token</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>账号激活码</td>	</tr>
+	<tr class="Structure"><td>token_exptime</td><td>int(10) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>激活码有效期</td>	</tr>
+</table><br>
+<h2>表格: leading_student</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_student" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >dateinto</td><td>dateinto</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >email</td><td>email</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >stuId</td><td>stuId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_student" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>name</td><td>varchar(30)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>姓名</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>email</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>邮箱</td>	</tr>
+	<tr class="Structure"><td>password</td><td>char(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>密码</td>	</tr>
+	<tr class="Structure"><td>status</td><td>tinyint(3) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>激活状态|1-激活|2-会员</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>tinyint(3) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>角色id</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>入学时间</td>	</tr>
+	<tr class="Structure"><td>token</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码</td>	</tr>
+	<tr class="Structure"><td>token_exptime</td><td>int(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码有效期</td>	</tr>
+</table><br>
+<h2>表格: leading_student_info</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_student_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >stuId</td><td>stuId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_student_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>sex</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>性别1-男|2-女</td>	</tr>
+	<tr class="Structure"><td>age</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>出生年月</td>	</tr>
+	<tr class="Structure"><td>otherMobile</td><td>char(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>紧急联系人联系方式</td>	</tr>
+	<tr class="Structure"><td>classId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>班级号</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1)</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-在读|2-毕业</td>	</tr>
+	<tr class="Structure"><td>eduBacId</td><td>int(2)</td><td>是</td><td>1</td><td>&nbsp;</td><td>最高学历</td>	</tr>
+	<tr class="Structure"><td>ecardId</td><td>varchar(20)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>身份证号</td>	</tr>
+	<tr class="Structure"><td>bloodType</td><td>varchar(20)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>血型</td>	</tr>
+	<tr class="Structure"><td>homeAddress</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>家庭地址</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>照片地址</td>	</tr>
+	<tr class="Structure"><td>qq</td><td>varchar(15)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>qq号</td>	</tr>
+	<tr class="Structure"><td>wechat</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>微信号</td>	</tr>
+	<tr class="Structure"><td>provinceId</td><td>int(3) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>省份编号</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>个人简介</td>	</tr>
+</table><br>
+<h2>表格: leading_teacher</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_teacher" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >email</td><td>email</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >teacherId</td><td>teacherId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_teacher" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>教师号</td>	</tr>
+	<tr class="Structure"><td>name</td><td>varchar(30)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>姓名</td>	</tr>
+	<tr class="Structure"><td>password</td><td>char(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>密码</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>tinyint(3) unsigned</td><td>是</td><td>2</td><td>&nbsp;</td><td>2-教师|3-班主任|10-both</td>	</tr>
+	<tr class="Structure"><td>status</td><td>tinyint(3) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>激活状态|1-激活</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>email</td><td>char(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>邮箱</td>	</tr>
+	<tr class="Structure"><td>datainto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>入职时间</td>	</tr>
+	<tr class="Structure"><td>token</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码</td>	</tr>
+	<tr class="Structure"><td>token_exptime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>激活码有效期</td>	</tr>
+</table><br>
+<h2>表格: leading_teacher_info</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="leading_teacher_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >teacherId</td><td>teacherId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="leading_teacher_info" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>教师号</td>	</tr>
+	<tr class="Structure"><td>sex</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-男|2-女</td>	</tr>
+	<tr class="Structure"><td>title</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-高级讲师</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>教师简介</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>照片地址</td>	</tr>
+</table><br>
+<h2>表格: login_log</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="login_log" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >loginTime</td><td>loginTime</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="login_log" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>bigint(20) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>accNumber</td><td>varchar(20)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>登陆账号</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>账号类型</td>	</tr>
+	<tr class="Structure"><td>loginTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>登陆时间</td>	</tr>
+</table><br>
+<h2>表格: note</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="note" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="note" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>noteId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>需要备注的id</td>	</tr>
+	<tr class="Structure"><td>note</td><td>varchar(300)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>备注内容</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>备注形式1-行|2-表</td>	</tr>
+</table><br>
+<h2>表格: project</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="project" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >courseId</td><td>courseId</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >startTime</td><td>startTime</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="project" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>projectName</td><td>varchar(40)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>项目名</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>char(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>教师号</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>作品简介</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1)</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-进行中2-已完成</td>	</tr>
+	<tr class="Structure"><td>startTime</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>开始时间</td>	</tr>
+	<tr class="Structure"><td>endTime</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>完成时间</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>照片存放路径</td>	</tr>
+	<tr class="Structure"><td>url</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>作品展示路径</td>	</tr>
+</table><br>
+<h2>表格: province</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="province" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>provinceId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="province" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">provinceId</td><td>int(3) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>省份编号</td>	</tr>
+	<tr class="Structure"><td>province</td><td>varchar(40)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>省份</td>	</tr>
+</table><br>
+<h2>表格: recommend</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="recommend" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >recommendId</td><td>recommendId</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >stuId</td><td>stuId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="recommend" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>recommendId</td><td>varchar(15)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>推荐人账号</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>推荐入学的新学员</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>推荐时间</td>	</tr>
+</table><br>
+<h2>表格: second_course</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="second_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >picUrl</td><td>picUrl</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >vedioUrl</td><td>vedioUrl</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="second_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>子课程id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>secCourseName</td><td>varchar(40)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>子课程名</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>子课程介绍</td>	</tr>
+	<tr class="Structure"><td>content</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>子课程内容</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>课程状态</td>	</tr>
+	<tr class="Structure"><td>startDate</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>开课时间</td>	</tr>
+	<tr class="Structure"><td>picUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程图片地址</td>	</tr>
+	<tr class="Structure"><td>vedioUrl</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课程视频地址</td>	</tr>
+</table><br>
+<h2>表格: second_course_sign</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="second_course_sign" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="second_course_sign" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>子课程报名表id</td>	</tr>
+	<tr class="Structure"><td>secCourseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>子课程id</td>	</tr>
+	<tr class="Structure"><td>signId</td><td>varchar(20)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>报名账号</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>报名时间</td>	</tr>
+</table><br>
+<h2>表格: student_education</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="student_education" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >dateOut</td><td>dateOut</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >dateOut_2</td><td>dateOut</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >dateOut_3</td><td>dateOut</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="student_education" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>major</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>专业</td>	</tr>
+	<tr class="Structure"><td>eduSchool</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>最高毕业院校</td>	</tr>
+	<tr class="Structure"><td>dateOut</td><td>int(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>毕业时间</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(1)</td><td>是</td><td>0</td><td>&nbsp;</td><td>1-最高|0-其他</td>	</tr>
+</table><br>
+<h2>表格: student_project</h2>
+<p>备注: 学生参与作品表</p>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="student_project" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="student_project" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>projectId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>作品编号</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>assess</td><td>varchar(100)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>教师评语</td>	</tr>
+	<tr class="Structure"><td>description</td><td>varchar(100)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>负责功能</td>	</tr>
+</table><br>
+<h2>表格: student_work</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="student_work" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >dateWork</td><td>dateWork</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="student_work" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>compName</td><td>varchar(60)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>公司名</td>	</tr>
+	<tr class="Structure"><td>comPAddress</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>公司地址</td>	</tr>
+	<tr class="Structure"><td>jobName</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>职位名</td>	</tr>
+	<tr class="Structure"><td>salary</td><td>int(8) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>薪水</td>	</tr>
+	<tr class="Structure"><td>treatment</td><td>varchar(60)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>福利待遇</td>	</tr>
+	<tr class="Structure"><td>dateOut</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>毕业时间</td>	</tr>
+	<tr class="Structure"><td>dateWork</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>工作时间</td>	</tr>
+	<tr class="Structure"><td>assess</td><td>varchar(100)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>就业评价</td>	</tr>
+</table><br>
+<h2>表格: study_course</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="study_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="study_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>secCourseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>子课程号</td>	</tr>
+	<tr class="Structure"><td>stuId</td><td>char(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>学号</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>开始学习时间</td>	</tr>
+</table><br>
+<h2>表格: teacher_courseware</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="teacher_courseware" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >dateinto</td><td>dateinto</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="teacher_courseware" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>教师号</td>	</tr>
+	<tr class="Structure"><td>secCourseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>子课程id</td>	</tr>
+	<tr class="Structure"><td>description</td><td>text</td><td>是</td><td>&nbsp;</td><td>&nbsp;</td><td>课件简介</td>	</tr>
+	<tr class="Structure"><td>url</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>课件地址</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-PPT|2-vedio</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>上传时间</td>	</tr>
+</table><br>
+<h2>表格: teaching_course</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="teaching_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="teaching_course" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>teacherId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>教师号</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>secCourseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>子课程id</td>	</tr>
+</table><br>
+<h2>表格: temp_register</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="temp_register" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >email</td><td>email</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >mobile</td><td>mobile</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >qq</td><td>qq</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >wechat</td><td>wechat</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="temp_register" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>recommendId</td><td>varchar(10)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>推荐账号</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(3) unsigned</td><td>否</td><td>0</td><td>&nbsp;</td><td>角色id</td>	</tr>
+	<tr class="Structure"><td>mobile</td><td>char(11)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>手机号</td>	</tr>
+	<tr class="Structure"><td>qq</td><td>varchar(13)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>qq号</td>	</tr>
+	<tr class="Structure"><td>wechat</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>微信号</td>	</tr>
+	<tr class="Structure"><td>email</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>邮箱</td>	</tr>
+	<tr class="Structure"><td>name</td><td>varchar(30)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>账号名</td>	</tr>
+	<tr class="Structure"><td>password</td><td>char(32)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>密码</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>注册时间</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>0-未通过验证|1-通过|2-会员</td>	</tr>
+	<tr class="Structure"><td>token</td><td>varchar(50)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>账号激活码</td>	</tr>
+	<tr class="Structure"><td>token_exptime</td><td>int(10) unsigned</td><td>是</td><td>0</td><td>&nbsp;</td><td>激活码有效期</td>	</tr>
+</table><br>
+<h2>表格: tuition</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="tuition" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="tuition" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>学费id</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程id</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>班级类别1-基础|2-就业</td>	</tr>
+	<tr class="Structure"><td>teaching</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>授课方式1-面授|2-双元</td>	</tr>
+	<tr class="Structure"><td>tuitionCase</td><td>int(2) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>缴费方式1-先|2-后</td>	</tr>
+	<tr class="Structure"><td>tuitionMoney</td><td>int(8) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>学费</td>	</tr>
+</table><br>
+<h2>表格: vedio</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="vedio" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >dateinto</td><td>dateinto</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >vedioId</td><td>vedioId</td><td>unique</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="vedio" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>vedioId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>视频编号</td>	</tr>
+	<tr class="Structure"><td>vedioName</td><td>varchar(50)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>视频名</td>	</tr>
+	<tr class="Structure"><td>description</td><td>varchar(200)</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>视频简介</td>	</tr>
+	<tr class="Structure"><td>vedioUrl</td><td>varchar(200)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>视频地址</td>	</tr>
+	<tr class="Structure"><td>courseId</td><td>int(10) unsigned</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>课程号</td>	</tr>
+	<tr class="Structure"><td>secCourseId</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>子课程id</td>	</tr>
+	<tr class="Structure"><td>status</td><td>int(1) unsigned</td><td>是</td><td>1</td><td>&nbsp;</td><td>1-公开|2-私用</td>	</tr>
+	<tr class="Structure"><td>dateinto</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>上传时间</td>	</tr>
+	<tr class="Structure"><td>author</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>上传者id</td>	</tr>
+</table><br>
+<h2>表格: vedio_download</h2>
+<h3>索引:</h3>
+<table border="0" cellspacing="0" summary="vedio_download" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td  class="PrimaryKey">主索引</td><td>id</td><td>unique</td><td></td></tr>
+	<tr class="Structure"><td >downTime</td><td>downTime</td><td>&nbsp;</td><td></td></tr>
+	<tr class="Structure"><td >vedioId</td><td>vedioId</td><td>&nbsp;</td><td></td></tr>
+</table><br>
+<h3>字段:</h3>
+<table border="0" cellspacing="0" summary="vedio_download" class="TableObject">
+	<tr class="TableHeader StructureHeader"><th>名称</th><th>类型</th><th>空</th><th>默认值</th><th>属性</th><th>备注</th></tr>
+	<tr class="Structure"><td class="PrimaryKey">id</td><td>int(10) unsigned</td><td>否</td><td>&lt;auto_increment&gt;</td><td>&nbsp;</td><td>表id</td>	</tr>
+	<tr class="Structure"><td>vedioId</td><td>varchar(10)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>视频编号</td>	</tr>
+	<tr class="Structure"><td>accNumber</td><td>varchar(20)</td><td>否</td><td>&nbsp;</td><td>&nbsp;</td><td>下载账号</td>	</tr>
+	<tr class="Structure"><td>downTime</td><td>int(10) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>下载时间</td>	</tr>
+	<tr class="Structure"><td>caseId</td><td>int(2) unsigned</td><td>是</td><td>&lt;空&gt;</td><td>&nbsp;</td><td>账号类型</td>	</tr>
+</table><br>
+</body>
+</html>
