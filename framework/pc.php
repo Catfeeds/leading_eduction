@@ -49,8 +49,6 @@ class PC
 	
 	public static function run($module,$config)
 	{
-		
-		//exit();
 		self::$config = $config;
 		self::init_db();
 		self::init_view();
@@ -58,18 +56,6 @@ class PC
 		self::init_controller();
 		C($module,self::$controller,self::$method);
 	}
-	// public static function run($config)
-	// {
-		
-		// //exit();
-		// self::$config = $config;
-		// self::init_db();
-		// self::init_view();
-		// self::init_method();//有问题？
-		// self::init_controller();
-		// C(self::$controller,self::$method);
-	// }
-	
 	
 }
 

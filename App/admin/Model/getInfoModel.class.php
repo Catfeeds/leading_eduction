@@ -35,7 +35,7 @@ class getInfoModel
         if($this->checkLogined()){
             @$caseId = intval(daddslashes($_POST['caseId']));
             @$accNumber = strval(daddslashes($_POST['accNumber']));
-            @$param = empty($_POST['param'])?strval(daddslashes($_POST['param'])):'';
+            @$param = !empty($_POST['param'])?strval(daddslashes($_POST['param'])):'';
             if(!(empty($caseId && $accNumber))){//存在角色参数
                 switch ($caseId) {
                     case 1://学生

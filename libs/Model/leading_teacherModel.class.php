@@ -2,9 +2,9 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class teacherModel
+class leading_teacherModel
 {
-    private static $table = 'teacher';
+    private static $table = 'leading_teacher';
     
     /**
      * 根据不同传参获得不同的信息

@@ -13,7 +13,7 @@ class verifyModel
         $obj = new checkModel();
         $arr = array();
         $where['mobile'] = $mobile; 
-        $table = array('student','teacher','leading_staff_info','leading_company','temp_register');
+        $table = array('leading_student','leading_teacher','leading_staff_info','leading_company','temp_register');
         foreach($table as $key=>$value){
             $res = $obj->getInfo_byArr($value,$arr,$where);
             if(count($res) >0 && ($res['id'] > 0)){
@@ -33,7 +33,7 @@ class verifyModel
         $obj = new checkModel();
         $arr = array();
         $where['email'] = $email;
-        $table = array('student','teacher','leading_staff_info','leading_company','temp_register');
+        $table = array('leading_student','leading_teacher','leading_staff_info','leading_company','temp_register');
         foreach($table as $key=>$value){
             $res = $obj->getInfo_byArr($value,$arr,$where);
             if(count($res)>0 && ($res['id'] > 0)){
@@ -86,5 +86,20 @@ class verifyModel
             }
         }
         return $res;
+    }
+    /**
+    * 根据省份编号获得省份名称
+    * @date: 2017年5月15日 下午4:25:46
+    * @author: lenovo2013
+    * @param: int 省份编号
+    * @return:
+    */
+    public static function  province($provinceId)
+    {
+        $obj = M('province');
+        $arr = array('province');
+        $where['provinceId'] = $provinceId;
+        $data = $obj->getInfo_byArr($arr,$where);
+        return $data;
     }
 }

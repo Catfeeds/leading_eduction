@@ -17,3 +17,26 @@
         }
         return $data;
     }
+	
+    /**
+    * 获得文件扩展名
+    * @date: 2017年5月15日 上午9:57:07
+    * @author: lenovo2013
+    * @param: string 文件名
+    * @return:string 文件后缀名
+    */
+	function getExt($fileName)
+	{
+		$arr = explode('.',$fileName);
+		return strtolower(array_pop($arr)); 
+	}
+	/**
+	* 获得唯一标识符
+	* @date: 2017年5月15日 上午10:08:41
+	* @author: lenovo2013
+	* @return:string 
+	*/
+	function getUniName()
+	{
+	    return md5(uniqid(microtime(true),true));
+	}

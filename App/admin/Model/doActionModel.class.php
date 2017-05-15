@@ -24,12 +24,12 @@ class doActionModel
             }
             switch ($caseId) {
                 case 1: // 学生
-                    $table = 'student';
+                    $table = 'leading_student';
                     $where = empty($where) ? " stuId = '{$accNumber}' " : $where;
                     break;
                 case 2:
                 case 3: // 教师
-                    $table = 'teacher';
+                    $table = 'leading_teacher';
                     $where = empty($where) ? " teacherId = '{$accNumber}' " : $where;
                     break;
                 case 4:

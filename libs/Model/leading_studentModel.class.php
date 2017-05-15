@@ -7,9 +7,38 @@ class leading_studentModel
     //所关联的表
     private static $table1 = 'leading_student';
     private static $table2 = 'leading_student_info';
-    private static $table3 = 'student_project';
+    /* private static $table3 = 'student_project';
     private static $table4 = 'student_work';
-    private static $table5 = 'student_eduction';
+    private static $table5 = 'student_eduction'; */
+    private static $student = array('id','stuId','name','password','mobile','email','password','status','caseId','dateinto','token','token_exptime');
+    private static $studentInfo = array('stuId','sex','age','otherMobile','classId','status','eduBacId','ecardId','bloodType','homeAddress','picUrl','qq','wechat','province','description');
+    
+    public function getInfo_byArrJoin($arr,$where,$talbe1='leading_student',$table2='leading_student_info')
+    {
+        $i = $j = 0;
+        foreach($arr as $val){
+            if(in_array($val,self::$student)){
+                $value[] = " s.{$val} ";
+                $i++;
+            }
+            if(in_array($val,self::$studentInfo)){
+                $value[] = " f.{$val} ";
+                $j++;
+            }
+        }
+        $selectInfo = implode(',',$value);
+        if( $j == 0 && $i > 0){//表名
+            $table = '`'.$table1.'` as s ';
+        }
+        if($i==0 && $j > 0){
+            $table = '`'.$table2.'` as f ';
+        }
+        if($i>0 && $j>0){//联合表名
+            $table = self::$table1." as s ,".self::$table2." as f";
+        }
+        $sql = "select ".$selectInfo." from ".$table." where ".$where;
+        return DB::fetchOne($sql);
+    }
     
     /**
     * 函数用途描述
@@ -19,21 +48,18 @@ class leading_studentModel
     * @param: array $where 条件数组  "stuId"=>"xxxxxxx"
     * @return:
     */
-    public function getInfo_byArr($arr,$where)
+    public function getInfo_byArr($arr,$where,$table='leading_student')
     {
+        $table1 = !empty($table)?$table:self::$table1;
         $sql = "select id ";
         foreach($arr as $key=>$value){
             $sql .= ",".$value;
         }
-        $sql .= " from ".self::$table1." where 1=1 ";
+        $sql .= " from ".$table1." where 1=1 ";
         foreach($where as $key=>$value){
             $sql .= "and {$key} = '".$value."'";
         }
        return DB::fetchOne($sql);
-    }
-    public function getInfo_byArrJoin($arr,$where)
-    {
-        $sql = "select id";
     }
     /**
     * 更新数据
@@ -45,6 +71,6 @@ class leading_studentModel
     */
     public function updateInfo_byArr($arr,$where)
     {
-        return DB::update(self::$table,$arr,$where);
+        return DB::update(self::$table1,$arr,$where);
     }
 }

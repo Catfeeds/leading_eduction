@@ -53,7 +53,7 @@ class checkModel
             }else{
                 $data['info'] = $this->user;
                 $data['status'] = 1;
-                $data['msg'] = '账号已登录，不用再次登录';
+                $data['msg'] = '账号已登录';
             }
         }else{
             //获得post中的数据
@@ -113,11 +113,11 @@ class checkModel
         }
         switch($caseId){
             case 1://学号登录
-                $table = 'student';
+                $table = 'leading_student';
                 $where['stuId'] = $accNumber;
                 break;
             case 2://教师登录
-                $table = 'teacher';
+                $table = 'leading_teacher';
                 $where['teacherId'] = $accNumber;
                 break;
             case 3://员工登陆
@@ -127,7 +127,7 @@ class checkModel
             case 4://手机号登陆
             default://默认手机登录
                 $where['mobile'] = $accNumber;
-                $table = array('student','teacher','leading_staff_info','leading_company','temp_register');
+                $table = array('leading_student','leading_teacher','leading_staff_info','leading_company','temp_register');
                 break;
         }
         if(is_array($table)){//手机登录
