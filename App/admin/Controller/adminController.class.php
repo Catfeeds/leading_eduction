@@ -4,6 +4,7 @@ use App\admin\Model\checkModel;
 use App\admin\Model\verifyModel;
 use App\admin\Model\doActionModel;
 use App\admin\Model\getInfoModel;
+use App\admin\Model\getStuInfoModel;
 use framework\libs\core\VIEW;
 class adminController
 {
@@ -40,6 +41,7 @@ class adminController
 	    $obj = new checkModel();
 	    $data = $obj->checkLogin();
 	    VIEW::ajaxReturn($data);
+	    //var_dump($data);
 	}
 	/**
 	* 注销
@@ -76,6 +78,14 @@ class adminController
 	{
 	    $obj = new getInfoModel();
 	    $data = $obj->getLoginedBase();
+	    //var_dump($data);
+	    VIEW::ajaxReturn($data);
+	}
+	public function test()
+	{
+	    $obj = new getStuInfoModel();
+	    $data = $obj->getCourse_byStuId('1601321102');
+	    //var_dump($data);
 	    VIEW::ajaxReturn($data);
 	}
 }

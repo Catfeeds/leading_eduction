@@ -1,6 +1,6 @@
 <?php
 namespace App\admin\Model;
-use App\admin\Model\verifyModel;
+//use App\admin\Model\verifyModel;
 class checkModel
 {
     private $user = [];
@@ -50,6 +50,7 @@ class checkModel
             if(time() > ($this->user['user_expTime'] + 60 * 60 * 6)){//超过有效期6个小时
                 $data['status'] = 5;
                 $data['msg'] = '登陆已失效，请重新登陆';
+                $this->logout();
             }else{
                 $data['info'] = $this->user;
                 $data['status'] = 1;
@@ -133,8 +134,9 @@ class checkModel
         if(is_array($table)){//手机登录
             foreach($table as $value){
                 $res = $this->getInfo_byArr($value,$arr,$where);
-                if(count($res)>0 && ($res['id'] > 0)){
-                    if($value = 'temp_register'){//查询临时表
+                if(count($res)>0 && isset($res['password']) && !empty($res['password'])){
+                    if($value == 'temp_register'){//查询临时表
+                        var_dump($value);
                         $res['caseId'] = 0;//修改角色值
                     }
                     break;
