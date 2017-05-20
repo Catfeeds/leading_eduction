@@ -53,9 +53,9 @@ class DB
 		return self::$db->fetchOne($query);
 	}
 	/***封装fetchOne_byArr函数****/
-	public static function fetchOne_byArr($table,$arr,$where,$where2='')
+	public static function fetchOne_byArr($table,$arr,$where,$where2='',$distinct = true)
 	{
-	    return self::$db->fetchOne_byArr($table,$arr,$where,$where2);
+	    return self::$db->fetchOne_byArr($table,$arr,$where,$where2,$distinct);
 	}
 	/**封装fetchAll函数**/
 	public static function fetchAll($sql)
@@ -67,6 +67,15 @@ class DB
 	public static function fetchAll_byArr($table,$arr,$where,$where2='')
 	{
 	    return self::$db->fetchAll_byArr($table,$arr,$where,$where2);
+	}
+	/**封装fetchOne_byArrJoin函数****/
+	public static function fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	{
+		return self::$db->fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
+	}
+	public static function fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	{
+		return self::$db->fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
 	}
 	/**封装getNums函数**/
 	public static function getNums($sql)

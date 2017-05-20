@@ -34,4 +34,13 @@ class infoModel
         $obj = M("{$table1}");
         return $obj->getInfo_byArrJoin($arr,$where,$table1,$table2);
     }
+    /**
+     * 联合表查询，获得多条记录
+     * return array
+     */
+    public function getInfoAll_byArrJoin($arr,$where,$table,$table2)
+    {
+        $obj = M("{$table}");
+        return $obj->getInfoAll_byArrJoin($arr,$where,$table,$table2);
+    }
 }

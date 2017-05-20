@@ -142,7 +142,7 @@ class mysqli
 	        $where .= " and {$key} = '{$val}'";
 	    }
 	    $where = !empty($where2)?$where.$where2:$where;
-	    $sql = "select {$value} from {$table} where 1 = 1 {$where}";
+	    $sql = "select {$value} from {$table} where 1 = 1 {$where} limit 0,1";
 	    return $this->fetchOne($this->query($sql));
 	}
 	/**
@@ -155,7 +155,7 @@ class mysqli
 	 * @param: string $where2 查询条件
 	 * @return:array
 	 */
-	public function fetchAll_byArr($table,$arr,$where1,$where2)
+	public function fetchAll_byArr($table,$arr,$where1,$where2,$distinct=true)
 	{
 	    $where = '';
 	    if(count($arr) > 1){
@@ -167,7 +167,10 @@ class mysqli
 	        $where .= " and {$key} = '{$val}'";
 	    }
 	    $where = !empty($where2)?$where.$where2:$where;
-	    $sql = "select {$value} from {$table} where 1 = 1 {$where}";
+		if($distinct){
+			$value = " distinct {$value} ";
+		}
+	    $sql = "SELECT {$value} FROM {$table} WHERE 1 = 1 {$where}";
 	    return $this->fetchAll($this->query($sql));
 	}
 	/**
@@ -219,11 +222,66 @@ class mysqli
 	{
 		return self::$link;
 	}
-	public static function test(){
-		echo "test<br />";
+	/**
+	*联合查询，获得一条数据
+	*/
+	public function fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	{
+		$i = $j = 0;
+		foreach($arr as $val){
+            if(in_array($val,$tableArr)){
+                $value[] = " s.{$val} ";
+                $i++;
+                continue;
+            }
+            if(in_array($val,$table2Arr)){
+                $value[] = " f.{$val} ";
+                $j++;
+            }
+        }
+		$selectInfo = implode(',',$value);
+        if( $j == 0 && $i > 0){//表名
+            $table = '`'.$table.'` as s ';
+        }
+        if($i==0 && $j > 0){
+            $table = '`'.$table2.'` as f ';
+        }
+        if($i>0 && $j>0){//联合表名
+            $table = $table." as s ,".$table2." as f";
+        }
+        $sql = "SELECT ".$selectInfo." FORM ".$table." WHERE ".$where." LIMIT 0,1";
+        return $this->fetchOne($this->query($sql));
 	}
-	
-	
+	/**
+	*联合查询，获得多条数据
+	*/
+	public function fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	{
+		$i = $j = 0;
+		foreach($arr as $val){
+            if(in_array($val,$tableArr)){
+                $value[] = " s.{$val} ";
+                $i++;
+                continue;
+            }
+            if(in_array($val,$table2Arr)){
+                $value[] = " f.{$val} ";
+                $j++;
+            }
+        }
+		$selectInfo = implode(',',$value);
+        if( $j == 0 && $i > 0){//表名
+            $table = '`'.$table.'` as s ';
+        }
+        if($i==0 && $j > 0){
+            $table = '`'.$table2.'` as f ';
+        }
+        if($i>0 && $j>0){//联合表名
+            $table = $table." as s ,".$table2." as f";
+        }
+        $sql = "SELECT ".$selectInfo." FROM ".$table." WHERE ".$where;
+        return $this->fetchAll($this->query($sql));
+	}
 		
 	
 }
