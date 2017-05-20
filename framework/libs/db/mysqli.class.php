@@ -120,9 +120,56 @@ class mysqli
 		$result = $query->fetch_assoc();//获得关联数组
 		return $result;
 	}
-	
-	
-	
+	/**
+	* 根据字段数组获得相应的一条信息
+	* @date: 2017年5月16日 下午1:44:09
+	* @author: lenovo2013
+	* @param: string $table 表名
+	* @param: array $arr字段数组
+	* @param: array $where1 查询条件数组
+	* @param: string $where2 查询条件
+	* @return:array
+	*/
+	public function fetchOne_byArr($table,$arr,$where1,$where2)
+	{
+	    $where = '';
+	    if(count($arr) > 1){
+	        $value = implode(',',$arr);
+	    }else{
+	        $value = implode(' ',$arr);
+	    }
+	    foreach($where1 as $key=>$val){
+	        $where .= " and {$key} = '{$val}'";
+	    }
+	    $where = !empty($where2)?$where.$where2:$where;
+	    $sql = "select {$value} from {$table} where 1 = 1 {$where}";
+	    return $this->fetchOne($this->query($sql));
+	}
+	/**
+	 * 根据字段数组获得相应的多条信息
+	 * @date: 2017年5月16日 下午1:44:09
+	 * @author: lenovo2013
+	 * @param: string $table 表名
+	 * @param: array $arr字段数组
+	 * @param: array $where1 查询条件数组
+	 * @param: string $where2 查询条件
+	 * @return:array
+	 */
+	public function fetchAll_byArr($table,$arr,$where1,$where2)
+	{
+	    $where = '';
+	    if(count($arr) > 1){
+	        $value = implode(',',$arr);
+	    }else{
+	        $value = implode(' ',$arr);
+	    }
+	    foreach($where1 as $key=>$val){
+	        $where .= " and {$key} = '{$val}'";
+	    }
+	    $where = !empty($where2)?$where.$where2:$where;
+	    $sql = "select {$value} from {$table} where 1 = 1 {$where}";
+	    return $this->fetchAll($this->query($sql));
+	}
 	/**
 	*获得多条记录信息
 	*@params source $query query函数执行后所获得的资源句柄

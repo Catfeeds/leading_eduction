@@ -52,14 +52,22 @@ class DB
 		$query = self::$db->query($sql);
 		return self::$db->fetchOne($query);
 	}
-	
+	/***封装fetchOne_byArr函数****/
+	public static function fetchOne_byArr($table,$arr,$where,$where2='')
+	{
+	    return self::$db->fetchOne_byArr($table,$arr,$where,$where2);
+	}
 	/**封装fetchAll函数**/
 	public static function fetchAll($sql)
 	{
 		$query = self::$db->query($sql);
 		return self::$db->fetchAll($query);
 	}
-	
+	/**封装fetchAll_byArr函数**/
+	public static function fetchAll_byArr($table,$arr,$where,$where2='')
+	{
+	    return self::$db->fetchAll_byArr($table,$arr,$where,$where2);
+	}
 	/**封装getNums函数**/
 	public static function getNums($sql)
 	{

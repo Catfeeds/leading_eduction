@@ -102,4 +102,12 @@ class verifyModel
         $data = $obj->getInfo_byArr($arr,$where);
         return $data;
     }
+    public static function verifyEducation($stuId)
+    {
+        $obj = M('student_education');
+        $arr = array('id','major','eduSchool');
+        $where['stuId'] = $stuId;
+        $where2 = "order by dateOut desc";
+        return $obj->getInfo_byArr($arr,$where,$where2);
+    }
 }
