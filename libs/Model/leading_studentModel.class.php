@@ -10,18 +10,18 @@ class leading_studentModel
     /* private static $table3 = 'student_project';
     private static $table4 = 'student_work';
     private static $table5 = 'student_eduction'; */
-    private static $student = array('id','stuId','name','password','mobile','email','password','status','caseId','dateinto','token','token_exptime');
-    private static $studentInfo = array('stuId','sex','age','otherMobile','classId','status','eduBacId','ecardId','bloodType','homeAddress','picUrl','qq','wechat','province','description');
+    private static $leading_student = array('id','stuId','name','password','mobile','email','password','status','caseId','dateinto','token','token_exptime');
+    private static $leading_student_info = array('stuId','sex','age','otherMobile','classId','status','eduBacId','ecardId','bloodType','homeAddress','picUrl','qq','wechat','province','description');
     
     public function getInfo_byArrJoin($arr,$where,$talbe1='leading_student',$table2='leading_student_info')
     {
         $i = $j = 0;
         foreach($arr as $val){
-            if(in_array($val,self::$student)){
+            if(in_array($val,self::$leading_student)){
                 $value[] = " s.{$val} ";
                 $i++;
             }
-            if(in_array($val,self::$studentInfo)){
+            if(in_array($val,self::$leading_student_info)){
                 $value[] = " f.{$val} ";
                 $j++;
             }
@@ -72,5 +72,16 @@ class leading_studentModel
     public function updateInfo_byArr($arr,$where)
     {
         return DB::update(self::$table1,$arr,$where);
+    }
+    /**
+     * 实现联合查询，获得多条数据
+     */
+    public function getInfoAll_byArrJoin($arr,$where,$table1='',$table2 = '')
+    {
+        $table = !empty($table1)?$table1:self::$table;
+        $table2 = !empty($table2)?$table2:self::$table2;
+        $tableArr = self::${$table};
+        $table2Arr = self::${$table2};
+        return DB::fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
     }
 }

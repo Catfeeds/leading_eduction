@@ -136,7 +136,7 @@ class getStuInfoModel
      */
     public function  getCourseAll_byStuId($stuId)
     {
-        $arr = array('id','courseId');
+        $arr = array('courseId');
         $where['stuId'] = $stuId;
         return $this->getInfoAll_byArr('study_course',$arr,$where);
     }
