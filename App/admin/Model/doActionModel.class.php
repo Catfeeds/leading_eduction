@@ -200,27 +200,32 @@ class doActionModel extends infoModel
         @$newPass_1 = $_LS['newPass_1'];
         @$newPass_2 = $_LS['newPass_2'];
         if ($accNumber && $email && $oldPass && $newPass_1 && $newPass_2) {
-            if (!empty($oldPass) && $this->verifyPass($oldPass,$user)) { // 旧密码不为空且正确
-                if ($oldPass != $newPass_1) {
-                    if ($newPass_1 == $newPass_2) {
-                        if (verifyLen($newPass_1, 6, 15)) {
-                            $newPass = myMd5($newPass_1);
-                            $res = $this->updatePass($table,$accNumber, $email, $newPass);
-                            if($res > 0){
-                                $_SESSION['user']['password'] = $newPass;
+            if ($this->verifyPass($oldPass,$user)) {          // 旧密码不为空且正确
+                if ($this->verifyEmail($email,$user)) {       // 邮箱正确
+                    if ($oldPass != $newPass_1) {
+                        if ($newPass_1 == $newPass_2) {
+                            if (verifyLen($newPass_1, 6, 15)) {
+                                $newPass = myMd5($newPass_1);
+                                $res = $this->updatePass($table,$accNumber, $email, $newPass);
+                                if($res > 0){
+                                    $_SESSION['user']['password'] = $newPass;  //更新sessio中的秘密
+                                }
+                                $data = parent::formatResponse($res);
+                            } else {
+                                $data['status'] = 7;
+                                $data['msg'] = '密码长度不符合';
                             }
-                            $data = parent::formatResponse($res);
                         } else {
-                            $data['status'] = 7;
-                            $data['msg'] = '密码长度不符合';
+                            $data['status'] = 5;
+                            $data['msg'] = '新密码与确认密码不一致';
                         }
                     } else {
-                        $data['status'] = 5;
-                        $data['msg'] = '新密码与确认密码不一致';
+                        $data['status'] = 4;
+                        $data['msg'] = '新密码与旧密码一样，不用修改';
                     }
                 } else {
-                    $data['status'] = 4;
-                    $data['msg'] = '新密码与旧密码一样，不用修改';
+                    $data['status'] = 8;
+                    $data['msg']    = '邮箱错误';
                 }
             } else {
                 $data['status'] = 3;
@@ -244,6 +249,21 @@ class doActionModel extends infoModel
         $res      = false;
         $password = myMd5($password);
         if(isset($user) && !empty($user) && $user['password'] == $password){
+            $res = true;
+        }
+        return $res;
+    }
+    
+    /**
+     * 验证邮箱
+     * @param string $email
+     * @param array $user
+     * @return boolean
+     */
+    public function verifyEmail($email,$user)
+    {
+        $res      = false;
+        if(isset($user) && !empty($user) && $user['email'] == $email){
             $res = true;
         }
         return $res;

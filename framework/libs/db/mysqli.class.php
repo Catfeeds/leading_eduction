@@ -385,7 +385,7 @@ class mysqli
             if(in_array($val,$tableArr[0])){
                 $value[] = " s.`{$val}` ";
                 $i++;
-                continue;
+               // continue;
             }
             if(!empty($tableArr[1]) && in_array($val,$tableArr[1])){
                 $value[] = " f.`{$val}` ";
@@ -393,11 +393,10 @@ class mysqli
             }
         }
 		$selectVals = $this->implodeArr($value);
-		
 		//获得表名
-		$tableVal = $this->formatTable($table,$i,$j);
-		$whereSql = is_string($where)?$where:$this->formatWhere($where,$tableArr,$i,$j);
-        $sql = "SELECT ".$selectVals." FROM ".$tableVal." WHERE  1=1 ".$whereSql;
+		$tableVal   = $this->formatTable($table,$i,$j);
+		$whereSql   = is_string($where)?$where:$this->formatWhere($where,$tableArr,$i,$j);
+        $sql        = "SELECT ".$selectVals." FROM ".$tableVal." WHERE  1=1 ".$whereSql;
 		return $sql;
 	}
 	/**

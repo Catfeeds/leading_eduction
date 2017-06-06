@@ -82,4 +82,12 @@ class studentController extends baseController
         $data = $obj->addStuPorject();
         parent::ajaxReturn($data);
     }
+    
+    //获得学员简历信息
+    public function getStuResume()
+    {
+        $obj  = new getStudentModel();
+        $data = $obj->getStuResume();
+        parent::ajaxReturn($data);
+    }
 }

@@ -4,7 +4,7 @@ namespace App\admin\Model;
 class getStudentModel extends infoModel
 {
     private $user          = array();
-    private $centerArr     = array('mobile','name','picUrl');
+    private $centerArr     = array('mobile','name','picUrl','stuId');
     private $baseArr       = array('name','mobile','email','sex','age','bloodType','provinceId','homeAddress','description');
     private $courseArr     = array('courseId');
     private $secCourseArr  = array('id','stageId','content');
@@ -87,13 +87,13 @@ class getStudentModel extends infoModel
         $where['stuId'] = $stuId;
         switch($param){
             case      'base'://基础数据
-                $data = $this->getStuBase($stuId);
+                $data = $this->getStuBase_byStuId($stuId);
                 break;
             case    'course'://课程信息
                 $data = $this->getStuCourse($where);//没有完成,还需改善
                 break;
             case   'project'://简历、作品或项目信息
-                $data = $this->getStuProject($where);//完成
+                $data = $this->getStuPro_byStuId($stuId);//完成
                 break;
             case   'concern'://关注信息
                 $data = $this->getStuConcern($stuId,$param);//完成
@@ -105,10 +105,10 @@ class getStudentModel extends infoModel
                 $data = $this->getStuRecommend($stuId);//完成
                 break;
             case      'work':
-                $data = $this->getStuWork($where);
+                $data = $this->getStuWork_byStuId($stuId);
                 break;
             case 'education':
-                $data = $this->getStuEducation($where);
+                $data = $this->getStuEdu_byStuId($stuId);
                 break;
             case    'center': //核心数据
             default         :
@@ -121,11 +121,11 @@ class getStudentModel extends infoModel
      * 获得学生基本信息
      * @param  $stuId
      */
-    public function getStuBase($stuId)
+    public function getStuBase_byStuId($stuId)
     {
         $arr   = $this->baseArr; 
         $table = array('leading_student','leading_student_info');
-        $where = " f.stuId = s.stuId AND s.stuId = {$stuId} ";
+        $where = " AND f.stuId = s.stuId AND s.stuId = {$stuId} ";
         $data  = parent::fetchOne_byArrJoin($table,$arr,$where);
         if(isset($data['provinceId']) && !empty($data['provinceId'])){
             $res = verifyModel::province($data['provinceId']);
@@ -146,7 +146,7 @@ class getStudentModel extends infoModel
         $data  = array();
         $arr   = $this->centerArr;
         $table = array('leading_student','leading_student_info');
-        $where = " f.stuId = s.stuId AND f.stuId = {$stuId} ";
+        $where = " AND f.stuId = s.stuId AND f.stuId = '{$stuId}' ";
         $data  = parent::fetchOne_byArrJoin($table,$arr,$where);
         return $data;
     }
@@ -180,14 +180,15 @@ class getStudentModel extends infoModel
      * @param unknown $where
      * return array
      */
-    public function getStuProject($where)
+    public function getStuPro_byStuId($stuId)
     {
         $data  = array();
         
         //获取学生参与的所有项目
-        $arr   = $this->stuProjectArr;
-        $table = 'student_project';
-        $res   = parent::fetchAll_byArr($table,$arr,$where);
+        $arr            = $this->stuProjectArr;
+        $table          = 'student_project';
+        $where['stuId'] = $stuId;
+        $res            = parent::fetchAll_byArr($table,$arr,$where);
         
         //获得每个项目的详细信息
         $count = count($res);
@@ -213,23 +214,35 @@ class getStudentModel extends infoModel
     public function getStuConcern($accNumber,$type)
     {
         $data               = array();
+        /* $arr                = array("{$type}","conTime");
+        $select             = trim(implode(' ',array_diff($this->concernArr,$arr)));
+        $where["{$select}"] = $accNumber;
+        $table              = 'concern';
+        $res                = parent::fetchAll_byArr($table,$arr,$where); */
+        $res  = $this->getConcernInfo_byType($accNumber,$type);
+        
+        //获得企业详细信息
+        if(count($res) > 0){
+            $obj = new getCompanyModel();
+            foreach ($res as $val){
+                /* $table_2 = 'leading_company';
+                $arr_2   = $this->companyArr;
+                $compId            = $val["{$type}"];
+                $where_2['compId'] = $compId; */
+                $data[] = $obj->getCompCenter_byCompId($val["{$type}"]);
+                //$data[]            = parent::fetchOne_byArr($table_2,$arr_2,$where_2);
+            }
+        }
+        return $data;
+    }
+    
+    public function getConcernInfo_byType($accNumber,$type)
+    {
         $arr                = array("{$type}","conTime");
         $select             = trim(implode(' ',array_diff($this->concernArr,$arr)));
         $where["{$select}"] = $accNumber;
         $table              = 'concern';
-        $res                = parent::fetchAll_byArr($table,$arr,$where);
-        
-        //获得企业详细信息
-        if(count($res) > 0){
-            $table_2 = 'leading_company';
-            $arr_2   = $this->companyArr;
-            foreach ($res as $val){
-                $compId            = $val["{$type}"];
-                $where_2['compId'] = $compId;
-                $data[]            = parent::fetchOne_byArr($table_2,$arr_2,$where_2);
-            }
-        }
-        return $data;
+        return parent::fetchAll_byArr($table,$arr,$where);
     }
     
     /**
@@ -253,16 +266,17 @@ class getStudentModel extends infoModel
     }
     
     /**
-     * 获得学生工作经验
+     * 通过学号获得学生工作经验
      * @param array $where
      * @return array
      */
-    public function getStuWork($where)
+    public function getStuWork_byStuId($stuId)
     {
-        $data  = array();
-        $arr   = $this->workArr;
-        $table = 'student_work';
-        $data  = parent::fetchAll_byArr($table,$arr,$where);
+        $data           = array();
+        $arr            = $this->workArr;
+        $table          = 'student_work';
+        $where['stuId'] = $stuId;
+        $data           = parent::fetchAll_byArr($table,$arr,$where);
         return $data;
     }
     
@@ -271,12 +285,50 @@ class getStudentModel extends infoModel
      * @param array $where
      * @return array
      */
-    public function getStuEducation($where)
+    public function getStuEdu_byStuId($stuId)
     {
-        $data  = array();
-        $arr   = $this->educationArr;
-        $table = 'student_education';
-        $data  = parent::fetchAll_byArr($table,$arr,$where);
+        $data           = array();
+        $arr            = $this->educationArr;
+        $table          = 'student_education';
+        $where['stuId'] = $stuId;
+        $data           = parent::fetchAll_byArr($table,$arr,$where);
         return $data;
     }
+    
+    /**
+     * 获得学员简历信息
+     * @return array
+     */
+    public function getStuResume()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        if (isset($accNumber) && $this->verifyUser($accNumber)) {       //验证账号信息
+            $data = $this->getStuResume_byStuId($accNumber);            //通过学号获得学员简历信息
+            $data = parent::formatResponse($data);                      //格式化结果集
+        } else {
+            $data['status'] = 2;
+            $data['msg']    = '账号为空或与登录信息不符';
+        }
+        return $data;
+    }
+    
+    /**
+     * 通过学号获得学员简历信息
+     * @param string $accNumber 学号
+     * @return array
+     */
+    public function getStuResume_byStuId($accNumber)
+    {
+        $data = array();
+        $data['base']      = $this->getStuBase_byStuId($accNumber);     //获得学员基本信息
+        $data['education'] = $this->getStuEdu_byStuId($accNumber);      //获得学员所有的教育经历
+        $data['work']      = $this->getStuWork_byStuId($accNumber);     //获得学员所有的工作经验
+        $data['project']   = $this->getStuPro_byStuId($accNumber);
+        return $data;
+    }
+    
+    
+    
 }

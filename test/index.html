@@ -14,21 +14,55 @@
 		<h1>上海领思教育</h1>
 		<ul>
 			<li id="login"><a href="javascript:login()">登陆</a></li>
-			<li id="setStuPass"><a href="javascript:setStuPass()">修改学生密码</a></li>
 			<li id="getVerify"><a href="javascript:getVerify()">获取验证码</a></li>
 			<li id="logout"><a href="javascript:logout()">注销</a></li>
 			<li id="sign"><a href="javascript:sign()">注册</a></li>
 			<li id="resetPassword"><a href="javascript:resetPassword()">重置密码</a></li>
-			<li><input type="text" id="param" placeholder="获取学生信息"/></li>
+			<li>===============</li>
+			<li><select id= "sParam">
+				  <option value ="center">核心</option>
+				  <option value ="base">基本</option>
+				  <option value="course">课程</option>
+				  <option value="project">项目</option>
+				  <option value="concern">关注</option>
+				  <option value="concerned">被关注</option>
+				  <option value="recommend">推荐</option>
+				  <option value="work">工作</option>
+				  <option value="education">教育</option>
+				</select></li>
 			<li id="getStuInfo"><a href="javascript:getStuInfo()">获取学生信息</a></li>
 			<li id="setStuBase"><a href="javascript:setStuBase()">修改学生基本信息</a></li>
 			<li id="setStuWork"><a href="javascript:setStuWork()">修改学生工作经验</a></li>
+			<li id="setStuPass"><a href="javascript:setStuPass()">修改学生密码</a></li>
 			<li id="setStuProject"><a href="javascript:setStuProject()">修改学生项目信息</a></li>
 			<li id="setStuEducation"><a href="javascript:setStuEducation()">修改学生教育经验</a></li>
 			<li id="addStuWork"><a href="javascript:addStuWork()">添加学员工作经验</a></li>
 			<li id="addStuProject"><a href="javascript:addStuProject()">添加学员项目经验</a></li>
-			<li><input type="text" id="tParam" placeholder="获取教师信息"/></li>
+			<li id="getStuResume"><a href="javascript:getStuResume()">获得学员简历信息</a></li>
+			<li>=================</li>
+			<li><select id= "tParam">
+				  <option value ="base">基本</option>
+				  <option value="course">课程</option>
+				  <option value="project">项目</option>
+				  <option value="class">班级</option>
+				  <option value="recommend">推荐</option>
+				</select></li>
 			<li id="getTeacherInfo"><a href="javascript:getTeacherInfo()">获得教师信息</a></li>
+			<li id="getClassStuInfo"><a href="javascript:getClassStuInfo()">获得一个班级下所有的学生信息</a></li>
+			<li id="setTeacherBase"><a href="javascript:setTeacherBase()">修改教师基本信息</a></li>
+			<li id="setTeacherPass"><a href="javascript:setTeacherPass()">修改教师密码信息</a></li>
+			<li>==================</li>
+			<li id="getMasterStuResumeInfo"><a href="javascript:getMasterStuResumeInfo()">班主任查看学生简历信息</a></li>
+			<li id="setStuAssess"><a href="javascript:setStuAssess()">班主任更改学生评价</a></li>
+			<li>==================</li>
+			<li><select id= "cParam">
+				  <option value ="base">基本</option>
+				  <option value ="center">核心</option>
+				  <option value="recruited">招聘</option>
+				  <option value="concern">关注</option>
+				  <option value="concerned">被关注</option>
+				</select></li>
+			<li id="getCompanyInfo"><a href="javascript:getCompanyInfo()">获得企业信息</a></li>
 		</ul>
 		
 		
@@ -63,12 +97,12 @@
 			{
 				var url  = "http://localhost:8066/leading/index.php?module=admin&method=login";
 				var data = {
-					//'accNumber' :'1601321102',
-					//'accNumber' :'18917023456',
-					'accNumber' :'t56801',
-					'password'  :'teacher',
-					'loginCase' :2,
-					'verifyCode':'LZ60'
+					'accNumber' :'1601321102',
+					//'accNumber' :'18917098765',
+					//'accNumber' :'t56801',
+					'password'  :'cheng',
+					'loginCase' :1,
+					'verifyCode':'988K'
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -97,11 +131,11 @@
 				var url = "http://localhost:8066/leading/index.php?module=admin&method=sign";
 				var data = {
 					"invitation" : "1701321101",//可以为空
-					"caseId" : 1,
-					"mobile" : "18725712349",
-					"email" : "hxq6@568it.cn",
-					"name" : "张三6",
-					"password" : "xxxxx",
+					"caseId" 	 : 1,
+					"mobile" 	 : "18725712349",
+					"email" 	 : "hxq6@568it.cn",
+					"name" 		 : "张三6",
+					"password" 	 : "xxxxx",
 					"verifyCode" : "123456"//手机验证码，后期实现
 				};
 				GLOBAL.ajax(url, data);
@@ -109,17 +143,17 @@
 			//重置密码
 			var resetPassword = function() {
 				var data = {
-					"mobile" : "18917012435",
-					"password_1" : "teacher",
-					"password_2" : "teacher",
-					"caseId" : 2
+					"mobile" 	 : "18917098765",
+					"password_1" : "company",
+					"password_2" : "company",
+					"caseId" 	 : 9
 				};
 				var url = "http://localhost:8066/leading/index.php?module=admin&method=resetPassword";
 				GLOBAL.ajax(url, data);
 			}
 			
 			var getStuInfo = function() {
-				var param = $("#param").val();
+				var param = $("#sParam").val();
 				param     = (param.length == 0)?'project':param;
 				var data  = {
 					"accNumber" : "1601321102",
@@ -157,8 +191,8 @@
 				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=student&method=setStuWork";
 				var data = {
 						"id" :1,
-						"accNumber":"1601321102",
-						"salary":16000,
+						"accNumber"  :"1601321102",
+						"salary"	 :16000,
 						"description":"nothing to do"
 				};
 				GLOBAL.ajax(url,data);
@@ -201,11 +235,11 @@
 				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=student&method=addStuEducation";
 				var data = {
 						"accNumber":"1601321102",
-						"major":"水上飘",
+						"major"	   :"水上飘",
 						"eduSchool":"少林寺",
-						"dateinto":1434567890,
-						"dateout":1534567890,
-						"highest":0
+						"dateinto" :1434567890,
+						"dateout"  :1534567890,
+						"highest"  :0
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -215,14 +249,14 @@
 			{
 				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=student&method=addStuWork";
 				var data = {
-						"accNumber":"1601321102",
-					    "compName":"水中央",
+						"accNumber"	 :"1601321102",
+					    "compName" 	 :"水中央",
 					    "compAddress":"滴水湖中央",
-					    "jobName":"看风水",
-					    "salary":1000000,
-					    "treatment":"风水不错",
-					    "dateWork":1434567890,
-					    "workOut":1534567890,
+					    "jobName"	 :"看风水",
+					    "salary"	 :1000000,
+					    "treatment"	 :"风水不错",
+					    "dateWork"	 :1434567890,
+					    "workOut"	 :1534567890,
 					    "description":"游山玩水"
 				};
 				GLOBAL.ajax(url,data);
@@ -232,15 +266,24 @@
 			{
 				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=student&method=addStuProject";
 				var data = {
-						"accNumber":"1601321102",
+						"accNumber"		:"1601321102",
 					    "stuDescription":"do everything",
-					    "professional":"php javascript",
-					    "projectName":"admin for education",
-					    "description":"for student to learn internet acknowledge",
-					    "status":1,
-					    "startTime":1434567890,
-					    "endTime":1534567890,
-					    "url":"www.leadingstudy.com"
+					    "professional"	:"php javascript",
+					    "projectName"	:"admin for education",
+					    "description"	:"for student to learn internet acknowledge",
+					    "status"		:1,
+					    "startTime"		:1434567890,
+					    "endTime"		:1534567890,
+					    "url"			:"www.leadingstudy.com"
+				};
+				GLOBAL.ajax(url,data);
+			}
+			//获得学员简历信息
+			var getStuResume = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=student&method=getStuResume";
+				var data = {
+						"accNumber":"1601321102",
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -252,9 +295,87 @@
 				var url   = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=getTeacherInfo";
 				var data  = {
 						"accNumber":"t56801",
-						"param":param
+						"param"	   :param
 				};
 				GLOBAL.ajax(url,data);
+			}
+			
+			var setTeacherBase = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=setTeacherBase";
+				var data = {
+						"accNumber":"t56801",
+					    /* "description":"经验丰富",
+					    "name":"水之渊", */
+					    "age"	   :1434567890,
+					    "sex"	   :2,
+					    "mobile"   :"13678900987",
+					    "email"    :"shui@163.com" 
+					    
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			var getClassStuInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=getClassStuInfo";
+				var data = {
+						"accNumber":"t56801",
+						"classId"  :1
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			
+			//修改教师密码信息
+			var setTeacherPass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=setTeacherPass";				
+				var data = {
+					'accNumber':'t56801',
+					'email'    : 'zhangsan@162.com',
+					'oldPass'  : 'teacher',
+					'newPass_1': 'student',
+					'newPass_2': 'student'
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//班主任查看学生简历信息
+			var getMasterStuResumeInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=getMasterStuResumeInfo";
+				var data = {
+					"accNumber":"t56801",
+					"stuId"    :"1601321102"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//班主任更改学生评价
+			var setStuAssess = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=setStuAssess";
+				var data = {
+						"accNumber":"t56801",
+					    "stuId"	   :"1601321102",
+					    "ls_assess":"yaban yaban",
+					    "classId"  :1
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//获得企业信息
+			var getCompanyInfo = function()
+			{
+				var url   = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=getCompanyInfo";
+				var param = $("#cParam").val();
+				param     = (param.length == 0)?'base':param;
+				var data  = {
+						"accNumber":"com5680001",
+						"param"    :param,
+				};
+				GLOBAL.ajax(url, data);
 			}
 			
 			var GLOBAL = {};
@@ -271,12 +392,12 @@
 					alert(data.msg);
 				}
 				$.ajax({
-					"url" : url,
-					"type" : type,
-					"data" : data,
+					"url"      : url,
+					"type"     : type,
+					"data" 	   : data,
 					"dataType" : dataType,
-					"success" : callback,
-					"error" : error,
+					"success"  : callback,
+					"error"    : error,
 				});
 			}
 		</script>

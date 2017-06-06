@@ -37,7 +37,7 @@ class setStudentModel extends infoModel
     public function setStuPass()
     {
         global $_LS;
-        $data = array();
+        $data       = array();
         @$accNumber = $_LS['accNumber'];
         if(!empty($accNumber) && $this->verifyUser($accNumber)){
             $obj  = new doActionModel();

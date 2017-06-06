@@ -17,8 +17,9 @@ class getTeacherModel extends infoModel
     //信息数组
     private $baseArr           = array('status','name','picUrl','title','description','mobile','email');
     private $secCourseArr      = array('id','stageId','content');
-    private $teacherStudentArr = array('stuId','name','sex','age');
+    private $teacherStudentArr = array('stuId','name','sex','age','qq','wechat','dateinto','dateout','status','mobile','email','ls_assess');
     private $recommendArr      = array('id','stuId','dateinto');
+    private $classArr          = array('classId','className','startClassTime','masterId','classType','endClassTime');
     
     public function __construct()
     {
@@ -41,6 +42,14 @@ class getTeacherModel extends infoModel
             }
         }
         return $res;
+    }
+    
+    /**
+     * 获得登陆者信息
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
     
     /**
@@ -82,8 +91,8 @@ class getTeacherModel extends infoModel
             case    'course':
                 $data = $this->getTeacherCourse($where);
                 break;
-            case   'student':
-                $data = $this->getTeacherStudent($where);
+            case   'class':
+                $data = $this->getTeacherClass($where);
                 break;
             case 'recommend':
                 $data = $this->getTeacherRecommend($accNumber);
@@ -106,7 +115,7 @@ class getTeacherModel extends infoModel
         $data = array();
         $arr  = $this->baseArr;
         $table = array($this->teacherTab,$this->teacherInfoTab);
-        $where = " f.teacherId = s.teacherId AND f.teacherId = '{$accNumber}' ";
+        $where = " AND f.teacherId = s.teacherId AND f.teacherId = '{$accNumber}' ";
         $data  = parent::fetchOne_byArrJoin($table,$arr,$where);
         return $data;
     }
@@ -142,40 +151,17 @@ class getTeacherModel extends infoModel
      * @param array $where
      * @return array
      */
-    public function getTeacherStudent($where)
+    public function getTeacherClass($where)
     {
         $data = array();
         
         //获得教师下的所有班级
-        $arr             = array('classId','className');
+        $arr             = $this->classArr;
         $table           = array($this->teacherClassTab,$this->classTab );
         $where['where2'] = " AND s.`classId` = f.`classId` ";
-        $res             = parent::fetchAll_byArrJoin($table,$arr,$where);
-        
-        //获得班级下的所有学生信息
-        $count = count(array_unique($res));
-        if($count > 0){
-            
-            for($i = 0;$i < $count;$i++){
-                $resp = $this->getStuInfo_byClassId($res[$i]['classId']);
-                $data["{$res[$i]['classId']}"] = array_merge($res[$i],$resp);
-            }
-        }
+        $data            = parent::fetchAll_byArrJoin($table,$arr,$where);
         return $data;
     }
-    /**
-     * 获得一个班级下的所有学生信息
-     * @param int $classId 班级号
-     * return array
-    */
-    public function getStuInfo_byClassId($classId)
-    {
-        $table = array($this->teacherStudentTab,$this->teacherStudentInfoTab);
-        $arr   = $this->teacherStudentArr;
-        $where['where2'] = " AND s.`stuId` = f.`stuId` AND f.`classId` = {$classId}";
-        return parent::fetchAll_byArrJoin($table,$arr,$where);
-    }
-    
     /**
      * 获得教师推荐的学员信息
      * @param string $accNumber 教师号
@@ -197,6 +183,68 @@ class getTeacherModel extends infoModel
     }
     
     /**
+     * 获得班级下所有的学生信息
+     * return array
+     */
+    public function getClassStuInfo()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        @$classId   = $_LS['classId'];
+        if ($accNumber && $classId) {
+            if ($this->verifyUser($accNumber)) {                                    //与登录信息一致
+                if ($this->verifyAccAndClass($accNumber,$classId)) {                //教师下存在该班级号
+                    $data['info']   = $this->getStuInfo_byClassId($classId);        //通过班级号获得学生信息
+                    $data['status'] = 0;
+                    $data['msg']    = 'success';
+                } else {
+                    $data['status'] = 4;
+                    $data['msg']    = '班级号不正确';
+                }
+            } else {
+                $data['status'] = 3;
+                $data['msg']    = '与登录信息不符';
+            }
+        } else {
+            $data['status'] = 2;
+            $data['msg']    = '传参不全';
+        }
+        return $data;
+    }
+    
+    public function getStuInfo_byClassId($clssId)
+    {
+        $data             = array();
+        $arr              = $this->teacherStudentArr;
+        $where['classId'] = $clssId;
+        $where['where2']  = ' AND s.`stuId` = f.`stuId`';
+        $table            = array($this->teacherStudentTab,$this->teacherStudentInfoTab);
+        $data             = parent::fetchAll_byArrJoin($table,$arr,$where);
+        return $data;
+    }
+    /**
+     * 查看该教师下是否有该班级号
+     * @param string $accNumber 教师号
+     * @param int $classId      班级号
+     * @return boolean
+     */
+    public function verifyAccAndClass($accNumber,$classId)
+    {
+        $res                = false;
+        $arr                = array('classId');
+        $where['classId']   = $classId;
+        $where['teacherId'] = $accNumber;
+        $table              = $this->teacherClassTab;
+        $res                = parent::fetchOne_byArr($table,$arr,$where);
+        if(count($res) > 0){
+            $res = true;
+        }
+        return $res;
+    }
+    
+    
+    /**
      * 通过学号获得学员信息
      * @param string $stuId
      * return array
@@ -206,8 +254,69 @@ class getTeacherModel extends infoModel
         $table           = array($this->teacherStudentTab,$this->teacherStudentInfoTab);
         $arr             = $this->teacherStudentArr;
         $where['stuId']  = $stuId;
-        $where['status'] = 1;
+        $where['status'] = 1;                               //必须是激活状态
         return parent::fetchOne_byArrJoin($table,$arr,$where);
     }
     
+    /**
+     * 获得该班主任下一个学员的简历信息
+     * @return array
+     */
+    public function getMasterStuResumeInfo()
+    {
+        global $_LS;
+        $data       = array();
+        @$accNumber = $_LS['accNumber'];
+        @$stuId     = $_LS['stuId'];
+        if ($accNumber && $stuId) {
+            if ($this->verifyUser($accNumber)) {
+                if ($this->verifyTeacherAndStuId($accNumber,$stuId)) {
+                    $data = $this->getStuResume_byStuId($stuId);            //通过学号获得学员简历信息
+                    $data = parent::formatResponse($data);                  //格式化结果集
+                } else {
+                    $data['status'] = 4;
+                    $data['msg']    = '该教师下没有该学号学员信息';
+                }
+            } else {
+                $data['status'] = 3;
+                $data['msg']    = '账号与登录信息不符';
+            }
+        } else {
+            $data['status'] = 2;
+            $data['msg']    = '参数不集全';
+        }
+        return $data;
+    }
+    
+    /**
+     * 通过学号获得学员简历信息
+     * @param string $stuId 学号
+     * @return array
+     */
+    public function getStuResume_byStuId($stuId)
+    {
+        $obj = new getStudentModel();
+        return $obj->getStuResume_byStuId($stuId);
+    }
+    
+    /**
+     * 验证该教师下是否有该学员
+     * @param string $accNumber 教师号
+     * @param string $stuId 学号
+     * @return boolean
+     */
+    public function verifyTeacherAndStuId($accNumber,$stuId)
+    {
+        $res                = false;
+        $resp               = array();
+        $arr                = array('classId');
+        $where['stuId']     = $stuId;
+        $where['teacherId'] = $accNumber;
+        $table              = array($this->teacherClassTab,$this->teacherStudentInfoTab);
+        $resp               = parent::fetchOne_byArrJoin($table,$arr,$where);
+        if (count($resp) > 0 ) {
+            $res = true;
+        } 
+        return $res;
+    }
 }

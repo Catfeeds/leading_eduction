@@ -7,8 +7,10 @@ class leading_studentModel extends tableModel
     //所关联的表
     private static $table1 = 'leading_student';
     private static $table2 = 'leading_student_info';
-    private static $leading_student = array('id','stuId','name','password','mobile','email','password','status','caseId','dateinto','token','token_exptime');
-    private static $leading_student_info = array('stuId','sex','age','otherMobile','classId','eduBacId','ecardId','bloodType','homeAddress','picUrl','qq','wechat','provinceId','description');
+    
+    //表属性数组
+    private static $leading_student      = array('id','stuId','name','password','mobile','email','password','status','caseId','dateinto','token','token_exptime');
+    private static $leading_student_info = array('stuId','sex','age','otherMobile','classId','eduBacId','ecardId','bloodType','homeAddress','picUrl','qq','wechat','provinceId','description','ls_assess');
     
     public function fetchOne_byArrJoin($table,$arr,$where,$tableArr)
     {
