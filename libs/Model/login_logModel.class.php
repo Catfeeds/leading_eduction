@@ -2,7 +2,7 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class login_logModel
+class login_logModel extends tableModel
 {
     private static $table = 'login_log';
     

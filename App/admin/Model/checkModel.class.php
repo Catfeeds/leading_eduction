@@ -1,10 +1,23 @@
 <?php
 namespace App\admin\Model;
 //use App\admin\Model\verifyModel;
-class checkModel
+class checkModel extends infoModel
 {
-    private $user = [];
-    
+    private $user  = [];
+    private $table = array(
+        1 => 'leading_student',
+        2 => 'leading_teacher',
+        3 => 'leading_staff_info',
+        4 => 'leading_company',
+        5 => 'temp_register'
+    );
+    private $where = array(
+        'leading_student'    => 'stuId',
+        'leading_teacher'    => 'teacherId',
+        'leading_staff_info' => 'accNumber',
+        'leading_company'    => 'compId',
+        'temp_register'      => 'accNumber'
+    );
     /**
      * @构造函数，检查是否登陆
      */
@@ -31,60 +44,90 @@ class checkModel
         if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
             unset($_SESSION['user']);
             $data['status'] = 0;
-            $data['msg'] = 'logout successed';
+            $data['msg']    = 'logout successed';
         }else{
             $data['status'] = 1;
-            $data['msg'] = '没有登录信息';
+            $data['msg']    = '没有登录信息';
         }
         return $data;
     }
-    
+    /**
+     * 检测是否是该用户登陆
+     * param $accNumber 手机号或者学号等
+     * return array
+     */
+    public function checkLogined($caseId,$accNumber)
+    {
+        $password = '';
+        $res = array();
+        if($this->user && is_array($this->user) && count($this->user)>0){//有登陆信息
+            if(time() > ($this->user['user_expTime'] + 60 * 60 * 6)){//超过有效期6个小时
+                $data['status'] = 5;
+                $data['msg']    = '登陆已失效';
+                $this->logout();
+            }else{
+                $res = $this->getPass_byCase($caseId,$accNumber);
+                if(count($res) > 0 && ($this->user['password'] == $res['password'])){
+                    $data['status'] = 0;
+                    $data['msg']    = 'logined';
+                }else{
+                    $data['status'] = 2;
+                    $data['msg']    = '账号不存在';
+                }
+            }
+        }else{
+            $data['status'] = 1;
+            $data['msg']    = '请登陆';
+        }
+        return $data;
+    }
     /**
      * @处理登陆，验证相关信息
      * @return array
      */
     public function checkLogin()
     {
-        $data = [];
+        $data = array();
         if($this->user && is_array($this->user) && count($this->user)>0){//已登陆
             if(time() > ($this->user['user_expTime'] + 60 * 60 * 6)){//超过有效期6个小时
                 $data['status'] = 5;
-                $data['msg'] = '登陆已失效，请重新登陆';
+                $data['msg']    = '登陆已失效，请重新登陆';
                 $this->logout();
             }else{
-                $data['info'] = $this->user;
+                $data['info']   = $this->user;
                 $data['status'] = 1;
-                $data['msg'] = '账号已登录';
+                $data['msg']    = '账号已登录';
             }
         }else{
             //获得post中的数据
-            @$accNumber = strval(daddslashes($_POST['accNumber']));
-            @$password = myMd5(strval(daddslashes($_POST['password'])));
-            @$verifyCode = strval(daddslashes($_POST['verifyCode']));
-            @$caseId = intval(daddslashes($_POST['loginCase']));
+            global $_LS;
+            @$accNumber  = $_LS['accNumber'];
+            @$password   = myMd5($_LS['password']);
+            @$verifyCode = $_LS['verifyCode'];
+            @$caseId     = $_LS['loginCase'];
             if($accNumber && $password && $verifyCode){
                 if(verifyModel::verifyPicCode($verifyCode)){//验证码相等且有效
                     $checkPass = $this->getPass_byCase($caseId,$accNumber);//获得数据库中密码
                     if(!empty($checkPass['password']) && ($checkPass['password'] == $password)){//两者密码相等
                         /**存在session中***/
-                        $_SESSION['user'] = $checkPass;
+                        $_SESSION['user']                 = $checkPass;
                         $_SESSION['user']['user_expTime'] = time();//登陆时间
                         /**end***/
                         $this->writeLoginLog($accNumber,$checkPass['caseId']);
-                        $data['info'] = array('caseId'=>$checkPass['caseId']);
+                        $data['info']   = array('caseId'=>$checkPass['caseId'],'accNumber'=>end($checkPass));
                         $data['status'] = 0;
-                        $data['msg'] = 'success';
+                        $data['msg']    = 'success';
                     }else{
                         $data['status'] = 4;
-                        $data['msg'] = '账号或密码错误';
+                        $data['msg']    = '账号或密码错误';
                     }
                 }else{
                     $data['status'] = 3;
-                    $data['msg'] = '验证码有误或失效';
+                    $data['msg']    = '验证码有误或失效';
                 }
             }else{
                 $data['status'] = 2;
-                $data['msg'] = '登陆信息不全';
+                $data['msg']    = '登陆信息不全';
             }
         }
         return $data;
@@ -108,58 +151,29 @@ class checkModel
      */
     public function getPass_byCase($caseId,$accNumber){
         $res = [];
-        $arr = array('password','caseId');
-        if(isMobile($accNumber) == 1){//是手机号
-            $caseId = 4;
-        }
-        switch($caseId){
-            case 1://学号登录
-                $table = 'leading_student';
-                $where['stuId'] = $accNumber;
-                break;
-            case 2://教师登录
-                $table = 'leading_teacher';
-                $where['teacherId'] = $accNumber;
-                break;
-            case 3://员工登陆
-                $table = 'leading_staff_info';
-                $where['accNumber'] = $accNumber;
-                break;
-            case 4://手机号登陆
-            default://默认手机登录
-                $where['mobile'] = $accNumber;
-                $table = array('leading_student','leading_teacher','leading_staff_info','leading_company','temp_register');
-                break;
-        }
-        if(is_array($table)){//手机登录
-            foreach($table as $value){
-                $res = $this->getInfo_byArr($value,$arr,$where);
+        $arr = array('password','caseId','mobile','status');//可添加status项，来确定该账号是否还有效
+        if(isMobile($accNumber)){
+            $table = $this->table;
+            $where['mobile'] = $accNumber;
+            foreach ($table as $value){
+                $arr_2 = $this->where["{$value}"];
+                $arr[] = $arr_2;
+                $res   = parent::fetchOne_byArr($value,$arr,$where);
                 if(count($res)>0 && isset($res['password']) && !empty($res['password'])){
                     if($value == 'temp_register'){//查询临时表
-                        var_dump($value);
                         $res['caseId'] = 0;//修改角色值
                     }
                     break;
                 }
             }
-        }else{//学号、工号、教师号
-            $res = $this->getInfo_byArr($table,$arr,$where);
+        }else{  
+            $table           = $this->table[$caseId];
+            $key             = $this->where["{$table}"];
+            $where["{$key}"] = $accNumber;
+            $arr[]           = $key;
+            $res             = parent::fetchOne_byArr($table,$arr,$where);
         }
         return $res;
-    }
-    /**
-    * 根据不同的模型与字段信息，获得相关信息
-    * @date: 2017年5月12日 上午9:54:38
-    * @author: lenovo2013
-    * @param: $table string 表名
-    * @param $arr array 字段数组
-    * @param $arr array 条件数组
-    * @return:array
-    */
-    public function getInfo_byArr($table,$arr,$where)
-    {
-        $obj = M("{$table}");
-        return $obj->getInfo_byArr($arr,$where);
     }
     
     /**
@@ -173,44 +187,55 @@ class checkModel
             /**
              * 获得post中的数据**
              */
-            @$arr['caseId'] = intval(daddslashes($_POST['caseId']));
-            @$arr['recommendId'] = strval(daddslashes($_POST['invitation']));//推荐码
-            @$arr['mobile'] = strval(daddslashes($_POST['mobile']));
+            global $_LS;
+            @$arr['caseId']      = $_LS['caseId'];
+            @$arr['recommendId'] = $_LS['recommendId'];//推荐码
+            @$arr['mobile']      = $_LS['mobile'];
             if(isMobile($arr['mobile'])){//手机号符合格式
-                @$arr['name'] = strval(daddslashes($_POST['name']));
-                @$arr['password'] = myMd5(strval(daddslashes($_POST['password'])));
-                @$arr['email'] = strval(daddslashes($_POST['email']));
+                @$arr['name']     = $_LS['name'];
+                @$password        = $_LS['password'];
+                @$arr['password'] = myMd5($password);
+                @$arr['email']    = $_LS['email'];
                 if($arr['caseId'] && $arr['mobile']  && $arr['name'] && $arr['password'] && $arr['email']){//信息集全
                     if(!verifyModel::verifyMobile($arr['mobile'])){//此手机号没有注册
                         if(!verifyModel::verifyEmail($arr['email'])){//此邮箱没有注册
-                            $arr['status'] = 0;//未通过后台验证
-                            $res = $this->insert('temp_register',$arr);
+                            $arr['status']    = 0;//未通过后台验证
+                            $tempObj          = new doActionModel();
+                            $arr['accNumber'] = $tempObj->productTempId();
+                            $res              = parent::insert('temp_register',$arr);
                             if($res > 0){
-                                $data['status'] = 0;
-                                $data['msg'] = '注册成功';
+                                //把该账号注册到论坛
+                                $res = $this->registerDiscuz($arr,$password);
+                                if($res['status']  == 0){
+                                    $data['status'] = 0;
+                                    $data['msg']    = '注册成功';
+                                }else{
+                                    $data['status'] = 7;
+                                    $data['msg']    = $res['msg'];
+                                }
                             }else{
                                 $data['status'] = 5;
-                                $data['msg'] = '注册失败';
+                                $data['msg']    = '注册失败';
                             }
                         }else{
                             $data['status'] = 4;
-                            $data['msg'] = '此邮箱已注册';
+                            $data['msg']    = '此邮箱已注册';
                         }
                     }else{
                         $data['status'] = 3;
-                        $data['msg'] = '此手机号已注册，请登陆';
+                        $data['msg']    = '此手机号已注册，请登陆';
                     }
                 }else{
                     $data['status'] = 2;
-                    $data['msg'] = '注册信息不全，不能注册';
+                    $data['msg']    = '注册信息不全，不能注册';
                 }
             }else{
                 $data['status'] = 6;
-                $data['msg'] = '手机号格式不对';
+                $data['msg']    = '手机号格式不对';
             }
         } else{
             $data['status'] = 1;
-            $data['msg'] = '验证码错误';
+            $data['msg']    = '验证码错误';
         }
         
         return $data;
@@ -236,6 +261,19 @@ class checkModel
     public function checkMobileVerify()
     {
         return true;
+    }
+    /**
+     * 账号注册到论坛
+     */
+    public function registerDiscuz($arr,$password)
+    {
+        $discuzArr['username']  = $arr['mobile'];
+        $discuzArr['password']  = $password;
+        $discuzArr['password2'] = $password; 
+        $discuzArr['salt']      = 'ls5698';
+        $discuzArr['email']     = $arr['email'];
+        $obj = new discuzModel();
+        return $obj->registerDiscuz($discuzArr);
     }
     
 }

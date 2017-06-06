@@ -8,6 +8,7 @@ class wechatController
 	*检查签名或回复消息
 	*/
 	private static $obj = '';
+	
 	public function __construct()
 	{
 		self::$obj = new indexModel();

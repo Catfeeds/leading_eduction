@@ -1,0 +1,28 @@
+2017-06-05 18:08:21 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:11:09 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:12:09 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:12:09 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 18:13:10 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:13:10 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 18:16:58 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:16:58 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 18:17:40 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:17:40 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 18:19:15 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:19:15 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 18:21:19 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 18:21:19 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 20:12:19 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`teacherId` = 't56801'  AND s.`classId` = f.`classId` 
+2017-06-05 20:12:19 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
+2017-06-05 22:23:18 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 22:56:53 SELECT `password`,`caseId`,`mobile`,`status`,`teacherId` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56801'
+2017-06-05 22:56:53 INSERT INTO `login_log` (`accNumber`,`caseId`,`loginTime`) VALUES('t56801','2','1496674613')
+2017-06-05 22:56:57 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 22:57:23 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 22:57:23 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND s.`stuId` = '1601321102'  AND s.`status` = f.`status` AND s.`status` = '1' 
+2017-06-05 22:58:44 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 23:00:13 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 23:00:13 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND s.`stuId` = '1601321102'  AND s.`status` = f.`status` AND s.`status` = '1' 
+2017-06-05 23:01:57 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 23:02:27 SELECT `id`,`stuId`,`dateinto` FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
+2017-06-05 23:02:27 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND s.`stuId` = '1601321102'  AND s.`status` = '1' 

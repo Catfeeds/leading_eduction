@@ -22,62 +22,107 @@ class DB
 		// return self::$link;
 	}
 	
-	/**封装query函数**/
+	/**
+	 *封装query函数
+	 **/
 	public static function query($sql)
 	{
 		return self::$db->query($sql);
 	}
 	
-	/**封装insert函数**/
+	/**
+	 *封装insert函数
+	 **/
 	public static function insert($table,$arr)
 	{
 		return self::$db->insert($table,$arr);
 	}
+	public static function insertSql($sql)
+	{
+		return self::$db->insertSql($sql);
+	}
 	
-	/**封装deleteRow函数**/
+	/**
+	 *封装deleteRow函数
+	 **/
 	public static function deleteRow($table,$where)
 	{
 		return self::$db->deleteRow($table,$where);
 	}
-	
-	/**封装update函数**/
-	public static function update($table,$arr,$where)
+	public static function deleteRowSql($sql)
 	{
-		return self::$db->update($table,$arr,$where);
+		return self::$db->deleteRowSql($sql);
 	}
 	
-	/**封装fetchOne函数**/
+	/**
+	 *封装update函数
+	 **/
+	public static function update($table,$arr,$where,$tableArr=null)
+	{
+		return self::$db->update($table,$arr,$where,$tableArr);
+	}
+	public static function updateSql($sql)
+	{
+		return self::$db->updateSql($sql);
+	}
+	/**
+	 *封装fetchOne函数
+	 **/
 	public static function fetchOne($sql)
 	{
 		$query = self::$db->query($sql);
 		return self::$db->fetchOne($query);
 	}
-	/***封装fetchOne_byArr函数****/
-	public static function fetchOne_byArr($table,$arr,$where,$where2='',$distinct = true)
-	{
-	    return self::$db->fetchOne_byArr($table,$arr,$where,$where2,$distinct);
-	}
-	/**封装fetchAll函数**/
+	/**
+	 *封装fetchAll函数
+	 **/
 	public static function fetchAll($sql)
 	{
 		$query = self::$db->query($sql);
 		return self::$db->fetchAll($query);
 	}
-	/**封装fetchAll_byArr函数**/
-	public static function fetchAll_byArr($table,$arr,$where,$where2='')
+	/**
+	 *封装fetchOne_byArr函数
+	 *
+	 ***/
+	public static function fetchOne_byArr($table,$arr,$where)
 	{
-	    return self::$db->fetchAll_byArr($table,$arr,$where,$where2);
+		return self::$db->fetchOne_byArr($table,$arr,$where);
 	}
-	/**封装fetchOne_byArrJoin函数****/
-	public static function fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	
+	/**
+	 *封装fetchAll_byArr函数
+	 *
+	 */
+	public static function fetchAll_byArr($table,$arr,$where)
 	{
-		return self::$db->fetchOne_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
+		return self::$db->fetchAll_byArr($table,$arr,$where);
 	}
-	public static function fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr)
+	
+	/**
+	 *封装fetchOne_byArrJoin函数
+	 *
+	 *
+	 **/
+	public static function fetchOne_byArrJoin($table,$arr,$where,$tableArr)
 	{
-		return self::$db->fetchAll_byArrJoin($arr,$where,$table,$table2,$tableArr,$table2Arr);
+		return self::$db->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
 	}
-	/**封装getNums函数**/
+	
+	/**
+	 *封装fetchAll_byArrJoin函数
+	 *
+	 */
+	public static function fetchAll_byArrJoin($table,$arr,$where,$tableArr)
+	{
+		return self::$db->fetchAll_byArrJoin($table,$arr,$where,$tableArr);
+	}
+	
+	
+	/**
+	 *封装getNums函数
+	 *
+	 */
 	public static function getNums($sql)
 	{
 		$query = self::$db->query($sql);
@@ -87,29 +132,7 @@ class DB
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 }

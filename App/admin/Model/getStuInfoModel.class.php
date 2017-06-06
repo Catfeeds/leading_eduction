@@ -1,7 +1,7 @@
 <?php
 namespace App\admin\Model;
-//use framework\libs\core\DB;
-class getStuInfoModel
+
+class getStuInfoModel extends infoModel 
 {
     /**
     * 根据不同的参数获得不同的值
@@ -53,7 +53,7 @@ class getStuInfoModel
     {
         $arr = array('sex','age','bloodType','provinceId','homeAddress','description');
         $where['stuId'] = $stuId;
-        $data = $this->getInfo_byArr('leading_student_info',$arr,$where);
+        $data = parent::getInfo_byArr('leading_student_info',$arr,$where);
         if(isset($data['provinceId']) && !empty($data['provinceId'])){
             $res = verifyModel::province($data['provinceId']);
             if(count($res) > 0){//如果存在信息
@@ -69,33 +69,7 @@ class getStuInfoModel
     {
         $arr = array('mobile','name','picUrl');
         $where = " s.stuId = f.stuId and s.stuId = '{$stuId}' ";
-        return $this->getInfo_byArrJoin($arr,$where,'leading_student','leading_student_info');
-    }
-    /**
-     * 根据模型及字段数组，条件数组获得相关信息
-     */
-    public function getInfo_byArr($table,$arr,$where,$where2='')
-    {
-        $obj = M("{$table}");
-        return $obj->getInfo_byArr($arr,$where,$where2);
-    }
-    public function getInfoAll_byArr($table,$arr,$where,$where2='')
-    {
-        $obj = M("{$table}");
-        return $obj->getInfoAll_byArr($arr,$where,$where2);
-    }
-    /**
-    * 两个数据表的联合查询
-    * @date: 2017年5月16日 上午11:05:41
-    * @author: lenovo2013
-    * @param: $where string 查询条件
-    * @param $table1 左表名 $table2 右表名
-    * @return:
-    */
-    public function getInfo_byArrJoin($arr,$where,$table1,$table2)
-    {
-        $obj = M("{$table1}");
-        return $obj->getInfo_byArrJoin($arr,$where,$table1,$table2);
+        return parent::getInfo_byArrJoin($arr,$where,'leading_student','leading_student_info');
     }
     /**
      * 根据手机号获得学号
@@ -104,7 +78,7 @@ class getStuInfoModel
     {
         $where['mobile'] = $mobile;
         $arr = array('stuId');
-        return $this->getInfo_byArr('leading_student',$arr,$where);
+        return parent::getInfo_byArr('leading_student',$arr,$where);
     }
     /**
     * 根据学号获得该学生学习课程信息
@@ -208,7 +182,7 @@ class getStuInfoModel
     {
         $arr = array('name','sex','age','homeAddress','ecardId','mobile','email','eduBacId','bloodType','description','picUrl');
         $where = " s.stuId = f.stuId and s.stuId = '{$stuId}' ";
-        return $this->getInfo_byArrJoin($arr,$where,'leading_student','leading_student_info');
+        return parent::getInfo_byArrJoin($arr,$where,'leading_student','leading_student_info');
     }
     /**
      * 根据学号获得学生基本工作信息
@@ -217,7 +191,7 @@ class getStuInfoModel
     {
         $arr = array('id','compName','jobName','salary');
         $where['stuId'] = $stuId;
-        return $this->getInfo_byArr('student_work',$arr,$where);
+        return parent::getInfo_byArr('student_work',$arr,$where);
     }
     /**
      * 通过学号获得学生参加作品的id及评价
@@ -252,7 +226,7 @@ class getStuInfoModel
         $arr = array('*');
         $where['id'] = $projectId;
         $where2 = ' order by id ';
-        return $this->getInfo_byArr('project',$arr,$where,$where2);
+        return parent::getInfo_byArr('project',$arr,$where,$where2);
     }
     /**
      * 根据学号获得该学生关注的所有公司名和邮箱
@@ -291,7 +265,7 @@ class getStuInfoModel
             $where['compId'] = $accNumber;
         }
         $where2 = '';
-        return $this->getInfo_byArr('leading_company',$arr,$where,$where2);
+        return parent::getInfo_byArr('leading_company',$arr,$where,$where2);
     }
     /**
      * 获得关注此学生的所有公司信息

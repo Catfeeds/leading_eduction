@@ -1,11 +1,13 @@
 <?php
+    
 	header("Content-type:text/html;charset=utf-8");
 	session_start();
 	date_default_timezone_set('Asia/Shanghai');
 	require_once('framework/autoLoad.php');
+	
 	require_once('config/config.php');
 	require_once('framework/pc.php');
-	//µ¥Ò»Èë¿ÚÎÄ¼þ
+	//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 	use framework\PC;
 	$module = (!empty($_GET['module']))?$_GET['module']:'index';
 	PC::run($module,$config);

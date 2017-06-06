@@ -5,8 +5,10 @@ use App\admin\Model\verifyModel;
 use App\admin\Model\doActionModel;
 use App\admin\Model\getInfoModel;
 use App\admin\Model\getStuInfoModel;
+use App\admin\Model\insertInfoModel;
+use App\admin\Model\modifyInfoModel;
 use framework\libs\core\VIEW;
-class adminController
+class adminController extends baseController
 {
     /**
      * just for test
@@ -21,9 +23,9 @@ class adminController
 	 */
 	public function sign()
 	{
-		$obj = new checkModel();
+		$obj  = new checkModel();
 		$data = $obj->checkSign();
-		VIEW::ajaxReturn($data);
+		parent::ajaxReturn($data);
 	}
 	/**
 	 * @获得图片验证码
@@ -31,16 +33,16 @@ class adminController
 	public function getVerify()
 	{
 	    $data = verifyModel::getVerifyCode();
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
 	}
 	/**
 	 * @处理登陆
 	 */
 	public function login()
 	{
-	    $obj = new checkModel();
+	    $obj  = new checkModel();
 	    $data = $obj->checkLogin();
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
 	    //var_dump($data);
 	}
 	/**
@@ -51,9 +53,9 @@ class adminController
 	*/
 	public function logout()
 	{
-	    $obj = new checkModel();
+	    $obj  = new checkModel();
 	    $data = $obj->logout();
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
 	}
 	/**
 	* 重置密码
@@ -64,9 +66,9 @@ class adminController
 	*/
 	public function resetPassword()
 	{
-	    $obj = new doActionModel();
+	    $obj  = new doActionModel();
 	    $data = $obj->resetPassword();
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
 	}
 	/**
 	* 获得登陆者的基本信息
@@ -76,16 +78,37 @@ class adminController
 	*/
 	public function getLoginedBase()
 	{
-	    $obj = new getInfoModel();
+	    $obj  = new getInfoModel();
 	    $data = $obj->getLoginedBase();
 	    //var_dump($data);
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
 	}
 	public function test()
 	{
-	    $obj = new getStuInfoModel();
+	    $obj  = new getStuInfoModel();
 	    $data = $obj->getCourse_byStuId('1601321102');
 	    //var_dump($data);
-	    VIEW::ajaxReturn($data);
+	    parent::ajaxReturn($data);
+	}
+	public function insert()
+	{
+		$obj  = new insertInfoModel();
+		$data = $obj->insertStuContent();
+		var_dump($data);
+		//VIEW::ajaxReturn($data);
+	}
+	public function productStuId()
+	{
+	    $obj = new doActionModel();
+	    var_dump($obj->productStaffId());
+	}
+	/**
+	 * 修改信息
+	 */
+	public function modifyInfo()
+	{
+	    $obj  = new modifyInfoModel();
+	    $data = $obj->modifyInfo();
+	    parent::ajaxReturn($data);
 	}
 }

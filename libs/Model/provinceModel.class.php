@@ -2,7 +2,7 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class provinceModel
+class provinceModel extends tableModel
 {
     private static $table = 'province';
     
@@ -14,7 +14,7 @@ class provinceModel
     * @param array $where 条件数组
     * @return:
     */
-    public function getInfo_byArr($arr,$where)
+    /* public function getInfo_byArr($arr,$where)
     {  
         $sql = "select provinceId ";
         foreach($arr as $key=>$value){
@@ -25,5 +25,5 @@ class provinceModel
             $sql .= "and {$key} = '".$value."'";
         }
        return DB::fetchOne($sql);
-    }
+    } */
 }

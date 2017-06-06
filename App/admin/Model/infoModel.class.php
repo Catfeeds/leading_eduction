@@ -3,44 +3,92 @@ namespace App\admin\Model;
 
 class infoModel
 {
-    /**
-     * 实例化不同的模型，调用该模型的getInfo_byArr方法,只获得一条数据
-     * return array
-     */
-    public function getInfo_byArr($table,$arr,$where,$where2 = '')
+    private $talbe = 'leading_student';
+    
+    public function query($sql,$table){
+        $table = is_null($table)?$this->table:$table;
+        $obj   = M("{$table}");
+        return $obj->query($sql);
+    }
+    public function insert($table,$arr)
     {
         $obj = M("{$table}");
-        return $obj->getInfo_byArr($arr,$where,$where2);
+        return $obj->insert($table,$arr);
     }
-    /**
-     * 实例化不同的模型，调用该模型的getInfoAll_byArr方法,获得多条数据
-     * retrun 多维数组
-     */
-    public function getInfoAll_byArr($table,$arr,$where,$where2 = '')
+    public function insertSql($table,$sql)
     {
         $obj = M("{$table}");
-        return $obj->getInfoAll_byArr($arr,$where,$where2);
+        return $obj->insertSql($sql);
     }
-    /**
-     * 两个数据表的联合查询
-     * @date: 2017年5月16日 上午11:05:41
-     * @author: lenovo2013
-     * @param: $where string 查询条件
-     * @param $table1 左表名 $table2 右表名
-     * @return:
-     */
-    public function getInfo_byArrJoin($arr,$where,$table1,$table2)
+    public function formatResponse($res)
     {
-        $obj = M("{$table1}");
-        return $obj->getInfo_byArrJoin($arr,$where,$table1,$table2);
+        $data['status'] = 1;
+        $data['msg']    = 'failed';
+        if (is_array($res) && count($res) > 0) {
+            $data['info']   = $res;
+            $data['status'] = 0;
+            $data['msg']    = 'success';
+        }else{
+            if($res > 0){
+                $data['status'] = 0;
+                $data['msg']    = 'success';
+            }
+        }
+        return $data;
     }
-    /**
-     * 联合表查询，获得多条记录
-     * return array
-     */
-    public function getInfoAll_byArrJoin($arr,$where,$table,$table2)
+    public function deleteRow($table,$where)
+    {
+        $obj = M("$table");
+        return $obj->deleteRow($table,$where);
+    }
+    public function deleteRowSql($sql)
+    {
+        $obj = M("$this->table");
+        return $obj->deleteRowSql($sql);
+    }
+    public function update($table,$arr,$where,$tableArr=null)
+    {
+        if(is_array($table)){
+            $obj = M("{$table[0]}");
+        }else{
+            $obj = M("{$table}");
+        }
+        return $obj->update($table,$arr,$where,$tableArr);
+    }
+    public function updateSql($sql)
+    {
+        $obj = M("$this->table");
+        return $this->obj->updateSql($sql);
+    }
+    public function fetchOne_bySql($sql,$table = null)
+    {
+        $table = is_null($table)?$this->table:$table;
+        $obj   = M("{$table}");
+        return $obj->fetchOne($sql);
+    }
+    public function fetchOne_byArr($table,$arr,$where)
     {
         $obj = M("{$table}");
-        return $obj->getInfoAll_byArrJoin($arr,$where,$table,$table2);
+        return $obj->fetchOne_byArr($table,$arr,$where);
+    }
+    public function fetchAll_bySql($sql)
+    {
+        $obj  = M("$this->table");
+        return $obj->fetchAll($sql);
+    }
+    public function fetchAll_byArr($table,$arr,$where)
+    {
+        $obj = M("{$table}");
+        return $obj->fetchAll_byArr($table,$arr,$where);
+    }
+    public function fetchOne_byArrJoin($table,$arr,$where,$tableArr = null)
+    {
+        $obj = M("{$table[0]}");
+        return $obj->fetchOne_byArrJoin($table,$arr,$where,$tableArr);
+    }
+    public function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null)
+    {
+        $obj = M("{$table[0]}");
+        return $obj->fetchAll_byArrJoin($table,$arr,$where,$tableArr);
     }
 }

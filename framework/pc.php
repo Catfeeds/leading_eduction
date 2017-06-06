@@ -7,8 +7,9 @@ include_once('function/common.php');
 use App\index\Controller\indexController;//1
 class PC
 {
-	public static $controller;
-	public static $method;
+    //public  $_LS = array();
+	public  static $controller;
+	public  static $method;
 	private static $config;
 	private static $controllerArr;
 	private static $methodArr;
@@ -47,13 +48,57 @@ class PC
 		}
 	}
 	
+	private static function init_POST()
+	{
+	    if($_POST){
+	        $arr = $_POST;
+	        foreach($arr as $key=>$val){
+	            if(is_array($val)){
+	               $val = self::foreachArr($arr);
+	            }else{
+	               $val = self::formatVal($val);
+	            }
+	        }
+	    }else{
+	        $arr = array();
+	    }
+	    return $arr;
+	}
+	
+	private static function foreachArr($arr)
+	{
+	    foreach ($arr as $key=>$val){
+	        $val = self::formatVal($val);
+	    }
+	    return $arr;
+	}
+	
+	/**
+	 * 格式化传入的值
+	 * @param string|int $val
+	 * @return string|int
+	 */
+	private static function formatVal($val)
+	{
+	    if(is_int($val)){
+	        $val = intval(daddslashes($val));
+	    }
+	    if(is_string($val)){
+	        $val = strval(daddslashes($val));
+	    }
+	    return $val;
+	}
+	
 	public static function run($module,$config)
 	{
+	    global $_LS;
+	    $module       = (!empty($_GET['module']))?$_GET['module']:'index';
 		self::$config = $config;
 		self::init_db();
-		self::init_view();
+		//self::init_view();
 		self::init_method();//有问题？
 		self::init_controller();
+		$_LS = self::init_POST();
 		C($module,self::$controller,self::$method);
 	}
 	

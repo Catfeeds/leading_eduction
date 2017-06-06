@@ -2,7 +2,7 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class study_courseModel
+class student_courseModel extends tableModel
 {
     private static $table = 'study_course';
     
@@ -17,12 +17,5 @@ class study_courseModel
     {
         $sql = "select id,courseId,secCourseId from ".self::$table." where stuId = '{$stuId}' order by dateinto desc";
         return fetchAll($sql);
-    }
-    /**
-     *根据字段数组信息  获得多条信息
-     */
-    public function getInfoAll_byArr($arr,$where,$where2)
-    {
-        return DB::fetchALL_byArr(self::$table,$arr,$where,$where2);
     }
 }

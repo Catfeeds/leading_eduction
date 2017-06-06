@@ -163,13 +163,15 @@
 	/**
 	*md5密钥加密
 	***/
-	function myMd5($string)
+	function myMd5($string,$salt=null)
 	{
-		$miyao = 'hujie';
-		$string = $miyao.$string;
-		return md5($string);
+		$salt = empty($salt)?'ls5698':$salt;
+		return md5(md5($string).$salt);
 	}
 	
+	/**
+	 *验证手机号是否合格
+	 */
 	function isMobile($mobile)
 	{
 		$res = '';
@@ -178,4 +180,9 @@
 			$res = preg_match('/^1[3458]{1}\d{9}$/',trim($mobile));
 		}
 		return $res;
+	}
+	function isEmail($email)
+	{
+		$res = '';
+		
 	}

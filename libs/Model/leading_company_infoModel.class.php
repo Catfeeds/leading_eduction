@@ -2,7 +2,7 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class leading_company_infoModel
+class leading_company_infoModel extends tableModel
 {
     private static $table = 'leading_company_info';
     
@@ -10,16 +10,16 @@ class leading_company_infoModel
      * 根据字段数组获得相应的一条信息
      * return array
      */
-    public function getInfo_byArr($arr,$where,$where2='')
+    /* public function getInfo_byArr($arr,$where,$where2='')
     {
         return DB::fetchOne_byArr(self::$table,$arr,$where,$where2);
-    }
+    } */
     /**
      * 根据字段数组获得相应的多条信息
      * return 多维数组
      */
-    public function getInfoAll_byArr($arr,$where,$where2='')
+    /* public function getInfoAll_byArr($arr,$where,$where2='')
     {
         return DB::fetchAll_byArr(self::$table,$arr,$where,$where2);
-    }
+    } */
 }

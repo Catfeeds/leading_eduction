@@ -162,13 +162,13 @@ class getTeacherInfoModel extends infoModel
         $where['teacherId'] = $accNumber;
         switch ($param) {
             case 'student':
-                $data = $this->getClassStudent($accNumber);//获得教师下的所有学员信息，根据班级
+                $data = $this->getClassStudent($accNumber);//获得班主任下的所有学员信息，根据班级
                 break;
             case 'project':
-                $data = $this->getTeacherProject($accNumber,$where);//获得教师下的所有项目和学员信息
+                $data = $this->getTeacherProject($accNumber,$where);//获得班主任下的所有项目和学员信息
                 break;
             case 'recommend':
-                $data = $this->getTeacherRecommend($accNumber);//获得教师推荐的学生信息
+                $data = $this->getTeacherRecommend($accNumber);//获得班主任荐的学生信息
                 break;
             case 'homework':
             case 'base':

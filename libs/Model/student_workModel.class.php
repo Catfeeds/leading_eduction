@@ -2,7 +2,7 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class student_workModel
+class student_workModel extends tableModel
 {
     private static $table = 'student_work';
     
@@ -13,8 +13,8 @@ class student_workModel
     * @param: variable
     * @return:
     */
-    public function getInfo_byArr($arr,$where,$where2='')
+    /* public function getInfo_byArr($arr,$where,$where2='')
     {
         return DB::fetchOne_byArr(self::$table,$arr,$where,$where2);
-    }
+    } */
 }
