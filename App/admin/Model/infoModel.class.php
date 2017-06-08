@@ -91,4 +91,17 @@ class infoModel
         $obj = M("{$table[0]}");
         return $obj->fetchAll_byArrJoin($table,$arr,$where,$tableArr);
     }
+    public function getNum($table,$arr,$where)
+    {
+        $obj = M("{$table}");
+        return $obj->getNum($table,$arr,$where);
+    }
+    
+    public function verifyCount($arr,$all)
+    {
+        $count = 0;
+        $count = count((array_diff_key($arr,array_flip($all))));
+        return $count;
+    }
+    
 }

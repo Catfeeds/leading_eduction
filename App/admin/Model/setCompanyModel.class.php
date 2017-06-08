@@ -1,0 +1,160 @@
+<?php
+namespace App\admin\Model;
+
+class setCompanyModel extends infoModel
+{
+    const JOBNUM  = 15;
+    
+    private $user = array();
+    private $obj;
+    public function __construct()
+    {
+        $obj        = new getCompanyModel();
+        $this->user = $obj->getUser();
+        $this->obj  = $obj;
+    }
+    
+    /**
+     * 验证是否与登录信息相符
+     * @param string $accNumber 企业号
+     * return boolean
+     */
+    public function verifyUser($accNumber)
+    {
+        return $this->obj->verifyUser($accNumber);
+    }
+    
+    /**
+     * 获得相关信息数组
+     * @param string $arr 数组名
+     */
+    public function getArr($arr)
+    {
+        return $this->obj->getArr($arr);
+    }
+    //获得数据表
+    public function getTable($table)
+    {
+        return $this->obj->getTable($table);
+    }
+    
+    /**
+     * 添加一条招聘信息
+     * @return array
+     */
+    public function addARecruitedInfo()
+    {
+        global $_LS;
+        $data       = array();
+        @$accNumber = $_LS['accNumber'];
+        if (isset($accNumber)) {
+            if ($this->verifyUser($accNumber)) {
+                $arr = array_diff($_LS,array("accNumber" => $accNumber));                               //组成插入数据数组
+                if (count($arr) > 0) {                                                                  //是否有插入的数据
+                    $arr['compId'] = $accNumber;
+                    $arr['status'] = 0;
+                    if (parent::verifyCount($arr,$this->getArr('jobArr')) == 0) {                       //验证信息是否安全
+                        $table           = $this->getTable('jobTab');
+                        $where['compId'] = $accNumber;
+                        $count           = parent::getNum($table,array('compId'),$where);               //查看已有简历记录条数
+                        if ($count < self::JOBNUM) {
+                            $data = parent::insert($table,$arr);                                        //插入一条记录
+                            $data = parent::formatResponse($data);                                      //格式化结果集
+                        } else {
+                            $data['status'] = 6;
+                        }
+                    } else {
+                        $data['status'] = 5;
+                    }
+                } else {
+                    $data['status'] = 4;
+                }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    
+    /**
+     * 修改招聘信息
+     * @return multitype:number string
+     */
+    public function setResumeInfo()
+    {
+        global $_LS;
+        $data       = array();
+        @$accNumber = $_LS['accNumber'];
+        @$jobId     = $_LS['jobId'];
+        if ($accNumber && $jobId) {
+            if ($this->verifyUser($accNumber)) {                                                //符合登陆信息    
+                $arr = array_diff($_LS,array("accNumber"=>$accNumber,"jobId"=>$jobId));         //组成更改信息数组
+                if (count($arr) > 0) {
+                    if (parent::verifyCount($arr,$this->getArr('jobArr')) == 0) {               //验证信息是否安全
+                        $where = array("compId"=>$accNumber,"jobId"=>$jobId);
+                        $data  = parent::update($this->getTable('jobTab'),$arr,$where);         //更新数据
+                        $data  = parent::formatResponse($data);                                 //格式化结果集
+                    } else {
+                        $data['status'] = 5;
+                    }
+                } else {
+                    $data['status'] = 4;
+                }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    
+    /**
+     * 修改企业登录密码
+     * @return array:
+     */
+    public function setCompPass()
+    {
+        global $_LS;
+        $data       = array();
+        @$accNumber = $_LS['accNumber'];
+        if (isset($accNumber)) {                                //存在账号信息
+            if ($this->verifyUser($accNumber)) {                //符合登陆信息
+                $obj   = new doActionModel();
+                $where = array("compId"=>$accNumber);           //修改条件
+                $data  = $obj->setPass($_LS,$this->getTable('companyTab'),$this->user,$where);  //修改密码
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    
+    /**
+     * 修改公司基本信息
+     * @return multitype:number
+     */
+    public function setCompBase()
+    {
+        global $_LS;
+        $data       = array();
+        @$accNumber = $_LS['accNumber'];
+        if (isset($accNumber)) {
+            if ($this->verifyUser($accNumber)) {
+                $table = array($this->getTable('companyTab'),$this->getTable('companyInfoTab'));
+                $obj   = new doActionModel();
+                $data  = $obj->setObjectBase($_LS,$this->getArr('baseArr'),$table,array("compId"=>$accNumber));     //修改基本信息
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    
+}

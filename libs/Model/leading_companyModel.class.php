@@ -21,5 +21,12 @@ class leading_companyModel extends tableModel
         return DB::fetchOne_byArrJoin($table,$arr,$where,$tableArr);
     }
     
+    public function update($table,$arr,$where,$tableArr=null)
+    {
+        if(is_array($table) && is_null($tableArr)){
+            $tableArr = array(self::${$table[0]},self::${$table[1]});
+        }
+        return DB::update($table,$arr,$where,$tableArr);
+    }
     
 }

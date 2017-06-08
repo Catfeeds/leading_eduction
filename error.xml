@@ -52,3 +52,7 @@
 2017-06-06 23:26:56 SELECT  s.`compId` , f.`compId` , s.`compName` , f.`picUrl` , f.`unionCode` , f.`tel`  FROM `leading_company` as s ,`leading_company_info` as f WHERE  1=1 leading_company
 2017-06-06 23:53:23 SELECT ``,`conTime` FROM `concern` where 1 = 1  AND `concerned concern` = 'com5680001'
 2017-06-07 00:01:05 SELECT  s.`mobile` , s.`name` , f.`picUrl` , s.`stuId` , f.`stuId`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  f.stuId = s.stuId AND f.stuId = 1601321102 
+2017-06-07 09:32:22 SELECT `compId`,`jobId`,`jobName`,`jobDate`,`people`,`eduSchool`,`status`,`duty`,`demand`,`treatment`,`workAddress` FROM `leading_job` where 1 = 1  AND `compId` = 'com5680001'
+2017-06-07 11:59:10 INSERT INTO `leading_job` (`jobName`,`jobDate`) VALUES('清理空气，清理太空垃圾','1434567890')
+2017-06-07 14:25:31 UPDATE `leading_company` SET `password`='aff1ec4e9edcea3f1c9d06d838ab5de7' WHERE 1 = 1  AND `stuId` = 'com5680001' AND `email` = 'hxq568@163.com'
+2017-06-07 15:33:25 UPDATE `Array` SET `compName`='上海领思教育科技有限公司',`mobile`='18917698765',`email`='hxq668@163.com',`tel`='021-3828945',`address`='滴水湖畔' WHERE 1 = 1  AND `compId` = 'com5680001'

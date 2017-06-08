@@ -63,16 +63,13 @@ class getTeacherModel extends infoModel
         @$param     = $_LS['param'];
         if (isset($accNumber) && isset($param)) {                           //如果存在传参
             if ($this->verifyUser($accNumber)) {                            //如果符合登陆信息
-                $data['info']   = $this->getInfo_byParam($accNumber,$param);//根据param获得信息
-                $data['status'] = 0;
-                $data['msg']    = 'success';
+                $data['info'] = $this->getInfo_byParam($accNumber,$param);//根据param获得信息
+                $data         = parent::formatResponse($data);
             } else{
                 $data['status'] = 3;
-                $data['msg']    = '与登录信息不相符';
             }
         } else {
             $data['status'] = 2;
-            $data['msg']    = '传参不全';
         }
         return $data;
     }
@@ -204,11 +201,9 @@ class getTeacherModel extends infoModel
                 }
             } else {
                 $data['status'] = 3;
-                $data['msg']    = '与登录信息不符';
             }
         } else {
             $data['status'] = 2;
-            $data['msg']    = '传参不全';
         }
         return $data;
     }
@@ -279,11 +274,9 @@ class getTeacherModel extends infoModel
                 }
             } else {
                 $data['status'] = 3;
-                $data['msg']    = '账号与登录信息不符';
             }
         } else {
             $data['status'] = 2;
-            $data['msg']    = '参数不集全';
         }
         return $data;
     }

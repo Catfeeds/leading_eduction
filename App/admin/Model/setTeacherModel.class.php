@@ -31,28 +31,18 @@ class setTeacherModel extends infoModel
     public function setTeacherBase()
     {
         global $_LS;
-        $data = array();
+        $data       = array();
         @$accNumber = $_LS['accNumber'];
-        if (isset($accNumber) && $this->verifyUser($accNumber)) {
-            //更改信息
-            $arr = array_diff($_LS,array("accNumber"=>$accNumber));                          //更改信息
-            if (count($arr) > 0) {
-                if (empty(array_diff_key($arr,array_flip($this->baseArr)))) {
-                    $table              = array($this->teacherTab,$this->teacherInfoTab);    //联合修改表名
-                    $where['teacherId'] = $accNumber;                                        //修改条件
-                    $res                = parent::update($table,$arr,$where);
-                    $data               = parent::formatResponse($res);
-                } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '修改信息不安全';
-                }
+        if (isset($accNumber)) {
+            if ($this->verifyUser($accNumber)) {
+                $table = array($this->teacherTab,$this->teacherInfoTab);
+                $obj   = new doActionModel();
+                $data  = $obj->setObjectBase($_LS,$this->baseArr,$table,array("teacherId"=>$accNumber));     //修改基本信息
             } else {
                 $data['status'] = 3;
-                $data['msg']    = '没有要修改的信息';
             }
         } else {
             $data['status'] = 2;
-            $data['msg']    = '账号为空或与登陆信息不符';
         }
         return $data;
     }
@@ -66,11 +56,11 @@ class setTeacherModel extends infoModel
         $data       = array();
         @$accNumber = $_LS['accNumber'];
         if(!empty($accNumber) && $this->verifyUser($accNumber)){
-            $obj  = new doActionModel();
-            $data = $obj->setPass($_LS,$this->teacherTab,$this->user);
+            $obj   = new doActionModel();
+            $where = array("teacherId"=>$accNumber);
+            $data  = $obj->setPass($_LS,$this->teacherTab,$this->user,$where);
         }else{
             $data['status'] = 2;
-            $data['msg']    = '账号为空或与登陆信息不符';
         }
         return $data;
     }
@@ -97,11 +87,9 @@ class setTeacherModel extends infoModel
                 }
             } else {
                 $data['status'] = 3;
-                $data['msg']    = '与登录信息不符';
             }
         } else {
             $data['status'] = 2;
-            $data['msg']    = '参数不集全';
         }
         return $data;
     }

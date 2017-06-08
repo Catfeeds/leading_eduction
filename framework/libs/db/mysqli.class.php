@@ -201,6 +201,12 @@ class mysqli
 		return $query->num_rows;
 	}
 	
+	public function getNum($table,$arr,$where)
+	{
+	    $sql = $this->createFetchSql($table,$arr,$where);
+	    return $this->getNums($this->query($sql));
+	}
+	
 	/**获得链接**/
 	public function getLink()
 	{
@@ -353,14 +359,7 @@ class mysqli
 			$selectVal[] = ($val == '*')?'*':"`{$val}`";//modified here
 		}
 	    $selectVals = $this->implodeArr($selectVal);
-	    foreach($where as $key=>$val){
-			$val = mysqli_real_escape_string(self::$link,$val);
-			if($key == 'where2'){
-				$whereSql .= " {$val}";//modify here
-			}else{
-				$whereSql .= " AND `{$key}` = '{$val}'";
-			}
-		}
+	    $whereSql = $this->formatWhereSql($where);
 		if($distinct){
 			$selectVal = " DISTINCT {$selectVals} ";
 		}
@@ -480,6 +479,21 @@ class mysqli
         return $whereSql;
     }
 	
+    public function formatWhereSql($where)
+    {
+        $whereSql = '';
+        foreach($where as $key=>$val){
+            $val = mysqli_real_escape_string(self::$link,$val);
+            if($key == 'where2'){
+                $whereSql .= " {$val}";//modify here
+            }else{
+                $whereSql .= " AND `{$key}` = '{$val}'";
+            }
+        }
+        return $whereSql;
+    }
+    
+    
 }
 
 

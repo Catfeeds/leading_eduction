@@ -10,7 +10,7 @@ class teacherController extends baseController
     {
         $obj  = new getTeacherModel();
         $data = $obj->getTeacherInfo();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
     
     //修改教师基本信息
@@ -18,7 +18,7 @@ class teacherController extends baseController
     {
         $obj  = new setTeacherModel();
         $data = $obj->setTeacherBase();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
     
     //修改教师密码
@@ -26,7 +26,7 @@ class teacherController extends baseController
     {
         $obj  = new setTeacherModel();
         $data = $obj->setTeacherPass();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
     
     //获得一个班级下所有的学生信息
@@ -34,7 +34,7 @@ class teacherController extends baseController
     {
         $obj  = new getTeacherModel();
         $data = $obj->getClassStuInfo();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
     
     //班主任查看一个学生的简历信息
@@ -42,7 +42,7 @@ class teacherController extends baseController
     {
         $obj  = new getTeacherModel();
         $data = $obj->getMasterStuResumeInfo();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
     
     //班主任更改学生评价
@@ -50,6 +50,6 @@ class teacherController extends baseController
     {
         $obj  = new setTeacherModel();
         $data = $obj->setStuAssess();
-        parent::ajaxReturn($data);
+        parent::ajaxReturn($data,'modify');
     }
 }

@@ -106,27 +106,30 @@ class checkModel extends infoModel
             @$verifyCode = $_LS['verifyCode'];
             @$caseId     = $_LS['loginCase'];
             if ($accNumber && $password && $verifyCode) {
-                if (verifyModel::verifyPicCode($verifyCode)) {                        //验证码相等且有效
-                    $checkPass = $this->getPass_byCase($caseId,$accNumber);           //获得数据库中密码
-                    if ($checkPass['status'] == 0) {                                  //账号未激活
-                        $data['status'] = 5;
-                        $data['msg']    = '账号未激活';
-                    } else {
-                        if (!empty($checkPass['password']) && ($checkPass['password'] == $password)) {  //两者密码相等
-                            /**存在session中***/
+                if (verifyModel::verifyPicCode($verifyCode)) { // 验证码相等且有效
+                    $checkPass = $this->getPass_byCase($caseId, $accNumber); // 获得数据库中密码
+                    if (! empty($checkPass['password']) && ($checkPass['password'] == $password)) { // 两者密码相等
+                        if ($checkPass['status'] == 0) { // 账号未激活
+                            $data['status'] = 5;
+                            $data['msg']    = '账号未激活';
+                        } else {
+                            /*存在session中*/
                             $_SESSION['user']                 = $checkPass;
-                            $_SESSION['user']['user_expTime'] = time();//登陆时间
-                            /**end***/
-                            $this->writeLoginLog($accNumber,$checkPass['caseId']);
-                            $data['info']   = array('caseId'=>$checkPass['caseId'],'accNumber'=>end($checkPass));
+                            $_SESSION['user']['user_expTime'] = time(); // 登陆时间
+                            /*end*/
+                            $this->writeLoginLog($accNumber, $checkPass['caseId']);
+                            $data['info'] = array(
+                                'caseId'    => $checkPass['caseId'],
+                                'accNumber' => end($checkPass)
+                            );
                             $data['status'] = 0;
                             $data['msg']    = 'success';
-                        } else {
-                            $data['status'] = 4;
-                            $data['msg']    = '账号或密码错误';
                         }
+                    } else {
+                        $data['status'] = 4;
+                        $data['msg']    = '账号或密码错误';
                     }
-                } else {
+                }  else {
                     $data['status'] = 3;
                     $data['msg']    = '验证码有误或失效';
                 }

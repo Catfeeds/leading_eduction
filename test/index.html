@@ -37,6 +37,7 @@
 			<li id="setStuProject"><a href="javascript:setStuProject()">修改学生项目信息</a></li>
 			<li id="setStuEducation"><a href="javascript:setStuEducation()">修改学生教育经验</a></li>
 			<li id="addStuWork"><a href="javascript:addStuWork()">添加学员工作经验</a></li>
+			<li id="addStuEducation"><a href="javascript:addStuEducation()">添加学员教育经验</a></li>
 			<li id="addStuProject"><a href="javascript:addStuProject()">添加学员项目经验</a></li>
 			<li id="getStuResume"><a href="javascript:getStuResume()">获得学员简历信息</a></li>
 			<li>=================</li>
@@ -63,6 +64,12 @@
 				  <option value="concerned">被关注</option>
 				</select></li>
 			<li id="getCompanyInfo"><a href="javascript:getCompanyInfo()">获得企业信息</a></li>
+			<li id="addARecruitedInfo"><a href="javascript:addARecruitedInfo()">添加一条招聘信息</a></li>
+			<li id="setResumeInfo"><a href="javascript:setResumeInfo()">修改一条招聘信息</a></li>
+			<li id="setCompPass"><a href="javascript:setCompPass()">修改公司登录密码</a></li>
+			<li id="setCompBase"><a href="javascript:setCompBase()">修改公司基本信息</a></li>
+			<li id="getStuResume"><a href="javascript:getStuResume()">查看学生投递简历记录</a></li>
+			<li id="getResumeInfo"><a href="javascript:getResumeInfo()">查看投递简历的简历信息</a></li>
 		</ul>
 		
 		
@@ -97,12 +104,12 @@
 			{
 				var url  = "http://localhost:8066/leading/index.php?module=admin&method=login";
 				var data = {
-					'accNumber' :'1601321102',
-					//'accNumber' :'18917098765',
+					//'accNumber' :'1601321102',
+					'accNumber' :'18917698765',
 					//'accNumber' :'t56801',
-					'password'  :'cheng',
-					'loginCase' :1,
-					'verifyCode':'988K'
+					'password'  :'company',
+					'loginCase' :4,
+					'verifyCode':'4JVk'
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -143,7 +150,7 @@
 			//重置密码
 			var resetPassword = function() {
 				var data = {
-					"mobile" 	 : "18917098765",
+					"mobile" 	 : "18917698765",
 					"password_1" : "company",
 					"password_2" : "company",
 					"caseId" 	 : 9
@@ -168,7 +175,7 @@
 				var data = {
 					"accNumber":"1601321102",
 					//"mobile"   :"18967023459",
-					 "email"    :"hxq66666@162.com",
+					 "email"    :"hxq666666@162.com",
 					//"set"      :2,
 					"age"      :1543987650,
 					"bloodType":"O",
@@ -377,6 +384,89 @@
 				};
 				GLOBAL.ajax(url, data);
 			}
+			
+			//添加一条招聘信息
+			var addARecruitedInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=addARecruitedInfo";
+				var data = {
+						"accNumber":"com5680001",
+					    "jobName":"清理空气",
+					    "jobDate":1434567890,
+					    "people":10,
+					    "eduBacId": "1",
+					    "duty":"保持空气清新",
+					    "demand":"不能有雾霾",
+					    "treatment":"能首次享受，可能会与外星人相会",
+					    "workAddress":"外太空"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			var setResumeInfo = function ()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=setResumeInfo";
+				var data = {
+						"accNumber":"com5680001",
+					    "jobId":6,
+					    "jobName":"清理空气，清理太空垃圾",
+					    "jobDate":1434567890,
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改公司登录密码
+			var setCompPass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=setCompPass";
+				var data = {
+						"accNumber":"com5680001",
+					    "email":"hxq568@163.com",
+					    "oldPass":"cheng1",
+					    "newPass_1":"company",
+					    "newPass_2":"company"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改公司基本信息
+			var setCompBase = function ()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=setCompBase";
+				var data = {
+						"accNumber":"com5680001",
+					    "compName": "上海领思教育科技有限公司",
+					    "mobile": "18917698765", 
+					    "email": "hxq668@163.com", 
+					    "tel": "021-3828945", 
+					    "address": "滴水湖畔",
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//查看学生投递简历记录
+			var getStuResume = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=getStuResume";
+				var data = {
+						"accNumber":"com5680001",
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//查看投递简历的简历信息
+			var getResumeInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=company&method=getResumeInfo";
+				var data = {
+						"accNumber":"com5680001",
+						"jobId":1,
+						"stuId":"1601321102",
+						"r_status":0
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
 			
 			var GLOBAL = {};
 			GLOBAL.ajax = function(url, data) {

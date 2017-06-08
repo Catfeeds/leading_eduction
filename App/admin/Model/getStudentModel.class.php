@@ -29,7 +29,10 @@ class getStudentModel extends infoModel
     {
         return $this->{$arr};
     }
-    
+    public function getTable($table)
+    {
+        return $this->{$table};
+    }
     /**
      * 验证登陆者信息
      * @param string $accNumber 学号
@@ -62,15 +65,12 @@ class getStudentModel extends infoModel
         if($stuId && $param){
             if($this->verifyUser($stuId)){
                 $data['info']   = $this->getStuInfo_byParam($stuId,$param);
-                $data['status'] = 0;
-                $data['msg']    = 'success';
+                $data           = parent::formatResponse($data['info']);
             }else{
-                $data['status'] = 2;
-                $data['msg']    = '与登录者信息不符';
+                $data['status'] = 3;
             }
         }else{
-            $data['status'] = 1;
-            $data['msg']    = '参数信息不全';
+            $data['status'] = 2;
         }
         return $data;
     }
@@ -168,7 +168,7 @@ class getStudentModel extends infoModel
             $table_2           = 'course_content';
             foreach ($res as $val){
                 $courseId               = $val['courseId'];
-                $where_2['courseId']      = $courseId;
+                $where_2['courseId']    = $courseId;
                 $data["{$courseId}"]    = parent::fetchAll_byArr($table_2,$arr_2,$where_2);
             }
         }
@@ -214,23 +214,13 @@ class getStudentModel extends infoModel
     public function getStuConcern($accNumber,$type)
     {
         $data               = array();
-        /* $arr                = array("{$type}","conTime");
-        $select             = trim(implode(' ',array_diff($this->concernArr,$arr)));
-        $where["{$select}"] = $accNumber;
-        $table              = 'concern';
-        $res                = parent::fetchAll_byArr($table,$arr,$where); */
         $res  = $this->getConcernInfo_byType($accNumber,$type);
         
         //获得企业详细信息
         if(count($res) > 0){
             $obj = new getCompanyModel();
             foreach ($res as $val){
-                /* $table_2 = 'leading_company';
-                $arr_2   = $this->companyArr;
-                $compId            = $val["{$type}"];
-                $where_2['compId'] = $compId; */
                 $data[] = $obj->getCompCenter_byCompId($val["{$type}"]);
-                //$data[]            = parent::fetchOne_byArr($table_2,$arr_2,$where_2);
             }
         }
         return $data;
@@ -309,7 +299,6 @@ class getStudentModel extends infoModel
             $data = parent::formatResponse($data);                      //格式化结果集
         } else {
             $data['status'] = 2;
-            $data['msg']    = '账号为空或与登录信息不符';
         }
         return $data;
     }

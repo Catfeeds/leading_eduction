@@ -190,7 +190,7 @@ class doActionModel extends infoModel
      * @param array $user
      * @return array
      */
-    public function setPass($_LS,$table,$user)
+    public function setPass($_LS,$table,$user,$where)
     {
         $data       = array();
         //获得post中的数据
@@ -200,15 +200,16 @@ class doActionModel extends infoModel
         @$newPass_1 = $_LS['newPass_1'];
         @$newPass_2 = $_LS['newPass_2'];
         if ($accNumber && $email && $oldPass && $newPass_1 && $newPass_2) {
-            if ($this->verifyPass($oldPass,$user)) {          // 旧密码不为空且正确
-                if ($this->verifyEmail($email,$user)) {       // 邮箱正确
-                    if ($oldPass != $newPass_1) {
-                        if ($newPass_1 == $newPass_2) {
-                            if (verifyLen($newPass_1, 6, 15)) {
-                                $newPass = myMd5($newPass_1);
-                                $res = $this->updatePass($table,$accNumber, $email, $newPass);
+            if ($this->verifyPass($oldPass,$user)) {                                    // 旧密码不为空且正确
+                if ($this->verifyEmail($email,$user)) {                                 // 邮箱正确
+                    if ($oldPass != $newPass_1) {                                       //修改前后密码不一致
+                        if ($newPass_1 == $newPass_2) {                                 //修改密码与确认密码一样
+                            if (verifyLen($newPass_1, 6, 15)) {                         //修改密码长度符合规定
+                                $newPass        = myMd5($newPass_1);                    //密码加密
+                                $where['email'] = $email;
+                                $res = $this->updatePass($table,$where, $newPass);
                                 if($res > 0){
-                                    $_SESSION['user']['password'] = $newPass;  //更新sessio中的秘密
+                                    $_SESSION['user']['password'] = $newPass;           //更新sessio中的秘密
                                 }
                                 $data = parent::formatResponse($res);
                             } else {
@@ -239,7 +240,7 @@ class doActionModel extends infoModel
     }
     
     /**
-     * 
+     * 验证密码是否正确
      * @param string $password
      * @param array $user 用户信息
      * @return boolean
@@ -272,19 +273,51 @@ class doActionModel extends infoModel
     /**
      * 修改密码
      * @param string $table
-     * @param string $accNumber
-     * @param string $email
+     * @param array $where
      * @param string $newPass_1
      * @return int
      */
-    public function updatePass($table,$accNumber,$email,$newPass_1)
+    public function updatePass($table,$where,$newPass_1)
     {
         $res            = '';
         $newPass        = myMd5($newPass_1);
         $arr            = array("password" => $newPass);
-        $where['stuId'] = $accNumber;
-        $where['email'] = $email;
         $res            = parent::update($table,$arr,$where);
         return $res;
+    }
+    /**
+     * 修改对象基本信息
+     * @param array $_LS 提交的信息组
+     * @param array $verifyArr 白名单数组
+     * @param array|string $table 更改的数据表
+     * @param array $where 更改条件数组 
+     */
+    public function setObjectBase($_LS,$verifyArr,$table,$where)
+    {
+        $data = array();
+        $arr  = array_diff($_LS,array("accNumber"=>$_LS["accNumber"]));         //获得要操作的信息
+        if (count($arr) > 0 ) {
+            if (parent::verifyCount($arr,$verifyArr) == 0) {                    //验证操作信息是否安全
+                @$mobile = $_LS['mobile'];
+                @$email  = $_LS['email'];
+                if ($mobile && verifyModel::verifyMobile($mobile)) {            //验证手机号是否注册
+                    $data['status'] = 8;
+                    $data['msg']    = '手机号已注册';
+                } else {
+                    if ($email && verifyModel::verifyEmail($email)) {           //验证邮箱是否注册
+                        $data['status'] = 9;
+                        $data['msg']    = '邮箱已注册';
+                    } else {
+                        $data  = parent::update($table,$arr,$where);            //更新数据
+                        $data  = parent::formatResponse($data);                 //格式化结果集
+                    }
+                }
+            } else {
+                $data['status'] = 5;
+            }
+        } else {
+            $data['status'] = 4;
+        }
+        return $data;
     }
 }
