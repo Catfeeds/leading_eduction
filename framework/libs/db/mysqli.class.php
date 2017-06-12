@@ -201,9 +201,13 @@ class mysqli
 		return $query->num_rows;
 	}
 	
-	public function getNum($table,$arr,$where)
+	public function getNum($table,$arr,$where,$tableArr = null)
 	{
-	    $sql = $this->createFetchSql($table,$arr,$where);
+	    if (is_null($tableArr)) {
+	        $sql = $this->createFetchSql($table,$arr,$where);
+	    } else {
+	        $sql = $this->createFetchSqlMore($table,$arr,$where,$tableArr);
+	    }
 	    return $this->getNums($this->query($sql));
 	}
 	

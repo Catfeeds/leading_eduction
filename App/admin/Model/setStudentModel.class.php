@@ -3,9 +3,14 @@ namespace App\admin\Model;
 
 class setStudentModel extends infoModel
 {
-    const WORKNUM         = 10;
-    const EDUNUM          = 5;
-    const PRONUM          = 10;
+    const WORKNUM         = 10;                             //最多添加工作经验的数量
+    const EDUNUM          = 5;                              //最多添加教育的数量
+    const PRONUM          = 10;                             //每个学员最多能添加项目的数量
+    const SENDMNUM        = 30;                             //每月最多投简历的数量
+    const SENDDNUM        = 10;                             //每天最多投简历的数量
+    const IMGURL          = '';
+    const DESTINATION     = './static/admin/images/uploads/image_149/';
+    
     private $user         = array();
     private $obj;
     //表名
@@ -15,6 +20,10 @@ class setStudentModel extends infoModel
     private $stuProTable  = 'student_project';
     private $projectTable = 'project';
     private $stuEduTable  = 'student_education';
+    private $jobTab       = 'leading_job';
+    private $resumeLogTab = 'leading_resume_log';
+    
+    //相关属性
     private $workArr      = array('id','compName','jobName','salary','dateWork','workOut','description','treatment','compAddress','stuId');
     private $addStuProArr = array('stuId','stuDescription','professional');
     private $addProArr    = array('projectName','description','status','startTime','endTime');
@@ -54,7 +63,7 @@ class setStudentModel extends infoModel
         if (!empty($accNumber) && $this->verifyUser($accNumber)) {
             $obj   = new doActionModel();
             $where = array("stuId"=>$accNumber);
-            $data  = $obj->setPass($_LS,$this->stuTable,$this->user);
+            $data  = $obj->setPass($_LS,$this->stuTable,$this->user,$where);
         } else {
             $data['status'] = 2;
         }
@@ -277,8 +286,6 @@ class setStudentModel extends infoModel
         if (isset($accNumber) && $this->verifyUser($accNumber)) {
             $arr            = array_diff_assoc($_LS,array("accNumber"=>$accNumber));
             $arr['stuId']   = $accNumber;
-            $data['status'] = 3;
-            $data['msg']    = '添加信息不全';
             if (count(array_diff_key(array_flip($this->addStuProArr),$arr)) == 0 ) {                //信息安全
                 $num = parent::getNum($this->stuProTable,array('id'),array("stuId"=>$accNumber));   //获取到已有的数据条数
                 //先插入project表，获得插入id        
@@ -303,6 +310,8 @@ class setStudentModel extends infoModel
                 } else {
                     $data['status'] = 6;
                 }
+            } else {
+                $data['status'] = 5;
             }
         } else {
             $data['status'] = 2;
@@ -310,4 +319,169 @@ class setStudentModel extends infoModel
         
         return $data;
     }
+    
+    /**
+     * 投递简历
+     * return array
+     */
+    public function sentResume()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];                                //学号
+        @$jobId     = $_LS['jobId'];                                    //职位号
+        if ($accNumber && $jobId) {
+            if ($this->verifyUser($accNumber)) {
+                if ($this->verifyJob($jobId)) {                         //存在该职位
+                    if ($this->verifyJobStatus($jobId)) {                       //需要招人
+                        $data = $this->sendResumeNum($accNumber,$jobId);        //验证或投递简历
+                    } else {
+                        $data['status'] = 5;
+                        $data['msg']    = '职位已招满';
+                    }
+                } else {
+                    $data['status'] = 4;
+                    $data['msg']    = '不存在该职位';
+                }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    /**
+     * 检查该职位是否存在
+     * @param string $jobId
+     * @return boolean 存在 返回 true
+     */
+    public function verifyJob($jobId)
+    {
+        $res  = false;
+        $data = parent::fetchOne_byArr($this->jobTab,array('compId'),array('jobId' => $jobId));
+        if (count($data) > 0) {
+            $res = true;
+        }
+        return $res;
+    }
+    
+    /**
+     * 检验该职位是否还招人
+     * @param int $jobId
+     * @return boolean
+     */
+    public function verifyJobStatus($jobId)
+    {
+        $res  = false;
+        $data = parent::fetchOne_byArr($this->jobTab,array('status'),array('jobId' => intval($jobId)));
+        if (count($data) > 0 && isset($data['status'])) {
+            if ($data['status'] == 0) {
+                $res = true;
+            }
+        }
+        return $res;
+    }
+    
+    /**
+     * 查看投递记录，并返回相应的信息，投递要求：30天投递过的职位不能再投，一天不能超过十次，30天不能超过30次
+     * 还需补充会员制
+     * @param string $accNumber 投递账号
+     */
+    public function sendResumeNum($accNumber,$jobId)
+    {
+        $data = array();
+        $where_2        = array('jobId' => $jobId, 'accNumber' => $accNumber, 'where2' => ' ORDER BY resumeTime DESC ');
+        $arr            = array('resumeTime','d_count','m_count','jobId');
+        $table          = $this->resumeLogTab;
+        $where          = array('accNumber' => $accNumber,'where2' => ' ORDER BY resumeTime DESC ');  //该账号上一次投递                       
+        $res            = parent::fetchOne_byArr($table,$arr,$where);
+        $arr_2          = array('jobId' => $jobId,'accNumber' => $accNumber,'resumeTime' => time());
+        if (count($res) > 0) {                                                      //之前投递过简历
+            if (verifyInMonth($res['resumeTime'])) {                                //与上次投递时间在同一个月中
+                if ($res['m_count'] < self::SENDMNUM ) {                            //本月投递次数没超过限制
+                    if (verifyInDay($res['resumeTime'])) {                          //与上次投递时间在同一天中
+                        if ($res['d_count'] < self::SENDDNUM) {                     //当天投递次数没超过限制
+                            $resp = parent::fetchOne_byArr($table,array('resumeTime'),$where_2); //获得之前投递此职位的信息
+                            if (count($resp) > 0) {                                              //投递过
+                                if (verifyInterVal($resp['resumeTime'],30)) {                    //30天内投过该职位
+                                    $data['status'] = 6;
+                                    $data['msg']    = '30内不能重复投递相同职位';
+                                } else {
+                                    $arr_2['d_count'] = intval($res['d_count']) + 1;            //当天投递次数加1
+                                    $arr_2['m_count'] = intval($res['m_count']) + 1;            //当月投递次数加1
+                                }
+                            } else {                                                            //没投过
+                                $arr_2['d_count'] = intval($res['d_count']) + 1;                //当天投递次数加1
+                                $arr_2['m_count'] = intval($res['m_count']) + 1;                //当月投递次数加1
+                            }
+                        } else {
+                            $data['status'] = 5;
+                            $data['msg']    = '今日投递简历已到达'.self::SENDDNUM.'次的限额';
+                        }
+                    } else {                                                //不在同一天中
+                        $arr_2['d_count'] = 1;                              //当天投递次数为1
+                        $arr_2['m_count'] = intval($res['m_count']) + 1;    //当月投递次数加1
+                    }
+                } else {                                                    //不能再投
+                    $data['status'] = 4;
+                    $data['msg']    = '本月投简历已达到'.self::SENDMNUM.'次的限额';
+                }
+            } else {                                                        //不在同一个月中
+                $arr_2['d_count'] = 1;                                      //当天投递次数为1
+                $arr_2['m_count'] = 1;                                      //当月投递次数为1
+            }
+        } else {                                                            //之前没投简历
+            $arr_2['d_count'] = 1;                                          //当天投递次数为1
+            $arr_2['m_count'] = 1;                                          //当月投递次数为1
+        }
+        if (count($data) == 0) {                                            //一切正常，投递简历
+            $res  = parent::insert($table,$arr_2);                          //投递简历
+            $data = parent::formatResponse($res);                           //格式化结果集
+        }
+        return $data;
+    }
+    
+    /**
+     * 上传头像
+     */
+    public function uploadImg()
+    {
+        $data = array();
+        @$stuId  = $this->user['stuId'];
+        if (!empty($stuId)) {
+            $obj = new uploadFileModel();
+            $msg = $obj->uploadFileImg();
+            if (is_array($msg)) {
+                if (count($msg) > 0 ){
+                    $fileName    = './static/admin/images/uploads/'.$msg[0]['name'];
+                    $destination = self::DESTINATION.$msg[0]['name'];
+                    $resource    = $obj->thumb($fileName,$destination,149,185,false);
+                    $res         = $this->uploadPhoto($stuId,$resource);
+                    $data        = parent::formatResponse($res);
+                } else {
+                    $data['status'] = 5;
+                    $data['msg']    = '上传失败';
+                }
+            } else {
+                $data['status'] = 4;
+                $data['msg']    = $msg;
+            }
+        } else {
+            $data['status'] = 3;
+        }
+        return $data;
+    }
+    
+    public function uploadPhoto($stuId,$destination)
+    {
+        $des   = preg_replace('/^[\.]/',' ',$destination);
+        $url   = 'http://'.$_SERVER['HTTP_HOST'].'/leading'.$des;
+        $table = $this->stuInfoTable;
+        $arr   = array('picUrl' => $url);
+        $where = array('stuId' => $stuId);
+        return parent::update($table,$arr,$where);
+        
+    }
+    
 }

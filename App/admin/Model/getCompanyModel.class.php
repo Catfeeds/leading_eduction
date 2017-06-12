@@ -3,6 +3,8 @@ namespace App\admin\Model;
 
 class getCompanyModel extends infoModel
 {
+    const PAGESIZE      =  8;
+    
     private $user = array();
     
     //表名
@@ -67,9 +69,11 @@ class getCompanyModel extends infoModel
         $data       = array();
         @$accNumber = $_LS['accNumber'];
         @$param     = $_LS['param'];
+        @$page      = intval($_LS['page'])?intval($_LS['page']):1;
+        @$pageSize  = intval($_LS['pageSize'])?intval($_LS['pageSize']):self::PAGESIZE;
         if ($accNumber && $param) {
             if ($this->verifyUser($accNumber)) {
-                $data['info'] = $this->getCompanyInfo_byParam($accNumber,$param);       //获得信息
+                $data['info'] = $this->getCompanyInfo_byParam($accNumber,$param,$page,$pageSize);       //获得信息
                 $data         = parent::formatResponse($data['info']);
             } else {
                 $data['status'] = 3;
@@ -86,22 +90,22 @@ class getCompanyModel extends infoModel
      * @param string $param 信息标示符
      * @return array
      */
-    public function getCompanyInfo_byParam($accNumber,$param)
+    public function getCompanyInfo_byParam($accNumber,$param,$page,$pageSize)
     {
         $data            = array();
         $where['compId'] = $accNumber;
         switch ($param) {
             case    'center':
-                $data = $this->getCompCenter_byCompId($where);              //获得企业核心信息
+                $data = $this->getCompCenter_byCompId($where);                              //获得企业核心信息
                 break;
             case 'recruited':
-                $data = $this->getCompRecruited_byCompId($where);           //获得已有的招聘信息
+                $data = $this->getCompRecruited_byCompId($where,$page,$pageSize);           //获得已有的招聘信息
                 break;
             case   'concern':
-                $data = $this->getCompConcern_byCompId($accNumber,$param);  //获得企业关注的学生信息
+                $data = $this->getCompConcern_byCompId($accNumber,$param,$page,$pageSize);  //获得企业关注的学生信息
                 break;
             case 'concerned':
-                $data = $this->getCompConcern_byCompId($accNumber,$param);  //获得关注企业的学生信息
+                $data = $this->getCompConcern_byCompId($accNumber,$param,$page,$pageSize);  //获得关注企业的学生信息
                 break;
             case      'base':
             default:
@@ -137,16 +141,18 @@ class getCompanyModel extends infoModel
      * @param string $param
      * @return array
      */
-    public function getCompConcern_byCompId($accNumber,$param)
+    public function getCompConcern_byCompId($accNumber,$param,$page,$pageSize)
     {
         $data = array();
         $obj  = new getStudentModel();
-        $res  = $obj->getConcernInfo_byType($accNumber,$param);           //获得关注|被关注学号
-        if(count($res) > 0){
+        $res  = $obj->getConcernInfo_byType($accNumber,$param,$page,$pageSize);                             //获得关注|被关注学号
+        $count = count($res);
+        if($count > 0){
             $obj = new getStudentModel();
-            foreach ($res as $val) {
-                $data[] = $obj->getStuCenter($val["{$param}"]);           //获得学生核心信息，通过学号
+            for($i = 0;$i < $count-1;$i++) {
+                $data[] = $obj->getStuCenter($res[$i]["{$param}"]);                         //获得学生核心信息，通过学号
             }
+            $data['pages'] = $res['pages'];                                                 //填充页码信息
         }
         return $data;
     }
@@ -156,9 +162,9 @@ class getCompanyModel extends infoModel
      * @param array $where
      * @retrun array
      */
-    public function getCompRecruited_byCompId($where)
+    public function getCompRecruited_byCompId($where,$page,$pageSize)
     {
-        return parent::fetchAll_byArr($this->jobTab,$this->jobArr,$where);
+        return page($this->jobTab,$this->jobArr,$where,$page,$pageSize);
     }
     /**
      * 查看企业招聘职位下的所有投递简历的个人信息
@@ -169,15 +175,18 @@ class getCompanyModel extends infoModel
         global $_LS;
         $data = array();
         @$accNumber = $_LS['accNumber'];
+        @$page      = intval($_LS['page'])?intval($_LS['page']):1;
+        @$pageSize  = intval($_LS['pageSize'])?intval($_LS['pageSize']):self::PAGESIZE;
         if (isset($accNumber)) {                        
             if ($this->verifyUser($accNumber)) {
-                $res   = $this->getCompJobs_byJobId($accNumber);                                    //获得公司下所有的招聘岗位
+                $res   = $this->getCompJobs_byJobId($accNumber,$page,$pageSize);                                    //获得公司下所有的招聘岗位
                 $count = count($res);
                 if ($count > 0) {
-                    for ($i = 0;$i<$count;$i++) {
+                    for ($i = 0;$i<$count-1;$i++) {
                         $data['info'][$i]["{$res[$i]['jobName']}"] = $this->getStuInfo_byJobId($res[$i]['jobId']);  //获得某个职位下的所有投递简历信息
                         $data = parent::formatResponse($data['info']);
                     }
+                    $data['pages'] = $res['pages'];
                 } else {
                     $data['status'] = 4;
                     $data['msg']    = '还没有职位信息，请到管理职位页面添加职位';
@@ -196,12 +205,13 @@ class getCompanyModel extends infoModel
      * @param string $accNumber 企业号
      * return array 多维数组
      */
-    public function getCompJobs_byJobId($accNumber) 
+    public function getCompJobs_byJobId($accNumber,$page,$pageSize) 
     {
         $table = $this->jobTab;
         $arr   = array('jobId','jobName');
         $where = array("compId"=>$accNumber);
-        return parent::fetchAll_byArr($table,$arr,$where);
+        //return parent::fetchAll_byArr($table,$arr,$where,$page,$pageSize);
+        return page($table,$arr,$where,$page,$pageSize);
     }
     
     /**
@@ -230,7 +240,7 @@ class getCompanyModel extends infoModel
      */
     public function getAllAcc_byJobId ($jobId)
     {
-        $arr   = array('accNumber','resumeTime','r_status');
+        $arr   = array('accNumber','resumeTime','r_status','l_id');
         $where = array('jobId'=>$jobId,'where2' => ' ORDER BY resumeTime ');
         return parent::fetchAll_byArr($this->resumeLogTab,$arr,$where);
     }

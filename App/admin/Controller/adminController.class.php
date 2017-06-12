@@ -111,4 +111,26 @@ class adminController extends baseController
 	    $data = $obj->modifyInfo();
 	    parent::ajaxReturn($data);
 	}
+	
+	public function sendMail()
+	{
+	    $obj  = new checkModel();
+	    $data = $obj->sendMail2();
+	    parent::ajaxReturn($data);
+	}
+	
+	//邮箱找回密码
+	public function startResetPassword()
+	{
+	    $obj  = new checkModel();
+	    $data = $obj->startResetPassword();
+	    parent::ajaxReturn($data,'modify');
+	}
+	public function checkresetPassVerify()
+	{
+	    $obj  = new checkModel();
+	    $data = $obj->checkresetPassVerify();
+	    parent::ajaxReturn($data,'modify');
+	}
+	
 }

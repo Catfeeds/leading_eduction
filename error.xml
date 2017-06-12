@@ -1,58 +1,11 @@
-2017-05-30 00:14:10 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:19:12 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:19:44 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:21:34 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:23:18 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:25:49 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-05-30 00:32:29 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1  AND `caseId` = '8' where2
-2017-06-02 14:04:29 SELECT `password`,`caseId`,`mobile`,`status`,`1601321102` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-02 15:13:07 SELECT  FROM  WHERE  Array
-2017-06-02 15:45:02 SELECT  FROM  WHERE  Array
-2017-06-02 15:46:11 SELECT  FROM  WHERE   f.stuId = s.stuId AND s.stuId = 1601321102 
-2017-06-02 15:49:38 SELECT `name`,`mobile`,`email`,`sex`,`age`,`bloodType`,`provinceId`,`homeAddress`,`description` FROM `Array` where 1 = 1 
-2017-06-02 16:29:28 SELECT `id`,`stageId`,`content` FROM `course_content` where 1 = 1  AND `stuId` = '1601321102' AND `courseId` = ''
-2017-06-02 16:31:44 SELECT `id`,`stageId`,`content` FROM `course_content` where 1 = 1  AND `stuId` = '1601321102' AND `courseId` = '56801'
-2017-06-02 18:14:24 SELECT  FROM `concern` where 1 = 1  AND `concern` = '1601321102'
-2017-06-02 18:30:57 SELECT `concern` FROM `concern` where 1 = 1  AND `` = ''
-2017-06-02 21:41:54 SELECT `concerned` FROM `concern` where 1 = 1  AND `concern conTime` = '1601321102'
-2017-06-02 21:51:27 SELECT  FROM `recommend` where 1 = 1  AND `recommendId` = '1601321102'
-2017-06-02 23:22:50 SELECT `status`,`compName`,`jobName`,`salary`,`dateOut`,`dateWork`,`workOut` FROM `student_work` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-02 23:24:38 SELECT `status`,`compName`,`jobName`,`salary`,`dateOut`,`dateWork`,`workOut` FROM `student_work` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-03 22:28:33 UPDATE `leading_student` as s  SET  s.`mobile` = '18967023459'  WHERE 1 = 1 AND s.`stuId` = f.`stuId` AND s.`stuId` = '1601321102' 
-2017-06-04 13:38:04 SELECT `id`,`projectName`,`courseId`,`teacherId`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 15:11:38 UPDATE `Array` SET `stuDescription`='负责网站数据库设计及后台管理页面的开发',`projectName`='领思教育管理网站开发',`professional`='php,java,ajax',`description`='一方面为了让学生更好地知道真正的开发流程，理解团队合作开发',`status`='1',`startTime`='1434567890',`endTime`='1534567890',`url`='http://www.leadingstudy.com',`people`='5' WHERE 1 = 1  AND `projectId` = '1' AND `stuId` = '1601321102'
-2017-06-04 15:13:13 UPDATE `Array` SET `stuDescription`='负责网站数据库设计及后台管理页面的开发',`projectName`='领思教育管理网站开发',`professional`='php,java,ajax',`description`='一方面为了让学生更好地知道真正的开发流程，理解团队合作开发',`status`='1',`startTime`='1434567890',`endTime`='1534567890',`url`='http://www.leadingstudy.com',`people`='5' WHERE 1 = 1  AND `projectId` = '1' AND `stuId` = '1601321102'
-2017-06-04 15:39:36 UPDATE `project` as f  SET  f.`projectName` = '上海领思教育科技有限公司管理网站开发'  WHERE 1 = 1  AND `projectId` = '1'  AND `stuId` = '1601321102' 
-2017-06-04 15:46:28 UPDATE `project` as f  SET  f.`projectName` = '上海领思教育科技有限公司管理网站开发'  WHERE 1 = 1  AND `projectId` = '1'  AND `stuId` = '1601321102' 
-2017-06-04 15:52:14 UPDATE `project` as f  SET  f.`projectName` = '上海领思教育科技有限公司管理网站开发'  WHERE 1 = 1  AND `projectId` = '1'  AND `stuId` = '1601321102' 
-2017-06-04 23:11:10 SELECT `id`,`projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 23:11:16 SELECT `id`,`projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 23:13:33 SELECT `id`,`projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 23:15:10 SELECT `projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 23:15:34 SELECT `projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-04 23:16:54 SELECT `projectId`,`projectName`,`description`,`status`,`startTime`,`endTime`,`picUrl`,`url`,`people`,`type` FROM `project` where 1 = 1  AND `id` = '1'
-2017-06-05 10:26:41 SELECT  FROM `student_education` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-05 14:19:07 INSERT INTO `student_project` (`stuId`,`stuDescription`,`professional`) VALUES('1601321102','do everything','php javascript')
-2017-06-05 16:16:40 SELECT  s.`status` , s.`name` , f.`picUrl` , f.`title` , f.`description` , s.`mobile` , s.`email`  FROM `leading_teacher` as s ,`leading_teacher_info` as f WHERE   f.teacherId = s.teahcerId AND f.teacherId = 't56801' 
-2017-06-05 17:34:40 SELECT  FROM  WHERE  Array
-2017-06-05 17:42:39 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  Array
-2017-06-05 17:48:20 SELECT  s.`classId` , f.`className`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE   AND s.`teacherId` = 't56801' 
-2017-06-05 18:03:20 SELECT  FROM  WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
-2017-06-05 18:08:21 SELECT  FROM  WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
-2017-06-05 18:11:09 SELECT  FROM  WHERE  1=1  AND s.`stuId` = f.`stuId` AND f.`classId` = 1
-2017-06-05 22:20:37 SELECT  FROM `recommend` where 1 = 1  AND `recommendId` = 't56801'
-2017-06-05 23:01:57 SELECT  s.`stuId` , s.`name` , f.`sex` , f.`age`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND s.`stuId` = f.`stuId` AND s.`stuId` = '1601321102'  AND s.`status` = f.`status` AND s.`status` = '1' 
-2017-06-06 09:07:08 SELECT  s.`status` , s.`name` , f.`picUrl` , f.`title` , f.`description` , s.`mobile` , s.`email`  FROM `leading_teacher` as s ,`leading_teacher_info` as f WHERE  1=1  f.teacherId = s.teacherId AND f.teacherId = 't56801' 
-2017-06-06 09:07:11 SELECT  s.`status` , s.`name` , f.`picUrl` , f.`title` , f.`description` , s.`mobile` , s.`email`  FROM `leading_teacher` as s ,`leading_teacher_info` as f WHERE  1=1  f.teacherId = s.teacherId AND f.teacherId = 't56801' 
-2017-06-06 14:25:36 SELECT  s.`name` , s.`mobile` , s.`email` , f.`sex` , f.`age` , f.`bloodType` , f.`provinceId` , f.`homeAddress` , f.`description`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  f.stuId = s.stuId AND s.stuId = 1601321102 
-2017-06-06 23:09:54 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId`,`teacherId` FROM `leading_teacher` where 1 = 1  AND `mobile` = '18917098765'
-2017-06-06 23:14:37 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId`,`teacherId` FROM `leading_teacher` where 1 = 1  AND `mobile` = '18917098765'
-2017-06-06 23:14:55 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId`,`teacherId` FROM `leading_teacher` where 1 = 1  AND `mobile` = '18917098765'
-2017-06-06 23:15:57 SELECT  FROM `leading_student` where 1 = 1  AND `mobile` = '18917098765'
-2017-06-06 23:26:56 SELECT  s.`compId` , f.`compId` , s.`compName` , f.`picUrl` , f.`unionCode` , f.`tel`  FROM `leading_company` as s ,`leading_company_info` as f WHERE  1=1 leading_company
-2017-06-06 23:53:23 SELECT ``,`conTime` FROM `concern` where 1 = 1  AND `concerned concern` = 'com5680001'
-2017-06-07 00:01:05 SELECT  s.`mobile` , s.`name` , f.`picUrl` , s.`stuId` , f.`stuId`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  f.stuId = s.stuId AND f.stuId = 1601321102 
-2017-06-07 09:32:22 SELECT `compId`,`jobId`,`jobName`,`jobDate`,`people`,`eduSchool`,`status`,`duty`,`demand`,`treatment`,`workAddress` FROM `leading_job` where 1 = 1  AND `compId` = 'com5680001'
-2017-06-07 11:59:10 INSERT INTO `leading_job` (`jobName`,`jobDate`) VALUES('清理空气，清理太空垃圾','1434567890')
-2017-06-07 14:25:31 UPDATE `leading_company` SET `password`='aff1ec4e9edcea3f1c9d06d838ab5de7' WHERE 1 = 1  AND `stuId` = 'com5680001' AND `email` = 'hxq568@163.com'
-2017-06-07 15:33:25 UPDATE `Array` SET `compName`='上海领思教育科技有限公司',`mobile`='18917698765',`email`='hxq668@163.com',`tel`='021-3828945',`address`='滴水湖畔' WHERE 1 = 1  AND `compId` = 'com5680001'
+2017-06-09 15:44:26 UPDATE `student_education` SET `0`='id' WHERE 1 = 1  AND `stuId` = '1601321102'
+2017-06-09 16:24:45 SELECT `stuId`,`name`,`sex`,`age`,`qq`,`wechat`,`dateinto`,`dateout`,`status`,`mobile`,`email`,`ls_assess` FROM `Array` where 1 = 1  AND `classId` = '1'  AND s.`stuId` = f.`stuId`
+2017-06-09 16:26:31 SELECT `stuId`,`name`,`sex`,`age`,`qq`,`wechat`,`dateinto`,`dateout`,`status`,`mobile`,`email`,`ls_assess` FROM `Array` where 1 = 1  AND `classId` = '1'  AND s.`stuId` = f.`stuId`
+2017-06-09 16:33:28 SELECT `stuId`,`name`,`sex`,`age`,`qq`,`wechat`,`dateinto`,`dateout`,`status`,`mobile`,`email`,`ls_assess` FROM `Array` where 1 = 1  AND `classId` = '1'  AND s.`stuId` = f.`stuId`
+2017-06-09 16:35:06 SELECT `stuId`,`name`,`sex`,`age`,`qq`,`wechat`,`dateinto`,`dateout`,`status`,`mobile`,`email`,`ls_assess` FROM `Array` where 1 = 1  AND `classId` = '1'  AND s.`stuId` = f.`stuId`
+2017-06-09 16:36:48 SELECT  FROM  WHERE  1=1  AND s.`stuId` = f.`stuId`
+2017-06-09 16:42:49 SELECT `stuId`,`name`,`sex`,`age`,`qq`,`wechat`,`dateinto`,`dateout`,`status`,`mobile`,`email`,`ls_assess` FROM `Array` where 1 = 1  AND `classId` = '1'  AND s.`stuId` = f.`stuId`
+2017-06-09 21:14:15 SELECT  f.`r_status`  FROM `leading_resume_log` as f  WHERE  1=1  AND s.`jobId` = f.`jobId` 
+2017-06-09 21:16:28 SELECT  f.`r_status`  FROM `leading_resume_log` as f  WHERE  1=1  AND f.`l_id` = '1'  AND s.`jobId` = f.`jobId` 
+2017-06-10 22:41:04 SELECT `rangId` FROM `leading_staff_info` where 1 = 1  AND `accNumber` = 'ls5680006'
+2017-06-12 14:20:11 SELECT `id`,`password`,`caseId`,`name` FROM `leading_company` where 1 = 1  AND `mobile` = '18967023459' AND `email` = 'hxq666666@162.com'

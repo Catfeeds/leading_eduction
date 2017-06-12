@@ -90,4 +90,28 @@ class studentController extends baseController
         $data = $obj->getStuResume();
         parent::ajaxReturn($data,'modify');
     }
+    
+    //投递简历
+    public function sentResume()
+    {
+        $obj  = new setStudentModel();
+        $data = $obj->sentResume();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    //查看投递简历记录
+    public function getStuResumeLog()
+    {
+        $obj  = new getStudentModel();
+        $data = $obj->getStuResumeLog();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    public function uploadImg()
+    {
+        $obj  = new setStudentModel();
+        $data = $obj->uploadImg();
+        parent::ajaxReturn($data,'modify');
+    }
+    
 }

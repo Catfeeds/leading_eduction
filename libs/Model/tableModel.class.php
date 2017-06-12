@@ -72,8 +72,8 @@ class tableModel
         return DB::getNums($sql);
     }
    
-    public function getNum($table,$arr,$where)
+    public function getNum($table,$arr,$where,$tableArr = null)
     {
-        return DB::getNum($table,$arr,$where);
+        return DB::getNum($table,$arr,$where,$tableArr);
     }
 }

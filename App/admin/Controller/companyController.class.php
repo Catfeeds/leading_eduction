@@ -59,4 +59,11 @@ class companyController extends baseController
         $data = $obj->getResumeInfo();
         parent::ajaxReturn($data,'modify');
     }
+    //修改简历状态
+    public function setResumeStatus()
+    {
+        $obj  = new setCompanyModel();
+        $data = $obj->setResumeStatus();
+        parent::ajaxReturn($data,'modify');
+    }
 }

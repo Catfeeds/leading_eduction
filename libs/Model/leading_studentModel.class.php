@@ -29,11 +29,19 @@ class leading_studentModel extends tableModel
         return DB::update($table,$arr,$where,$tableArr);
     }
     
-    public function fetchAll_byArrJoin($table,$arr,$where,$tableArr)
+    public function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null)
     {
         if(is_array($table) && is_null($tableArr)){
             $tableArr = array(self::${$table[0]},self::${$table[1]});
         }
         return DB::fetchAll_byArrJoin($table,$arr,$where,$tableArr);
     }
+    public function getNum($table,$arr,$where,$tableArr = null)
+    {
+        if (is_array($table)) {
+            $tableArr = array(self::${$table[0]},self::${$table[1]});
+        }
+        return DB::getNum($table,$arr,$where,$tableArr);
+    }
+    
 }

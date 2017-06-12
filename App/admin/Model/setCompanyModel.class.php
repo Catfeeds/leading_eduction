@@ -157,4 +157,63 @@ class setCompanyModel extends infoModel
         return $data;
     }
     
+    /**
+     * 修改简历状态
+     * @return array
+     */
+    public function setResumeStatus()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        @$l_id      = $_LS['l_id'];
+        @$r_status  = $_LS['r_status'];
+        if ($accNumber && $l_id && $r_status) {
+            if ($this->verifyUser($accNumber)) {                                    //符合登陆信息
+                $res = $this->verifyCompAndLId($accNumber,$l_id);                   //获得已有的状态
+                if (count($res) > 0) {                                              //信息安全
+                    if ($res['r_status'] != $r_status) {
+                        $data = $this->modifyRStatus($l_id,$r_status);              //修改状态
+                        $data = parent::formatResponse($data);
+                    } else {
+                        $data['status'] = 6;
+                        $data['msg']    = '当前状态不用修改';
+                    }
+                } else {
+                    $data['status'] = 5;
+                }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $status['status'] = 2;
+        }
+        return $data;
+    }
+    
+    /**
+     * 验证该简历记录是否属于该公司
+     * @param string $accNumber 企业号
+     * @param int $l_id         投递记录表id
+    **/
+    public function verifyCompAndLId($accNumber,$l_id)
+    {
+        $table = array($this->getTable('jobTab'),$this->getTable('resumeLogTab'));
+        $arr   = array('r_status','compId');
+        $where = array('compId' => $accNumber,'l_id' => $l_id,'where2' => ' AND s.`jobId` = f.`jobId` ' );
+        return parent::fetchOne_byArrJoin($table,$arr,$where);
+    }
+    /**
+     * 修改简历查看状态
+     * @param number $l_id
+     * @param number $r_status
+     * @return number
+    **/
+    public function modifyRStatus($l_id,$r_status)
+    {
+        $arr   = array('r_status' => $r_status);
+        $where = array('l_id' => $l_id);
+        return parent::update($this->getTable('resumeLogTab'),$arr,$where);
+    }
+    
 }

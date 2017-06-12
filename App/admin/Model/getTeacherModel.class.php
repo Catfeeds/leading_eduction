@@ -3,6 +3,8 @@ namespace App\admin\Model;
 
 class getTeacherModel extends infoModel
 {
+    const PAGESIZE = 8;
+    
     private $user = array();
     
     //表
@@ -61,10 +63,11 @@ class getTeacherModel extends infoModel
         $data       = array();
         @$accNumber = $_LS['accNumber'];
         @$param     = $_LS['param'];
-        if (isset($accNumber) && isset($param)) {                           //如果存在传参
-            if ($this->verifyUser($accNumber)) {                            //如果符合登陆信息
-                $data['info'] = $this->getInfo_byParam($accNumber,$param);//根据param获得信息
-                $data         = parent::formatResponse($data);
+        @$page      = intval($_LS['page'])?intval($_LS['page']):1;
+        if (isset($accNumber) && isset($param)) {                                   //如果存在传参
+            if ($this->verifyUser($accNumber)) {                                    //如果符合登陆信息
+                $data['info'] = $this->getInfo_byParam($accNumber,$param,$page);    //根据param获得信息
+                $data         = parent::formatResponse($data['info']);
             } else{
                 $data['status'] = 3;
             }
@@ -80,19 +83,19 @@ class getTeacherModel extends infoModel
      * @param string $param 信息标签
      * @return array
      */
-    public function getInfo_byParam($accNumber,$param)
+    public function getInfo_byParam($accNumber,$param,$page)
     {
         $data               = array();
         $where['teacherId'] = $accNumber;
         switch ($param) {
             case    'course':
-                $data = $this->getTeacherCourse($where);
+                $data = $this->getTeacherCourse($where,$page);
                 break;
             case   'class':
                 $data = $this->getTeacherClass($where);
                 break;
             case 'recommend':
-                $data = $this->getTeacherRecommend($accNumber);
+                $data = $this->getTeacherRecommend($accNumber,$page);
                 break;
             case      'base':
             default         :
@@ -122,23 +125,23 @@ class getTeacherModel extends infoModel
      * @param unknown $accNumber
      * @return multitype:NULL
      */
-    public function getTeacherCourse($where)
+    public function getTeacherCourse($where,$page)
     {
         $data = array();
         //获得教师下所有教的课程
         $arr                = array('courseId');
         $table              = $this->teacherCourseTab;
-        $res                = parent::fetchAll_byArr($table,$arr,$where);
-        
+        $res                = page($table,$arr,$where,$page);
         //获得课程详细内容信息
-        $count   = count(array_unique($res));
+        $count   = count($res);
         $table_2 = $this->courseContentTab;
         $arr_2   = $this->secCourseArr;
         if($count > 0){
-            for($i = 0;$i<$count;$i++){
+            for($i = 0;$i<$count-1;$i++){
                 $where_2['courseId']            = $res[$i]['courseId'];
-                $data["{$res[$i]['courseId']}"] = parent::fetchAll_byArr($table_2,$arr_2,$where_2); 
+                $data["{$res[$i]['courseId']}"] = page($table_2,$arr_2,$where_2,$page); 
             }
+            $data['pages'] = $res['pages'];
         }
         return $data;
     }
@@ -164,17 +167,19 @@ class getTeacherModel extends infoModel
      * @param string $accNumber 教师号
      * return array
      */
-    public function getTeacherRecommend($accNumber)
+    public function getTeacherRecommend($accNumber,$page)
     {
         $data                 = array();
         $arr                  = $this->recommendArr;
         $table                = 'recommend';
         $where['recommendId'] = $accNumber;
-        $res                  = parent::fetchAll_byArr($table,$arr,$where);
-        if(count($res) > 0){
-            foreach ($res as $val){
-                $data[] = array_merge($val,$this->getStuBase($val['stuId']));
+        $res                  = page($table,$arr,$where,$page);
+        $count = count($res);
+        if($count > 0){
+            for ($i = 0;$i<$count-1;$i++) {
+                $data[] = array_merge($res[$i],$this->getStuBase($res[$i]['stuId']));
             }
+            $data['pages'] = $res['pages'];
         }
         return $data;
     }
@@ -189,12 +194,13 @@ class getTeacherModel extends infoModel
         $data = array();
         @$accNumber = $_LS['accNumber'];
         @$classId   = $_LS['classId'];
+        @$page      = intval($_LS['page'])?intval($_LS['page']):1;
+        @$pageSize  = intval($_LS['pageSize'])?intval($_LS['pageSize']):self::PAGESIZE;
         if ($accNumber && $classId) {
-            if ($this->verifyUser($accNumber)) {                                    //与登录信息一致
-                if ($this->verifyAccAndClass($accNumber,$classId)) {                //教师下存在该班级号
-                    $data['info']   = $this->getStuInfo_byClassId($classId);        //通过班级号获得学生信息
-                    $data['status'] = 0;
-                    $data['msg']    = 'success';
+            if ($this->verifyUser($accNumber)) {                                                    //与登录信息一致
+                if ($this->verifyAccAndClass($accNumber,$classId)) {                                //教师下存在该班级号
+                    $data['info']   = $this->getStuInfo_byClassId($classId,$page,$pageSize);        //通过班级号获得学生信息
+                    $data           = parent::formatResponse($data['info']);
                 } else {
                     $data['status'] = 4;
                     $data['msg']    = '班级号不正确';
@@ -208,14 +214,15 @@ class getTeacherModel extends infoModel
         return $data;
     }
     
-    public function getStuInfo_byClassId($clssId)
+    public function getStuInfo_byClassId($clssId,$page,$pageSize)
     {
         $data             = array();
         $arr              = $this->teacherStudentArr;
         $where['classId'] = $clssId;
         $where['where2']  = ' AND s.`stuId` = f.`stuId`';
         $table            = array($this->teacherStudentTab,$this->teacherStudentInfoTab);
-        $data             = parent::fetchAll_byArrJoin($table,$arr,$where);
+        $data             = page($table,$arr,$where,$pageSize);
+ //       $data             = parent::fetchAll_byArrJoin($table,$arr,$where);
         return $data;
     }
     /**

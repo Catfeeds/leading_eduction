@@ -1,8 +1,11 @@
 <?php
 namespace App\admin\Model;
-//use App\admin\Model\verifyModel;
 class checkModel extends infoModel
 {
+    const EXPTIME = 7200;       //token过期时间，单位秒
+    
+    private $mailPassTitle = '上海领思教育科技有限公司找回密码';
+    
     private $user  = [];
     private $table = array(
         1 => 'leading_student',
@@ -10,6 +13,17 @@ class checkModel extends infoModel
         3 => 'leading_staff_info',
         4 => 'leading_company',
         5 => 'temp_register'
+    );
+    private $tableId = array(
+        1 => 'leading_student',
+        2 => 'leading_teacher',
+        3 => 'leading_teacher',
+        4 => 'leading_staff_info',
+        5 => 'leading_staff_info',
+        6 => 'leading_staff_info',
+        7 => 'leading_staff_info',
+        8 => 'temp_register',
+        9 => 'leading_company'
     );
     private $where = array(
         'leading_student'    => 'stuId',
@@ -169,7 +183,7 @@ class checkModel extends infoModel
                 $res              = parent::fetchOne_byArr($value,$arr,$where);
                 if(count($res)>0 && isset($res['password']) && !empty($res['password'])){
                     if($value == 'temp_register'){//查询临时表
-                        $res['caseId'] = 0;//修改角色值
+                        $res['caseId'] = 8;//修改角色值
                     }
                     break;
                 }
@@ -282,6 +296,150 @@ class checkModel extends infoModel
         $discuzArr['email']     = $arr['email'];
         $obj = new discuzModel();
         return $obj->registerDiscuz($discuzArr);
+    }
+    
+    public function startResetPassword()
+    {
+        global $_LS;
+        $data    = array();
+        @$mobile = $_LS['mobile'];
+        @$email  = $_LS['email'];
+        @$caseId = $_LS['caseId'];
+        if ($mobile && $email) {
+            $arr   = array('id','password','caseId','name');
+            $where = array('mobile' => $mobile,'email' => $email);
+            $table = empty($caseId)?$this->table:$this->table[$caseId];
+            if (is_array($table)) {                                     //没有指定表
+                foreach ($table as $val) {
+                    $resp = parent::fetchOne_byArr($val,$arr,$where);
+                    if (count($resp) > 0) {
+                        if ($val == 'temp_register') {
+                            $resp['caseId'] = 8;                        //角色为临时
+                        }
+                        break;
+                    }
+                }
+            } else {                                                    //caseId指定表
+                $resp = parent::fetchOne_byArr($table,$arr,$where);
+            }
+            if (count($resp)) {
+                $token_exptime = time();
+                $token         = md5($mobile.$resp['password'].$token_exptime);                             //获得token
+                $arr           = array('token' => $token,'token_exptime' => $token_exptime);
+                $where         = array('mobile' => $mobile);
+                $response      = $this->updateInfo($resp['caseId'],$arr,$where);
+                if ($response > 0) {
+                    $data      = $this->sendEMail($email,$resp['name'],$mobile,$resp['caseId'],$token); //发邮箱  
+                } else {
+                    $data['status'] = 4;
+                    $data['msg']    = '系统维修中';
+                }
+            } else {
+                $data['status'] = 3;
+                $data['msg']    = '手机号或邮箱不正确';
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
+    
+    /**
+     * 插入一条记录
+     * @param int $caseId
+     * @param array $arr
+     * @param array $where
+    **/
+    public function updateInfo($caseId,$arr,$where)
+    {
+        $table = $this->getTab_byid(intval($caseId));
+        return parent::update($table,$arr,$where);
+    }
+    /**
+     * 通过id获得表名
+     * @param int $id
+     * return string 表名
+     */
+    public function getTab_byid($id)
+    {
+        return $this->tableId[$id];
+    }
+    /**
+     * 发送邮件
+     * @param string $email toUser
+     * @param string $name  userName
+     * @param int $caseId   
+     * @param string $token
+     */
+    public function sendEMail($email,$name,$mobile,$caseId,$token)
+    {
+        $toUser   = $email;
+        $title    = $this->mailPassTitle;
+        $content = $this->formatEmailContent($name,$mobile,$caseId,$token);
+        $flag  = $this->sendMail($toUser,$title,$content);
+        return parent::formatResponse($flag);
+        /* $flag = $this->sendMail('359418894@qq.com','上海领思教育重置密码','<span style="color:red;">重置密码</span><br/>重置密码');
+        return parent::formatResponse($flag); */
+    }
+    public function formatEmailContent($name,$mobile,$caseId,$token)
+    {
+        $content = "尊敬的" . $name . "：<br/>此邮件仅是帮您重置密码。<br/>点击链接重置你的密码。<br/><a href='http://localhost:8066/leading/index.php?module=admin&method=checkresetPassVerify&verify=" . $token . "&caseId=".$caseId."&mobile=".$mobile."' target='_blank'>http://localhost:8066/leading/index.php?module=admin&method=checkresetPassVerify&verify=" .  $token . "&caseId=".$caseId."&mobile=".$mobile . "</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接2小时内有效。<br/>如果此次操作请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- 上海领思教育科技有限公司</p>";
+        return $content;
+    }
+    
+    public function sendMail($to, $title, $content)
+    {
+        $mail = new mailerModel(); // 实例化PHPMailer核心类
+        // $mail->SMTPDebug = 1;//是否启用smtp的debug进行调试 开发环境建议开启 生产环境注释掉即可 默认关闭debug调试模式
+        $mail->isSMTP(); // 使用smtp鉴权方式发送邮件
+        $mail->SMTPAuth = true; // smtp需要鉴权 这个必须是true
+        $mail->Host = 'smtp.qq.com'; // 链接qq域名邮箱的服务器地址
+        $mail->SMTPSecure = 'ssl'; // 设置使用ssl加密方式登录鉴权
+        $mail->Port = 465; // 设置ssl连接smtp服务器的远程服务器端口号，以前的默认是25，但是现在新的好像已经不可用了 可选465或587
+        $mail->CharSet = 'UTF-8'; // 设置发送的邮件的编码 可选GB2312 我喜欢utf-8 据说utf8在某些客户端收信下会乱码
+        $mail->FromName = '测试邮件发送'; // 设置发件人姓名（昵称） 任意内容，显示在收件人邮件的发件人邮箱地址前的发件人姓名
+        $mail->Username = '913346548@qq.com'; // smtp登录的账号 这里填入字符串格式的qq号即可
+        $mail->Password = 'htcjugryuqpjbdcg'; // smtp登录的密码 使用生成的授权码（就刚才叫你保存的最新的授权码）【非常重要：在网页上登陆邮箱后在设置中去获取此授权码】
+        $mail->From = '913346548@qq.com'; // 设置发件人邮箱地址 这里填入上述提到的“发件人邮箱”
+        $mail->isHTML(true); // 邮件正文是否为html编码 注意此处是一个方法 不再是属性 true或false
+        $mail->addAddress($to); // 设置收件人邮箱地址
+        $mail->Subject = $title; // 添加该邮件的主题
+        $mail->Body = $content; // 添加邮件正文 上方将isHTML设置成了true，则可以是完整的html字符串 如：使用file_get_contents函数读取本地的html文件
+                                // 简单的判断与提示信息
+        if ($mail->send()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * 验证重置密码是否有效和安全
+     */
+    public function checkresetPassVerify()
+    {
+        @$caseId = intval(daddslashes($_GET['caseId']));
+        @$mobile = strval(daddslashes($_GET['mobile']));
+        @$verify = strval(daddslashes($_GET['verify']));
+        if ($caseId && $mobile && $verify) {
+            $arr   = array('id','token_exptime');
+            $table = $this->getTab_byid($caseId);
+            $where = array('mobile' => $mobile,'token' => $verify);
+            $res   = parent::fetchOne_byArr($table,$arr,$where);            //获得数据库中的验证信息
+            if (count($res) > 0 && isset($res['token_exptime'])) {
+                if ((time() -self::EXPTIME) < $res['token_exptime']) {      //有效
+                    $data['status'] = 0;
+                } else {                                                    //超时
+                    $data['status'] = 3;
+                    $data['msg']    = '已超时';
+                }
+            } else {
+                $data['status'] = 5;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
     }
     
 }

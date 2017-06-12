@@ -6,16 +6,11 @@ class course_contentModel extends tableModel
 {
     private static $table = 'course_content';
     
-    /**
-     *根据字段数组信息  获得多条信息
-     */
-   /*  public function getInfoAll_byArr($arr,$where,$where2)
+    public function getNum($table,$arr,$where,$tableArr = null)
     {
-        return DB::fetchALL_byArr(self::$table,$arr,$where,$where2);
+        if (is_array($table)) {
+            $tableArr = array(self::${$table[0]},self::${$table[1]});
+        }
+        return DB::getNum($table,$arr,$where,$tableArr);
     }
-	
-	public function insert($arr)
-	{
-		return DB::insert(self::$table,$arr);
-	} */
 }

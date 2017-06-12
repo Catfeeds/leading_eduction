@@ -190,7 +190,7 @@ class doActionModel extends infoModel
      * @param array $user
      * @return array
      */
-    public function setPass($_LS,$table,$user,$where)
+    public function setPass($_LS,$table,$user,$where = null)
     {
         $data       = array();
         //获得post中的数据

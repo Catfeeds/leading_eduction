@@ -104,7 +104,7 @@
 	 * @param string $where2 查询结果排序等操作如order by 等
 	 * @return array 页容量信息数组
 	 */
-	function showPage($table,$page,$pageSize=8,$where1='',$where2='')
+	function showPages($table,$page,$pageSize=8,$where1='',$where2='')
 	{
 	    $page = ($page > 0)?$page:1;//page小于1时默认为1
 	    $offset = ($page -1)*$pageSize;//偏移量
@@ -122,6 +122,24 @@
 	    }
 	    $sql = "select * from {$table} {$where} limit $offset,$pageSize";
 	    return DB::fetchAll($sql);
+	}
+	
+	function showPage($table,$arr,$where,$page=1,$pageSize=8)
+	{
+	    $page   = ($page > 0)?$page:1;         //page小于1时默认为1
+	    $offset = ($page -1)*$pageSize;        //偏移量
+	    if (!empty($where['where2'])) {
+	        $where['where2'] .= " LIMIT {$offset},{$pageSize}";
+	    } else {
+	        $where['where2']  = " LIMIT {$offset},{$pageSize}";
+	    }
+	    if (is_array($table)) {
+	        $obj = M("{$table[0]}");
+	        return $obj->fetchAll_byArrJoin($table,$arr,$where);
+	    } else {
+	        $obj = M("{$table}");
+	        return $obj->fetchAll_byArr($table,$arr,$where);
+	    }
 	}
 	
 	/**
@@ -159,6 +177,57 @@
 	    $result = "当前是第{$page}页,总共{$pageNums}页<br />{$index}{$pre}{$p}{$next}{$last}";
 	    return $result;
 	}
+	
+	
+	/**
+	 * 获得分页页码信息
+	 * @param array|string $table 表名
+	 * @param array $arr       查询数组
+	 * @param array $where     查询条件
+	 * @param number $page     当前页
+	 * @param number $pageSize 页容量
+	 * @return multitype:array
+	 */
+	function getPage($table,$arr,$where,$page = 1,$pageSize = 8)
+	{
+	    $pages              = array();
+	    if (is_array($table)) {
+	        $obj = M("{$table[0]}");
+	    } else {
+	        $obj = M("{$table}");
+	    }
+	    $totalNums          = $obj->getNum($table,$arr,$where);                //总条数
+	    $page               = ($page > 0)?$page:1;                             //page小于1时默认为1
+	    $page               = ($page > $totalNums)?$totalNums:$page;           //当page大于总记录条数时默认为总记录数
+	    $pages['totalNums'] = $totalNums;
+	    $pages['pageNums']  = ceil($totalNums/$pageSize);                      //总页数
+	    $pages['page']      = $page;                                           //当前页
+	    $pages['index']     = 1;                                               //首页
+	    $pages['pre']       = $page -1;                                        //上一页
+	    $pages['next']      = $page + 1;                                       //下一页
+	    $pages['last']      = $pages['pageNums'];                              //尾叶
+	    return $pages;
+	}
+	
+	/**
+	 * 分页函数
+	 * @param array|string $table  表名
+	 * @param array $arr           
+	 * @param array $where
+	 * @param number $page         当前页
+	 * @param number $pageSize     页容量
+	 * @return array
+	 */
+	function page($table,$arr,$where,$page = 1,$pageSize = 8)
+	{
+	    $data          = array();
+	    $data          = showPage($table,$arr,$where,$page=1,$pageSize=8);
+	    if (count($data) > 0 ) {
+	        $data['pages'] = getPage($table,$arr,$where,$page,$pageSize);
+	    }
+	    return $data;
+	}
+	
 	
 	/**
 	*md5密钥加密

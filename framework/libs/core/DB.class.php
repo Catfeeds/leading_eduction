@@ -130,9 +130,9 @@ class DB
 	}
 	
 	
-	public static function getNum($table,$arr,$where)
+	public static function getNum($table,$arr,$where,$tableArr=null)
 	{
-	    return self::$db->getNum($table,$arr,$where);
+	    return self::$db->getNum($table,$arr,$where,$tableArr);
 	}
 	
 
