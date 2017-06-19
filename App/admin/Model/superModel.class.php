@@ -32,12 +32,13 @@ class superModel extends infoModel
         @$accNumber = $_LS['accNumber'];
         @$staffId   = $_LS['staffId'];
         @$rangeId   = intval($_LS['rangeId']);
+        @$caseId    = intval($_LS['caseId']);
         if ($accNumber && $staffId && $rangeId) {
             if ($this->verifyUser($accNumber)) {
                if ($accNumber != $staffId) {
                    $res   = $this->getStaffOneInfo_byArr($staffId,array('rangeId'));            //获得已有的权限信息
                    if (intval($res['rangeId']) != $rangeId) {                                   //与已有的权限不想等时才能修改
-                       $resp = $this->update_byArr($staffId,array('rangeId' => $rangeId));      //修改权限信息
+                       $resp = $this->update_byArr($staffId,array('rangeId' => $rangeId,'caseId' => $caseId));      //修改权限信息
                        $data = parent::formatResponse($resp);                                   //格式化结果集
                    } else { 
                        $data['status'] = 5;

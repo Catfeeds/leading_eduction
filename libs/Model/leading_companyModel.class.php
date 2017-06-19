@@ -12,11 +12,18 @@ class leading_companyModel extends tableModel
     private static $leading_company_info = array('id','compId','unionCode','description','startTime','unionTime','address','picUrl','licenseUrl','tel','legalPerson');
     
     
+    public function getTabArr($name)
+    {
+        return self::${$name};
+    }
+    
+    
+    
     public function fetchOne_byArrJoin($table,$arr,$where,$tableArr)
     {
         if(is_null($tableArr)){
             $tableArr[0] = self::${$table[0]};
-            $tableArr[1] = self::${$table[1]};
+            $tableArr[1] = parent::getArr($table[1]);
         }
         return DB::fetchOne_byArrJoin($table,$arr,$where,$tableArr);
     }
@@ -24,7 +31,7 @@ class leading_companyModel extends tableModel
     public function update($table,$arr,$where,$tableArr=null)
     {
         if(is_array($table) && is_null($tableArr)){
-            $tableArr = array(self::${$table[0]},self::${$table[1]});
+            $tableArr = array(self::${$table[0]},parent::getArr($table[1]));
         }
         return DB::update($table,$arr,$where,$tableArr);
     }

@@ -3,6 +3,8 @@ namespace App\admin\Model;
 
 class setTeacherModel extends infoModel
 {
+    const DESTINATION              = './static/admin/images/uploads/image_149/';
+    
     private $user                  = array();
     //表名
     private $teacherTab            = 'leading_teacher';
@@ -108,6 +110,22 @@ class setTeacherModel extends infoModel
         $arr['ls_assess'] = $ls_assess;
         $talbe            = $this->teacherStudentInfoTab;
         return parent::update($talbe,$arr,$where);
+    }
+    
+    //上传头像
+    public function uploadImg()
+    {
+        $data = array();
+        @$teacherId  = $this->user['teacherId'];
+        if (!empty($teacherId)) {
+            $table = $this->teacherInfoTab;
+            $where = array('teacherId' => $teacherId);
+            $obj = new doActionModel();
+            $data = $obj->uploadPic($table,$where,self::DESTINATION);
+        } else {
+            $data['status'] = 3;
+        }
+        return $data;
     }
     
 }

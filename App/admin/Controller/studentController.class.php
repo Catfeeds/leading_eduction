@@ -107,6 +107,7 @@ class studentController extends baseController
         parent::ajaxReturn($data,'modify');
     }
     
+    //上传头像
     public function uploadImg()
     {
         $obj  = new setStudentModel();

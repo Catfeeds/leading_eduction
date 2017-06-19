@@ -6,6 +6,8 @@ class student_courseModel extends tableModel
 {
     private static $table = 'study_course';
     
+    private static $study_course = array('id','courseId','secCourseId','stuId','dateinto');
+    
     /**
     * 根据学号获得该学生学习的所有课程
     * @date: 2017年5月16日 上午9:46:43
@@ -18,4 +20,13 @@ class student_courseModel extends tableModel
         $sql = "select id,courseId,secCourseId from ".self::$table." where stuId = '{$stuId}' order by dateinto desc";
         return fetchAll($sql);
     }
+    
+    public function getTabArr($name)
+    {
+        return self::${$name};
+    }
+    
+    
+    
+    
 }

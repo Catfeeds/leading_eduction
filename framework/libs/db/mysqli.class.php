@@ -92,7 +92,9 @@ class mysqli
 	public function insertSql($sql)
 	{
 		$this->query($sql);
-		return self::$link->insert_id;
+		$inser_id = self::$link->insert_id;
+		$res      = empty($insert_id)?self::$link->affected_rows:$inser_id;
+		return $res;
 	}
 	
 	/**

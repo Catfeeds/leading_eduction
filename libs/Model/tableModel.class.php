@@ -76,4 +76,11 @@ class tableModel
     {
         return DB::getNum($table,$arr,$where,$tableArr);
     }
+    
+    
+    public function getArr($name)
+    {
+        $obj = M($name);
+        return $obj->getTabArr($name);
+    }
 }

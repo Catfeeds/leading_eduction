@@ -6,18 +6,12 @@ class projectModel extends tableModel
 {
     private static $table = 'project';
     
-    /**
-     * 根据字段数组获得相应的一条信息
-     */
-    /* public function getInfo_byArr($arr,$where,$where2='')
+    private static $project = array('projectId','projectName','description','status','startTime','endTime','picUrl','url','people','type');
+    
+    
+    
+    public function getTabArr($name)
     {
-        return DB::fetchOne_byArr(self::$table,$arr,$where,$where2);
-    } */
-    /**
-     * 根据字段数组获得相应的多条信息
-     */
-   /*  public function getInfoAll_byArr($arr,$where,$where2='')
-    {
-        return DB::fetchAll_byArr(self::$table,$arr,$where,$where2);
-    } */
+        return self::${$name};
+    }
 }

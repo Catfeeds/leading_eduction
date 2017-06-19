@@ -2,14 +2,14 @@
 namespace libs\Model;
 use framework\libs\core\DB;
 
-class leading_classModel extends tableModel
+class course_projectModel extends tableModel
 {
     //表名
-    private static $table = 'leading_class';
-    
+    private static $table = 'course_project';
+
     //表属性
-    private static $leading_class = array('classId','courseId','className','masterId','startClassTime','endClassTime','classType','addressId');
-    
+    private static $course_project = array('id','projectId','courseId','teacherId');
+
     public function getTabArr($name)
     {
         return self::${$name};
@@ -30,7 +30,7 @@ class leading_classModel extends tableModel
         }
         return DB::getNum($table,$arr,$where,$tableArr);
     }
-    
+
     public function update($table,$arr,$where,$tableArr=null)
     {
         if(is_array($table) && is_null($tableArr)){
@@ -38,6 +38,6 @@ class leading_classModel extends tableModel
         }
         return DB::update($table,$arr,$where,$tableArr);
     }
-    
-    
+
+
 }

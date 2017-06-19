@@ -3,9 +3,9 @@ namespace App\admin\Model;
 
 class getTeacherModel extends infoModel
 {
-    const PAGESIZE = 8;
-    
-    private $user = array();
+    const PAGESIZE    = 8;                  //默认页容量大小
+    const USEREXPTIME = 21600;              //单位秒，用户登录有效期   
+    private $user     = array();
     
     //表
     private $teacherTab            = 'leading_teacher';
@@ -25,9 +25,11 @@ class getTeacherModel extends infoModel
     
     public function __construct()
     {
-        if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-             $this->user = $_SESSION['user'];
-         }
+        if (isset($_SESSION['user']) && ! empty($_SESSION['user'])) {
+            if (($_SESSION['user']['user_expTime'] + self::USEREXPTIME) > time()) {
+                $this->user = $_SESSION['user'];
+            }
+        }
     }
     
     /**
@@ -319,4 +321,14 @@ class getTeacherModel extends infoModel
         } 
         return $res;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

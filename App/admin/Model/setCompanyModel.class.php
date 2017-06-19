@@ -3,7 +3,8 @@ namespace App\admin\Model;
 
 class setCompanyModel extends infoModel
 {
-    const JOBNUM  = 15;
+    const JOBNUM      = 15;                             //企业可以发布职位招聘次数
+    const DESTINATION = './static/admin/images/uploads/image_149/';
     
     private $user = array();
     private $obj;
@@ -214,6 +215,38 @@ class setCompanyModel extends infoModel
         $arr   = array('r_status' => $r_status);
         $where = array('l_id' => $l_id);
         return parent::update($this->getTable('resumeLogTab'),$arr,$where);
+    }
+    
+    //上传头像
+    public function uploadImg()
+    {
+        $data = array();
+        @$compId  = $this->user['compId'];
+        if (!empty($compId)) {
+            $table = $this->getTable('companyInfoTab');
+            $where = array('compId' => $compId);
+            $obj   = new doActionModel();
+            $data  = $obj->uploadPic($table,$where,self::DESTINATION);
+        } else {
+            $data['status'] = 3;
+        }
+        return $data;
+    }
+    //上传营业执照
+    public function uploadLicenseUrl()
+    {
+        $data = array();
+        @$compId  = $this->user['compId'];
+        if (!empty($compId)) {
+            $table = $this->getTable('companyInfoTab');
+            $where = array('compId' => $compId);
+            $obj   = new doActionModel();
+            $arr   = array('');
+            $data  = $obj->uploadPic($table,$where,self::DESTINATION,'licenseUrl');
+        } else {
+            $data['status'] = 3;
+        }
+        return $data;
     }
     
 }

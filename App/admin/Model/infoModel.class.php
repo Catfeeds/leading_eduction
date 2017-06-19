@@ -101,10 +101,15 @@ class infoModel
         return $obj->getNum($table,$arr,$where,$tableArr);
     }
     
-    public function verifyCount($arr,$all)
+    public function verifyCount($arr,$all,$type = true)
     {
         $count = 0;
-        $count = count((array_diff_key($arr,array_flip($all))));
+        if ($type) {
+            $arr   = array_diff_key($arr,array_flip($all));
+        } else {
+            $arr   = array_diff_key(array_flip($arr),$all);
+        }
+        $count = count($arr);
         return $count;
     }
 }

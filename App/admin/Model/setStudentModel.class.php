@@ -450,29 +450,20 @@ class setStudentModel extends infoModel
         $data = array();
         @$stuId  = $this->user['stuId'];
         if (!empty($stuId)) {
-            $obj = new uploadFileModel();
-            $msg = $obj->uploadFileImg();
-            if (is_array($msg)) {
-                if (count($msg) > 0 ){
-                    $fileName    = './static/admin/images/uploads/'.$msg[0]['name'];
-                    $destination = self::DESTINATION.$msg[0]['name'];
-                    $resource    = $obj->thumb($fileName,$destination,149,185,false);
-                    $res         = $this->uploadPhoto($stuId,$resource);
-                    $data        = parent::formatResponse($res);
-                } else {
-                    $data['status'] = 5;
-                    $data['msg']    = '上传失败';
-                }
-            } else {
-                $data['status'] = 4;
-                $data['msg']    = $msg;
-            }
+            $table = $this->stuInfoTable;
+            $where = array('stuId' => $stuId);
+            $obj   = new doActionModel();
+            $data  = $obj->uploadPic($table,$where,self::DESTINATION);
         } else {
             $data['status'] = 3;
         }
         return $data;
     }
-    
+    /**
+     * 存入缩略图url地址
+     * @param 身份标识符 $stuId
+     * @param 当前文件所在路径，相对路径 $destination
+     */
     public function uploadPhoto($stuId,$destination)
     {
         $des   = preg_replace('/^[\.]/',' ',$destination);

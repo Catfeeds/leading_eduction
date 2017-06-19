@@ -4,7 +4,7 @@ namespace App\admin\Model;
 class getCompanyModel extends infoModel
 {
     const PAGESIZE      =  8;
-    
+    const USEREXPTIME   = 21600;        //单位秒
     private $user = array();
     
     //表名
@@ -25,7 +25,9 @@ class getCompanyModel extends infoModel
     public function __construct()
     {
         if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-             $this->user = $_SESSION['user'];
+            if (($_SESSION['user']['user_expTime'] + self::USEREXPTIME) > time()) {
+                $this->user = $_SESSION['user'];
+            }
          }
     }
     
@@ -186,7 +188,7 @@ class getCompanyModel extends infoModel
                         $data['info'][$i]["{$res[$i]['jobName']}"] = $this->getStuInfo_byJobId($res[$i]['jobId']);  //获得某个职位下的所有投递简历信息
                         $data = parent::formatResponse($data['info']);
                     }
-                    $data['pages'] = $res['pages'];
+                    $data['info']['pages'] = $res['pages'];
                 } else {
                     $data['status'] = 4;
                     $data['msg']    = '还没有职位信息，请到管理职位页面添加职位';

@@ -5,7 +5,7 @@ class getStudentModel extends infoModel
 {
     const CPAGESIZE        = 15; 
     const PAGESIZE         = 8;
-    const USER_EXPTIME     = 7200;         //单位s
+    const USEREXPTIME     = 21600;         //登陆有效期，单位s
     private $user          = array();
     private $centerArr     = array('mobile','name','picUrl','stuId');
     private $baseArr       = array('name','mobile','email','sex','age','bloodType','provinceId','homeAddress','description');
@@ -24,7 +24,7 @@ class getStudentModel extends infoModel
     public function __construct()
     {
         if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-            if (($_SESSION['user']['user_expTime'] + self::USER_EXPTIME) > time()){
+            if (($_SESSION['user']['user_expTime'] + self::USEREXPTIME) > time()){
                 $this->user = $_SESSION['user'];
             }
          }

@@ -1,29 +1,37 @@
-2017-06-12 14:45:46 SELECT `id`,`password`,`caseId`,`name` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `email` = '359418894@qq.com'
-2017-06-12 14:45:46 UPDATE `leading_student` SET `token`='f73bf3287324f68a012b01bd59a359a0',`token_exptime`='1497249946' WHERE 1 = 1  AND `mobile` = '18967023459'
-2017-06-12 14:46:28 SELECT `id` FROM `leading_student` where 1 = 1  AND `mobile` = ''
-2017-06-12 14:46:28 SELECT `id` FROM `leading_teacher` where 1 = 1  AND `mobile` = ''
-2017-06-12 14:46:28 SELECT `id` FROM `leading_staff_info` where 1 = 1  AND `mobile` = ''
-2017-06-12 14:46:28 SELECT `id` FROM `leading_company` where 1 = 1  AND `mobile` = ''
-2017-06-12 14:46:28 SELECT `id` FROM `temp_register` where 1 = 1  AND `mobile` = ''
-2017-06-12 14:57:46 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = ''
-2017-06-12 15:00:49 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = '37e57436aa02af6336b1bda5617c08a3'
-2017-06-12 15:01:08 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = '37e57436aa02af6336b1bda5617c08a3'
-2017-06-12 15:02:24 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = '37e57436aa02af6336b1bda5617c08a3'
-2017-06-12 15:03:06 SELECT `id`,`password`,`caseId`,`name` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `email` = '359418894@qq.com'
-2017-06-12 15:03:06 UPDATE `leading_student` SET `token`='63ff3c16fd833323ff4cf6d3cfa10e8d',`token_exptime`='1497250986' WHERE 1 = 1  AND `mobile` = '18967023459'
-2017-06-12 15:06:01 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = '63ff3c16fd833323ff4cf6d3cfa10e8d'
-2017-06-12 15:07:36 SELECT `id`,`token_exptime` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459' AND `token` = '63ff3c16fd833323ff4cf6d3cfa10e8d'
-2017-06-12 17:36:39 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-12 17:36:54 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-12 17:37:56 SELECT `id` FROM `leading_student` where 1 = 1  AND `mobile` = '15134567890'
-2017-06-12 17:37:56 SELECT `id` FROM `leading_teacher` where 1 = 1  AND `mobile` = '15134567890'
-2017-06-12 17:37:56 SELECT `id` FROM `leading_staff_info` where 1 = 1  AND `mobile` = '15134567890'
-2017-06-12 17:37:56 SELECT `id` FROM `leading_company` where 1 = 1  AND `mobile` = '15134567890'
-2017-06-12 17:37:56 SELECT `id` FROM `temp_register` where 1 = 1  AND `mobile` = '15134567890'
-2017-06-12 17:39:31 SELECT `id` FROM `leading_student` where 1 = 1  AND `mobile` = '18967023459'
-2017-06-12 17:39:31 UPDATE `leading_student` SET `password`='df4a4f45faa1de326a7fe1db38edf415' WHERE 1 = 1  AND `mobile` = '18967023459'
-2017-06-12 17:40:10 SELECT `password`,`caseId`,`mobile`,`status`,`email`,`stuId` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
-2017-06-12 17:40:10 INSERT INTO `login_log` (`accNumber`,`caseId`,`loginTime`) VALUES('1601321102','1','1497260410')
-2017-06-12 18:14:53 UPDATE `leading_student_info` SET `picUrl`='http://localhost:8066/leading /static/admin/images/uploads/119173ce8deb6ecb21b108b7769b0346.jpg' WHERE 1 = 1  AND `stuId` = '1601321102'
-2017-06-12 18:15:24 SELECT  s.`mobile` , s.`name` , f.`picUrl` , s.`stuId` , f.`stuId`  FROM `leading_student` as s ,`leading_student_info` as f WHERE  1=1  AND f.stuId = s.stuId AND f.stuId = '1601321102' 
-2017-06-12 18:46:07 UPDATE `leading_student_info` SET `picUrl`='http://localhost:8066/leading /static/admin/images/uploads/image_149/82260f75a7181bbe5a77501bf2f1be86.jpg' WHERE 1 = 1  AND `stuId` = '1601321102'
+2017-06-19 15:33:12 UPDATE `course_content` SET `content`='xxxx',`focus`='xxxxx' WHERE 1 = 1  AND `id` = '1'
+2017-06-19 15:33:14 UPDATE `course_content` SET `content`='xxxx',`focus`='xxxxx' WHERE 1 = 1  AND `id` = '1'
+2017-06-19 15:33:44 SELECT `id`,`stageId`,`content`,`focus` FROM `course_content` where 1 = 1  AND `courseId` = '56801'  LIMIT 0,8
+2017-06-19 15:33:44 SELECT `id`,`stageId`,`content`,`focus` FROM `course_content` where 1 = 1  AND `courseId` = '56801'
+2017-06-19 15:33:49 UPDATE `course_content` SET `content`='xxxx',`focus`='xxxxx' WHERE 1 = 1  AND `id` = '1'
+2017-06-19 15:33:53 UPDATE `leading_staff_info` SET `password`='837c44950671af42445cce6727f4dcb0' WHERE 1 = 1  AND `accNumber` = 'ls5680006' AND `email` = 'zhangyu@163.com'
+2017-06-19 15:34:00 SELECT  s.`classId` , s.`className` , s.`masterId` , f.`name` , s.`endClassTime` , s.`classType` , s.`addressId`  FROM `leading_class` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  AND s.masterId = f.teacherId ORDER BY s.startClassTime DESC  LIMIT 0,8
+2017-06-19 15:34:00 SELECT  s.`classId` , s.`className` , s.`masterId` , f.`name` , s.`endClassTime` , s.`classType` , s.`addressId`  FROM `leading_class` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  AND s.masterId = f.teacherId ORDER BY s.startClassTime DESC 
+2017-06-19 15:34:02 SELECT `teacherId`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56802' AND `caseId` = '3'
+2017-06-19 15:34:02 INSERT INTO `leading_class` (`courseId`,`className`,`masterId`,`startClassTime`,`endClassTime`,`classType`,`addressId`) VALUES('56801','java第二期','t56802','1434567890','1534567890','1','1')
+2017-06-19 15:34:03 SELECT `teacherId`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56801' AND `caseId` = '2'
+2017-06-19 15:34:03 SELECT `classId` FROM `leading_class_teacher` where 1 = 1  AND `classId` = '2' AND `teacherId` = 't56801'
+2017-06-19 15:34:06 SELECT `className` FROM `leading_class` where 1 = 1  AND `classId` = '1'
+2017-06-19 15:34:06 SELECT `teacherId`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56803' AND `caseId` = '3'
+2017-06-19 15:34:09 SELECT `className` FROM `leading_class` where 1 = 1  AND `classId` = '1'
+2017-06-19 15:34:10 SELECT `teacherId`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56803' AND `caseId` = '3'
+2017-06-19 15:34:11 SELECT  s.`classId` , f.`classId` , f.`className` , f.`masterId` , f.`classType` , f.`startClassTime`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`classId` = f.`classId` ORDER BY f.`classId` DESC LIMIT 0,8
+2017-06-19 15:34:11 SELECT  s.`classId` , f.`classId` , f.`className` , f.`masterId` , f.`classType` , f.`startClassTime`  FROM `leading_class_teacher` as s ,`leading_class` as f WHERE  1=1  AND s.`classId` = f.`classId` ORDER BY f.`classId` DESC
+2017-06-19 15:34:13 SELECT * FROM `leading_class` where 1 = 1  AND `masterId` = 't56802'  ORDER BY startClassTime DESC  LIMIT 0,8
+2017-06-19 15:34:13 SELECT * FROM `leading_class` where 1 = 1  AND `masterId` = 't56802'  ORDER BY startClassTime DESC 
+2017-06-19 15:34:15 INSERT INTO `project` (`projectName`,`description`,`startTime`,`endTime`,`type`) VALUES('how to do some project by studing','for students to learnling and using ','1434567890','1534567890','1')
+2017-06-19 15:34:17 SELECT  s.`teacherId` , f.`teacherId` , f.`mobile` , f.`dateinto`  FROM `course_project` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  AND s.teacherId = f.teacherId  LIMIT 0,8
+2017-06-19 15:34:17 SELECT  s.`teacherId` , f.`teacherId` , f.`mobile` , f.`dateinto`  FROM `course_project` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  AND s.teacherId = f.teacherId 
+2017-06-19 15:34:19 SELECT `id` FROM `course_project` where 1 = 1  AND `projectId` = '1' AND `teacherId` = 't56805' AND `courseId` = '56801'
+2017-06-19 15:34:21 SELECT * FROM `project` where 1 = 1  AND `status` = '1'  ORDER BY startTime LIMIT 0,8
+2017-06-19 15:34:21 SELECT * FROM `project` where 1 = 1  AND `status` = '1'  ORDER BY startTime
+2017-06-19 15:34:24 SELECT * FROM `recommend` where 1 = 1   ORDER BY dateinto DESC  LIMIT 0,8
+2017-06-19 15:34:24 SELECT * FROM `recommend` where 1 = 1   ORDER BY dateinto DESC 
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321103'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56801'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1701011111'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1601321102'
+2017-06-19 15:34:24 SELECT `id`,`name` FROM `leading_student` where 1 = 1  AND `stuId` = '1701011113'
+2017-06-19 15:34:26 SELECT `mobile`,`name`,`email` FROM `leading_staff_info` where 1 = 1  AND `accNumber` = 'ls5680001'

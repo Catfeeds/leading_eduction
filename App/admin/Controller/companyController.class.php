@@ -66,4 +66,11 @@ class companyController extends baseController
         $data = $obj->setResumeStatus();
         parent::ajaxReturn($data,'modify');
     }
+    //上传头像
+    public function uploadImg()
+    {
+        $obj  = new setCompanyModel();
+        $data = $obj->uploadImg();
+        parent::ajaxReturn($data,'modify');
+    }
 }

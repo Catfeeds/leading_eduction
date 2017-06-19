@@ -7,6 +7,7 @@ class checkModel extends infoModel
     private $mailPassTitle = '上海领思教育科技有限公司找回密码';
     
     private $user  = [];
+    
     private $table = array(
         1 => 'leading_student',
         2 => 'leading_teacher',
@@ -30,7 +31,7 @@ class checkModel extends infoModel
         'leading_teacher'    => 'teacherId',
         'leading_staff_info' => 'accNumber',
         'leading_company'    => 'compId',
-        'temp_register'      => 'accNumber'
+        'temp_register'      => 'tmpId'
     );
     /**
      * @构造函数，检查是否登陆
@@ -47,6 +48,14 @@ class checkModel extends infoModel
             unset($this->user);
         }
     }
+    
+    public function getTable_byKey($caseId)
+    {
+        return $this->tableId["{$caseId}"];
+    }
+    
+    
+    
     /**
     * 注销
     * @date: 2017年5月12日 上午10:35:57
@@ -221,7 +230,8 @@ class checkModel extends infoModel
                 if($arr['caseId'] && $arr['mobile']  && $arr['name'] && $arr['password'] && $arr['email']){//信息集全
                     if(!verifyModel::verifyMobile($arr['mobile'])){//此手机号没有注册
                         if(!verifyModel::verifyEmail($arr['email'])){//此邮箱没有注册
-                            $arr['status']    = 0;//未通过后台验证
+                            $arr['status']    = 0;                  //未通过后台验证
+                            $arr['dateinto']  = time();             //注册时间
                             $tempObj          = new doActionModel();
                             $arr['accNumber'] = $tempObj->productTempId();
                             $res              = parent::insert('temp_register',$arr);
@@ -304,7 +314,7 @@ class checkModel extends infoModel
         $data    = array();
         @$mobile = $_LS['mobile'];
         @$email  = $_LS['email'];
-        @$caseId = $_LS['caseId'];
+        @$caseId = intval($_LS['caseId']);
         if ($mobile && $email) {
             $arr   = array('id','password','caseId','name');
             $where = array('mobile' => $mobile,'email' => $email);
@@ -322,17 +332,25 @@ class checkModel extends infoModel
             } else {                                                    //caseId指定表
                 $resp = parent::fetchOne_byArr($table,$arr,$where);
             }
-            if (count($resp)) {
-                $token_exptime = time();
-                $token         = md5($mobile.$resp['password'].$token_exptime);                             //获得token
-                $arr           = array('token' => $token,'token_exptime' => $token_exptime);
-                $where         = array('mobile' => $mobile);
-                $response      = $this->updateInfo($resp['caseId'],$arr,$where);
-                if ($response > 0) {
-                    $data      = $this->sendEMail($email,$resp['name'],$mobile,$resp['caseId'],$token); //发邮箱  
+            if (count($resp) > 0 ) {                                    //信息正确
+                $token_exptime = time() - self::EXPTIME;
+                $where_2       = array('mobile' => $mobile,'where2' => ' AND token_expTime > '.$token_exptime);
+                $table         = $this->getTab_byid($resp['caseId']);
+                $res_2         = parent::fetchOne_byArr($table,array('id'),$where);             
+                if (count($res_2) == 0 ) {                                                      //邮箱尚未过期
+                    $token         = md5($mobile.$resp['password'].$token_exptime);                             //获得token
+                    $arr           = array('token' => $token,'token_exptime' => time());
+                    $where         = array('mobile' => $mobile);
+                    $response      = $this->updateInfo($resp['caseId'],$arr,$where);
+                    if ($response > 0) {
+                        $data      = $this->sendEMail($email,$resp['name'],$mobile,$resp['caseId'],$token); //发邮箱
+                    } else {
+                        $data['status'] = 4;
+                        $data['msg']    = '系统维修中';
+                    }
                 } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '系统维修中';
+                    $data['status'] = 5;
+                    $data['msg']    = '邮件尚未过期，请至邮箱查看';
                 }
             } else {
                 $data['status'] = 3;
@@ -352,7 +370,7 @@ class checkModel extends infoModel
     **/
     public function updateInfo($caseId,$arr,$where)
     {
-        $table = $this->getTab_byid(intval($caseId));
+        $table = $this->getTab_byid($caseId);
         return parent::update($table,$arr,$where);
     }
     /**

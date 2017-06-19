@@ -84,6 +84,29 @@
 			<li id="setResumeStatus"><a href="javascript:setResumeStatus()">企业修改投递简历的状态</a></li>
 			<li>===============</li>
 			<li id="modifyCaseId"><a href="javascript:modifyCaseId()">超管修改权限</a></li>
+			<li>===============</li>
+			<li id="handleTempInfo"><a href="javascript:handleTempInfo()">处理注册信息</a></li>
+			<li id="showRegisterInfo"><a href="javascript:showRegisterInfo()">展示注册信息</a></li>
+			<li id="modifyCompStatus"><a href="javascript:modifyCompStatus()">修改企业权限</a></li>
+			<li id="showCourses"><a href="javascript:showCourses()">显示所有课程信息</a></li>
+			<li id="modifyCourseInfo"><a href="javascript:modifyCourseInfo()">修改课程信息</a></li>
+			<li id="addCourses"><a href="javascript:addCourses()">添加大课程信息</a></li>
+			<li id="showSecCourse"><a href="javascript:showSecCourse()">显示某课程下的所有子课程信息</a></li>
+			<li id="modifySecCourseInfo"><a href="javascript:modifySecCourseInfo()">修改子课程信息</a></li>
+			<li id="addSecCourse"><a href="javascript:addSecCourse()">添加子课程信息</a></li>
+			<li id="setStaffPass"><a href="javascript:setStaffPass()">修改编辑员登陆密码</a></li>
+			<li id="showClass"><a href="javascript:showClass()">显示某课程下的所有班级信息</a></li>
+			<li id="addClass"><a href="javascript:addClass()">添加一个班级</a></li>
+			<li id="addClassTeacher"><a href="javascript:addClassTeacher()">添加班级教师信息</a></li>
+			<li id="modifyClass"><a href="javascript:modifyClass()">修改班级信息</a></li>
+			<li id="showClassTeacher"><a href="javascript:showClassTeacher()">展示一个班级下的所有任课老师</a></li>
+			<li id="showMasterClass"><a href="javascript:showMasterClass()">获得班主任所有课程信息</a></li>
+			<li id="addProject"><a href="javascript:addProject()">添加一个项目</a></li>
+			<li id="showCourseTeacher"><a href="javascript:showCourseTeacher()">展示一个课程下的所有教师</a></li>
+			<li id="addProjectTeacher"><a href="javascript:addProjectTeacher()">在项目下添加一个教师</a></li>
+			<li id="showPorjects"><a href="javascript:showPorjects()">展示所有的项目</a></li>
+			<li id="getRecommend"><a href="javascript:getRecommend()">展示所有的推荐信息</a></li>
+			<li id="getBaseInfo"><a href="javascript:getBaseInfo()">获得某个账号的详细信息</a></li>
 		</ul>
 		
 		
@@ -92,19 +115,7 @@
 		
 		<script>
 			$(document).ready(function(){
-				//$("#login").bind('click',login);
-				//setStuPass();
-				//getVerify();
-				//login();
-				//logout();
-				//sign();
-				//resetPassword();
-				//getStuInfo();
-				//setStuBase();
-				//tsetInsert();
-				//setStuWork();
-				//setStuProject();
-				//setStuEducation();
+				
 			});
 			//获得验证码
 			var getVerify = function()
@@ -118,13 +129,17 @@
 			{
 				var url  = "http://localhost:8066/leading/index.php?module=admin&method=login";
 				var data = {
-					'accNumber' :'1601321102',
-					//'accNumber' :'18917698765',
+					//'accNumber' :'1601321102',
+					//'accNumber' :'18917698765',	//company
+					//'accNumber' :'18817095201',	//admin
 					//'accNumber' :'18817095201',
 					//'accNumber' :'t56801',
-					'password'  :'cheng1',
-					'loginCase' :1,
-					'verifyCode':'8okq'
+					'accNumber':'18609876543',	//edit
+					'password'  :'cheng1',		//学、编辑员、超管
+					//'password'  :'company',		//企业
+					//'password'  :'teacher',		//师
+					'loginCase' :4,
+					'verifyCode':'148f'
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -161,8 +176,8 @@
 				var data = {
 					"invitation" : "1701321101",//可以为空
 					"caseId" 	 : 1,
-					"mobile" 	 : "18725712349",
-					"email" 	 : "hxq6@568it.cn",
+					"mobile" 	 : "18725712369",
+					"email" 	 : "hxq6@5686it.cn",
 					"name" 		 : "张三6",
 					"password" 	 : "xxxxx",
 					"verifyCode" : "123456"//手机验证码，后期实现
@@ -182,10 +197,10 @@
 			//重置密码
 			var resetPassword = function() {
 				var data = {
-					"mobile" 	 : "18967023459",
+					"mobile" 	 : "18609876543",
 					"password_1" : "cheng1",
 					"password_2" : "cheng1",
-					"caseId" 	 : 1
+					"caseId" 	 : 4
 				};
 				var url = "http://localhost:8066/leading/index.php?module=admin&method=resetPassword";
 				GLOBAL.ajax(url, data);
@@ -360,7 +375,7 @@
 				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=teacher&method=getClassStuInfo";
 				var data = {
 						"accNumber":"t56801",
-						"classId"  :1
+						"classId"  :2
 				};
 				GLOBAL.ajax(url,data);
 			}
@@ -550,6 +565,292 @@
 				var data  ={};
 				GLOBAL.ajax(url, data);
 			}
+			
+			//处理注册信息
+			var handleTempInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=handleTempInfo";
+				var data = {
+						"accNumber":"ls5680006",
+					    "tmpId":"tmp5680008",
+					    "status":1,
+					    /* "classId":1,
+					    "addressId":1 */
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//展示所有注册信息
+			var showRegisterInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showRegisterInfo";
+				var data = {
+						"accNumber":"ls5680006",
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改企业账号状态
+			var modifyCompStatus = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=modifyCompStatus";
+				var data = {
+						"accNumber":"ls5680006",
+					    "compId":"com5680001",
+					    "status":1
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//显示所有课程信息
+			var showCourses = function ()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showCourses";
+				var data = {
+						"accNumber":"ls5680006"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改课程信息
+			var modifyCourseInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=modifyCourseInfo";
+				var data = {
+						"accNumber":"ls5680006",
+						"courseId" :56801,
+						"description":"水中央",
+						//"hhsda":"xxxxxx"
+				}; 
+				GLOBAL.ajax(url, data);
+			}
+			
+			//添加课程
+			var addCourses = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addCourses";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseName":"UI工程师",
+					    "description":"画画和p图",
+					    "status":0
+				}; 
+				GLOBAL.ajax(url, data);
+			}
+			
+			//显示某课程下的所有子课程内容信息
+			var showSecCourse = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showSecCourse";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseId":56801,
+					    "page":1,
+					    "pageSize":8
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改子课程信息
+			var modifySecCourseInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=modifySecCourseInfo";
+				var data = {
+						"accNumber":"ls5680006",
+					    "secId":1,
+					    "content":"xxxx",
+					    "focus":"xxxxx" 
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			var addSecCourse = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addSecCourse";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseId":56801,
+					    "stageId":1,
+					    "content":"ssfadad",
+					    "focus":"sdfadfa"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//修改编辑员登陆密码
+			var setStaffPass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=setStaffPass";
+				var data = {
+						"accNumber":"ls5680006",
+					    "email":"zhangyu@163.com",
+					    "oldPass":"cheng1",
+					    "newPass_1":"student",
+					    "newPass_2":"student"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//显示某课程下的所有班级信息
+			var showClass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showClass";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseId" :"56801",
+					    "page":1,
+					    "pageSize":8
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//添加一个班级
+			var addClass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addClass";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseId":56801,
+					    "className":"java第二期",
+					    "masterId" :"t56802",
+					    "name":"李好",
+					    "startClassTime":1434567890,
+					    "endClassTime":1534567890,
+					    "classType":1,
+					    "addressId":1,
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			
+			//添加班级教师信息
+			var addClassTeacher = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addClassTeacher";
+				var data = {
+						"accNumber":"ls5680006",
+					    "classId":2,
+					    "teacherId":"t56801",
+					    "name":"水之渊"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			
+			//修改班级信息
+			var modifyClass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=modifyClass";
+				var data = {
+						"accNumber":"ls5680006",
+					    "classId":1,
+					    "masterId":"t56803",
+					    
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//显示一个班级的所有任课老师，或者一个老师教授的所有班级
+			var showClassTeacher = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showClassTeacher";
+				var data = {
+						"accNumber":"ls5680006",
+					    "teacherId":"t56801"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//获得班主任所有课程信息
+			var showMasterClass = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showMasterClass";
+				var data = {
+						"accNumber":"ls5680006",
+						"masterId":"t56802"
+				};
+				GLOBAL.ajax(url, data);
+			}
+			
+			//添加一个项目
+			var addProject = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addProject";
+				var data = {
+						"accNumber":"ls5680006",
+						"projectName":"how to do some project by studing",
+						"description":"for students to learnling and using ",
+						"startTime":1434567890,
+						"endTime":1534567890,
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			//展示一个课程下的所有教师
+			var showCourseTeacher = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showCourseTeacher";
+				var data = {
+						"accNumber":"ls5680006",
+					    "courseId":56801,
+					    "page":1,
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			//为项目添加教师
+			var addProjectTeacher = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=addProjectTeacher";
+				var data = {
+						"accNumber":"ls5680006",
+					    "projectId":1,
+					    "courseId":56801,
+					    "teacherId":"t56805"
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			
+			//展示所有的项目
+			var showPorjects = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=showPorjects";
+				var data = {
+						"accNumber":"ls5680006",
+					    "page":1,
+					    "pageSize":8,
+					    "status":1
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			
+			//获得所有的推荐信息
+			var getRecommend = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=getRecommend";
+				var data = {
+						"accNumber":"ls5680006",
+					    "page":1,
+					    "pageSize":8
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			//获得某个账户的详细信息
+			var getBaseInfo = function()
+			{
+				var url  = "http://localhost:8066/leading/index.php?module=admin&controller=edit&method=getBaseInfo";
+				var data = {
+						"accNumber":"ls5680006",
+						"userId":"ls5680001",
+						"caseId":5,
+				};
+				GLOBAL.ajax(url,data);
+			}
+			
+			
 			
 			var GLOBAL = {};
 			GLOBAL.ajax = function(url, data) {

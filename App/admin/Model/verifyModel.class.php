@@ -6,6 +6,9 @@ class verifyModel extends infoModel
     private static $table = array(
         1 => 'leading_student',
         2 => 'leading_teacher',
+        3 => 'leading_teacher',
+        4 => 'leading_staff_info',
+        5 => 'leading_staff_info',
         6 => 'leading_staff_info',
         9 => 'leading_company',
         8 => 'temp_register'
@@ -18,19 +21,21 @@ class verifyModel extends infoModel
     {
         $arr             = array('id');
         $where['mobile'] = $mobile; 
-        $table = !empty($caseId)?self::$table[$caseId]:self::$table;
-        if(is_array($table)){
+        $table = !empty($caseId)?self::$table[$caseId]:array_unique(self::$table);
+        if (is_array($table)) {
             foreach($table as $key=>$value){
-                @$res = parent::fetchOne_byArr($value,$arr,$where);
-                if(count($res) >0 && ($res['id'] > 0)){
+                @$resp = parent::fetchOne_byArr($value,$arr,$where);
+                if (count($resp) >0 && ($resp['id'] > 0)) {
                     $res = true;
                     break;
                 }
             }
-        }else{
-            @$res = parent::fetchOne_byArr($table,$arr,$where);
+        } else {                                                    //单表
+            @$resp = parent::fetchOne_byArr($table,$arr,$where);
+            if(count($resp) >0 && ($resp['id'] > 0)){
+                $res = true;
+            }
         }
-        
         return $res;
     }
     
@@ -38,16 +43,24 @@ class verifyModel extends infoModel
      * @验证邮箱是否已经注册
      * @return boolean true 表示有注册
      */
-    public static function verifyEmail($email)
+    public static function verifyEmail($email,$caseId = null)
     {
+        $res            = false;
         $arr            = array('id');
         $where['email'] = $email;
-        $table          = array('leading_student','leading_teacher','leading_staff_info','leading_company','temp_register');
-        foreach($table as $key=>$value){
-            @$res = parent::fetchOne_byArr($value,$arr,$where);
-            if(count($res)>0 && ($res['id'] > 0)){
+        $table = !empty($caseId)?self::$table[$caseId]:array_unique(self::$table);
+        if (is_array($table)) {
+            foreach($table as $key=>$value){
+                @$resp = parent::fetchOne_byArr($value,$arr,$where);
+                if (count($resp) >0 && ($resp['id'] > 0)) {
+                    $res = true;
+                    break;
+                }
+            }
+        } else {                                                    //单表
+            @$resp = parent::fetchOne_byArr($table,$arr,$where);
+            if(count($resp) >0 && ($resp['id'] > 0)){
                 $res = true;
-                break;
             }
         }
         return $res;

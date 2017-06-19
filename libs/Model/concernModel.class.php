@@ -30,18 +30,4 @@ class concernModel extends tableModel
         $sql  ="select concern from ".self::$table." where concerned = '".$con."'";
         return DB::fetchAll($sql);
     }
-    /**
-     * 根据字段数组获得相应的一条信息
-     */
-   /*  public function getInfo_byArr($arr,$where,$where2='')
-    {
-        return DB::fetchOne_byArr(self::$table,$arr,$where,$where2);
-    } */
-    /**
-     * 根据字段数组获得相应的多条信息
-     */
-   /*  public function getInfoAll_byArr($arr,$where,$where2='')
-    {
-        return DB::fetchAll_byArr(self::$table,$arr,$where,$where2);
-    } */
 }

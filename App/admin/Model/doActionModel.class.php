@@ -3,6 +3,34 @@ namespace App\admin\Model;
 
 class doActionModel extends infoModel
 {
+    
+    private static $table = array(
+        1 => 'leading_student',
+        2 => 'leading_teacher',
+        3 => 'leading_staff_info',
+        4 => 'leading_company',
+        5 => 'temp_register'
+    );
+    
+    private static $where = array(
+        'leading_student'    => 'stuId',
+        'leading_teacher'    => 'teacherId',
+        'leading_staff_info' => 'accNumber',
+        'leading_company'    => 'compId',
+        'temp_register'      => 'tmpId'
+    );
+    
+    
+    public function getTable_byCaseId($caseId)
+    {
+        return self::$table[$caseId];
+    }
+    
+    public function getWhere($table)
+    {
+        return self::$where[$table];
+    }
+    
     /**
     * 重置密码
     * @date: 2017年5月12日 下午1:21:02
@@ -19,46 +47,32 @@ class doActionModel extends infoModel
         @$password_1 = $_LS['password_1'];
         @$password_2 = $_LS['password_2'];
         if($password_1 == $password_2){//两个密码一致
-            if(verifyModel::verifyMobile($mobile)){
-                $resetPass = myMd5($password_1);
-                if ($caseId && $mobile && $resetPass) {
-                    if(isMobile($mobile)){
-                        $arr             = array( "password" => $resetPass  ); // 要更新的字段和值
-                        $where['mobile'] = $mobile;
-                        switch ($caseId){
-                            case 1: // 学生
-                                $table = 'leading_student';
-                                break;
-                            case 2:
-                            case 3: // 教师
-                                $table = 'leading_teacher';
-                                break;
-                            case 4:
-                            case 5:
-                            case 6:
-                            case 7: // 员工
-                                $table = 'leading_staff_info';
-                                break;
-                            case 9: // 企业
-                                $table = 'leading_company';
-                                break;
-                            default: // 临时表
-                                $table = 'temp_register';
-                                break;
+            if (verifyLen($password_1, 6, 15)) {
+                if(verifyModel::verifyMobile($mobile)){                             //手机号是否注册
+                    $resetPass = myMd5($password_1);
+                    if ($caseId && $mobile && $resetPass) {
+                        if(isMobile($mobile)){
+                            $arr             = array( "password" => $resetPass  );  // 要更新的字段和值
+                            $where['mobile'] = $mobile;
+                            $obj             = new checkModel();
+                            $table           = $obj->getTable_byKey($caseId);       //获得相关表
+                            $res  = parent::update($table,$arr,$where);
+                            $data = parent::formatResponse($res);
+                        }else{
+                            $data['status'] = 2;
+                            $data['msg']    = "手机格式不符";
                         }
-                        $res  = parent::update($table,$arr,$where);
-                        $data = parent::formatResponse($res);
                     }else{
-                        $data['status'] = 2;
-                        $data['msg']    = "手机格式不符";
+                        $data['status'] = 3;
+                        $data['msg']    = "数据不全";
                     }
                 }else{
-                    $data['status'] = 3;
-                    $data['msg']    = "数据不全";
+                    $data['status'] = 5;
+                    $data['msg']    = '手机号未注册';
                 }
-            }else{
-                $data['status'] = 5;
-                $data['msg']    = '手机号未注册';
+            } else {
+                $data['status'] = 6;
+                $data['msg']    = '密码长度不符合规定';
             }
         }else{
             $data['status'] = 4;
@@ -75,15 +89,19 @@ class doActionModel extends infoModel
      * 7，8，9，10位是该班级的第几位学员
      * return string
      */
-    public function productStuId($classId,$addressId)
+    public function productStuId($classId = null,$addressId = null)
     {
         //获得1，2位
+        $classId          = is_null($classId)?1:$classId;
+        $addressId        = is_null($addressId)?1:$addressId;
         $year             = substr(date('y-m-d'),0,2);//获取入学年份
+        
         //获得最后一个学生学号
         $arr              = array('id','stuId');
         $where['classId'] = $classId;
         $where['where2']  = "order by id desc ";
         $data = parent::fetchOne_byArr('leading_student_info',$arr,$where);
+        
         //规定学生数量，获得7，8，9，10
         if(count($data)>0){
             $lastStuId = substr($data['stuId'],-4,4);
@@ -170,7 +188,7 @@ class doActionModel extends infoModel
     {
         $tempId          = '';
         $arr             = array('accNumber','id');
-        $where['caseId'] = 8;
+        //$where['caseId'] = 8;
         $where['where2'] = ' order by id desc';
         $res             = parent::fetchOne_byArr('temp_register',$arr,$where);
         if(count($res) > 0){
@@ -182,6 +200,23 @@ class doActionModel extends infoModel
         $tempId = 'tmp'.$num;
         return $tempId;
     }
+    
+    //生成课程id
+    public function productCourseId()
+    {
+        $courseId = 0;
+        $arr      = array('courseId');
+        $where    = array('where2' => ' ORDER BY courseId DESC ');
+        $res      = parent::fetchOne_byArr('course',$arr,$where);
+        if (count($res) > 0) {
+            $courseId = intval($res['courseId']) + 1;
+        } else {
+            $courseId = 56801;
+        }
+        return $courseId;
+    }
+    
+    
     
     /**
      * 修改密码
@@ -320,4 +355,147 @@ class doActionModel extends infoModel
         }
         return $data;
     }
+    
+    /**
+     * 上传图片，并生成149x185大小的缩略图
+     * @param string $table        用户表
+     * @param array $where         更新url条件
+     * @param string $destination  图片文件路径
+     * @return array
+     */
+    public function uploadPic($table,$where,$destination,$urlName=null)
+    {
+        $obj = new uploadFileModel();
+        $msg = $obj->uploadFileImg();
+        if (is_array($msg)) {
+            if (count($msg) > 0 ){
+                $fileName    = './static/admin/images/uploads/'.$msg[0]['name'];
+                $destination = $destination.$msg[0]['name'];
+                $resource    = $obj->thumb($fileName,$destination,149,185,false);
+                $des         = preg_replace('/^[\.]/',' ',$destination);
+                $url         = 'http://'.$_SERVER['HTTP_HOST'].'/leading'.$des;
+                $urlName     = is_null($urlName)?'picUrl':$urlName;
+                $arr         = array("{$urlName}" => $url);
+                $res         = parent::update($table,$arr,$where); 
+                $data        = parent::formatResponse($res);
+            } else {
+                $data['status'] = 5;
+                $data['msg']    = '上传失败';
+            }
+        } else {
+            $data['status'] = 4;
+            $data['msg']    = $msg;
+        }
+        return $data;
+    }
+    
+    
+    
+    /**
+     * 验证角色号
+     * @param string $accNumber
+     * @return int
+     */
+    public function verifyCaseId($accNumber)
+    {
+        $caseId = 0;
+        if (isMobile($accNumber)) {                                 //手机号
+            return 6;
+        }
+        if ($this->verifyStuId($accNumber)) {                       //学号
+            return 1;
+        }
+        if ($this->verifyTeacherId($accNumber)) {                   //教师号
+            return 2;
+        }
+        if ($this->verifyStaffId($accNumber)) {                     //员工号
+            return 3;
+        }
+        if ($this->verifyCompId($accNumber)) {                      //企业号
+            return 4;
+        }
+        if ($this->verifyTmpId($accNumber)) {                       //临时号
+            return 5;
+        }
+        return $caseId;
+    }
+    
+    /**
+     * 验证学号
+     * @param string $accNumber
+     * @return number
+     */
+    public function verifyStuId($accNumber)
+    {
+        $res = 0;
+        $len = is_string($accNumber)?strlen(trim($accNumber)):0;
+        if ($len == 10) {
+            $res = preg_match('/^[\d]{10}$/',trim($accNumber)); 
+        }
+        return $res;
+    }
+    
+    /**
+     * 验证企业号
+     * @param string $accNumber
+     * @return int 0|1
+     */
+    public function verifycompId($accNumber)
+    {
+        $res = 0;
+        $len = is_string($accNumber)?strlen(trim($accNumber)):0;
+        if ($len == 10) {
+            $res = preg_match('/^(com)([\d]{7})$/',trim($accNumber));
+        }
+        return $res;
+    }
+    
+    /**
+     * 验证员工号
+     * @param string $accNumber
+     * @return int 0|1
+     */
+    public function verifyStaffId($accNumber)
+    {
+        $res = 0;
+        $len = is_string($accNumber)?strlen(trim($accNumber)):0;
+        if ($len == 9) {
+            $res = preg_match('/^(ls)([\d]{7})$/',trim($accNumber));
+        }
+        return $res;
+    }
+    
+    
+    /**
+     * 验证临时账号
+     * @param string $accNumber
+     * @return number 1|0
+     */
+    public function veiryTmpId($accNumber)
+    {
+        $res = 0;
+        $len = is_string($accNumber)?strlen(trim($accNumber)):0;
+        if ($len == 10) {
+            $res = preg_match('/^(tmp)([\d]{7})$/',trim($accNumber));
+        }
+        return $res;
+    }
+    
+    /**
+     * 验证教师号
+     * @param string $accNumber
+     * @return int 0|1
+     */
+    public function verifyTeacherId($accNumber)
+    {
+        $res = 0;
+        $len = is_string($accNumber)?strlen(trim($accNumber)):0;
+        if ($len = 6) {
+            $res = preg_match('/^(t)([\d]{5})$/',trim($accNumber));
+        }
+        return $res;
+    }
+    
+    
+    
 }

@@ -6,15 +6,12 @@ class student_workModel extends tableModel
 {
     private static $table = 'student_work';
     
-    /**
-    * 根据字段数字获得相关信息
-    * @date: 2017年5月16日 下午1:33:43
-    * @author: lenovo2013
-    * @param: variable
-    * @return:
-    */
-    /* public function getInfo_byArr($arr,$where,$where2='')
+    private static $student_work = array('id','stuId','compName','compAddress','jobName','salary','treatment','dateWork','workOut','description'); 
+    
+    
+    
+    public function getTabArr($name)
     {
-        return DB::fetchOne_byArr(self::$table,$arr,$where,$where2);
-    } */
+        return self::${$name};
+    }
 }

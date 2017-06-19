@@ -12,11 +12,18 @@ class leading_jobModel extends tableModel
     private static $leading_job        = array('jobId','compId','jobName','status','people','duty','people','demand','treatment','workAddress','jobDate','eduBacId');
     private static $leading_resume_log = array('l_id','jobId','resumeTime','accNumber','caseId','r_status');
     
+    
+    public function getTabArr($name)
+    {
+        return self::${$name};
+    }
+    
+    
     public function fetchOne_byArrJoin($table,$arr,$where,$tableArr = null)
     {
         if(is_null($tableArr)){
             $tableArr[0] = self::${$table[0]};
-            $tableArr[1] = self::${$table[1]};
+            $tableArr[1] = parent::getArr($table[1]);
         }
         return DB::fetchOne_byArrJoin($table,$arr,$where,$tableArr);
     }
@@ -24,14 +31,14 @@ class leading_jobModel extends tableModel
     public function fetchAll_byArrJoin($table,$arr,$where,$tableArr = null)
     {
         if(is_array($table) && is_null($tableArr)){
-            $tableArr = array(self::${$table[0]},self::${$table[1]});
+            $tableArr = array(self::${$table[0]},parent::getArr($table[1]));
         }
         return DB::fetchAll_byArrJoin($table,$arr,$where,$tableArr);
     }
     public function getNum($table,$arr,$where,$tableArr = null)
     {
         if (is_array($table)) {
-            $tableArr = array(self::${$table[0]},self::${$table[1]});
+            $tableArr = array(self::${$table[0]},parent::getArr($table[1]));
         }
         return DB::getNum($table,$arr,$where,$tableArr);
     }

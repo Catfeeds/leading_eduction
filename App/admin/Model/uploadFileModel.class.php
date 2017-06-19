@@ -3,9 +3,9 @@ namespace App\admin\Model;
 
 class uploadFileModel{
 	
-	private static $image      = array('jpg','jpeg','png','gif');//图片类型
+	private static $image      = array('jpg','jpeg','png','gif');  //图片类型
 	private static $imgPath    ='./static/admin/images/uploads';
-	private static $imgMaxSize = '2097152';
+	private static $imgMaxSize = '2097152';                        //单位字节 ，2M
 	private static $imgFlag    = true;
 	
 	//验证是否符合上传文件类型

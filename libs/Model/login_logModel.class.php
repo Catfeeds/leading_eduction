@@ -6,6 +6,16 @@ class login_logModel extends tableModel
 {
     private static $table = 'login_log';
     
+    private $login_log = array('id','accNumber','caseId','loginTime');
+    
+    
+    public function getTabArr($name)
+    {
+        return self::${$name};
+    }
+    
+    
+    
     /**
     * 写入一条登陆记录
     * @date: 2017年5月12日 上午11:02:06

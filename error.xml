@@ -9,3 +9,24 @@
 2017-06-09 21:16:28 SELECT  f.`r_status`  FROM `leading_resume_log` as f  WHERE  1=1  AND f.`l_id` = '1'  AND s.`jobId` = f.`jobId` 
 2017-06-10 22:41:04 SELECT `rangId` FROM `leading_staff_info` where 1 = 1  AND `accNumber` = 'ls5680006'
 2017-06-12 14:20:11 SELECT `id`,`password`,`caseId`,`name` FROM `leading_company` where 1 = 1  AND `mobile` = '18967023459' AND `email` = 'hxq666666@162.com'
+2017-06-13 15:44:16 INSERT INTO `leading_student` (`stuId`,`name`,`mobile`,`email`,`password`,`status`,`caseId`,`dateinto`) VALUES('1701011110','张三6','18725712369','hxq6@5686it.cn','8c070fc337e7f02bf4f1b6f097881037','1','1','1497339855')
+2017-06-15 12:49:35 SELECT  s.`classId` , s.`className` , s.`masterId` , f.`name` , s.`startTime` , s.`endTime` , s.`classType`  FROM `leading_class` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  LIMIT 0,8
+2017-06-15 12:51:30 SELECT  s.`classId` , s.`className` , s.`masterId` , f.`name` , s.`startTime` , s.`endTime` , s.`classType`  FROM `leading_class` as s ,`leading_teacher` as f WHERE  1=1  AND s.`courseId` = '56801'  AND s.masterId = f.teacherId  LIMIT 0,8
+2017-06-15 12:53:13 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 12:57:05 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 12:57:30 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 13:00:05 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 13:03:40 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 13:07:22 SELECT `classId`,`className`,`masterId`,`name`,`starClasstTime`,`endClassTime`,`classType`,`addresssId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 13:13:09 SELECT `classId`,`className`,`masterId`,`name`,`startClasstTime`,`endClassTime`,`classType`,`addressId` FROM `Array` where 1 = 1  AND `courseId` = '56801'  AND s.masterId = f.teacherId 
+2017-06-15 14:09:33 SELECT `teacherId`,`name` FROM `leading_teacher` where 1 = 1  AND `teacherId` = 't56801' AND `classId` = '3'
+2017-06-15 16:18:34 UPDATE `Array` SET `masterId`='t56807' WHERE 1 = 1  AND `classId` = '1'
+2017-06-16 09:38:09 SELECT `classId`,`className`,`master`,`classType` FROM `Array` where 1 = 1  AND `teahcerId` = 't56801'  AND s.`classId` = f.`classId` ORDER BY f.`classId` DESC
+2017-06-16 09:40:06 SELECT `classId`,`className`,`master`,`classType` FROM `Array` where 1 = 1  AND `teahcerId` = 't56801'  AND s.`classId` = f.`classId` ORDER BY f.`classId` DESC
+2017-06-16 09:42:55 SELECT `classId`,`className`,`master`,`classType` FROM `Array` where 1 = 1  AND `teahcerId` = 't56801'  AND s.`classId` = f.`classId` ORDER BY f.`classId` DESC
+2017-06-19 10:22:22 INSERT INTO `leading_company` (`compId`,`compName`,`mobile`,`password`,`email`,`status`,`caseId`,`dateinto`) VALUES('com5680005','水笑漂企业','18976512346','8c070fc337e7f02bf4f1b6f097881037','18976512346@163.com','1','9','1497838942')
+2017-06-19 10:22:58 INSERT INTO `leading_company` (`compId`,`compName`,`mobile`,`password`,`email`,`status`,`caseId`,`dateinto`) VALUES('com5680005','水笑漂企业','18976512346','8c070fc337e7f02bf4f1b6f097881037','18976512346@163.com','1','9','1497838978')
+2017-06-19 13:11:40 SELECT `mobile`,`name`,`picUrl` FROM `leading_staff_info` where 1 = 1  AND `accNumber` = 'ls5680001'
+2017-06-19 13:32:09 INSERT INTO `course` (`courseName`,`description`,`status`,`courseId`) VALUES('UI工程师','画画和p图','0','56811')
+2017-06-19 13:35:56 INSERT INTO `course` (`courseName`,`description`,`status`,`courseId`) VALUES('UI工程师','画画和p图','0','56811')
+2017-06-19 13:37:19 INSERT INTO `course` (`courseName`,`description`,`status`,`courseId`) VALUES('UI工程师','画画和p图','0','56811')

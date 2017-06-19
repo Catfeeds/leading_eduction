@@ -246,7 +246,7 @@
 		$res = '';
 		$len = is_string($mobile)?strlen(trim($mobile)):0;
 		if($len == 11){
-			$res = preg_match('/^1[3458]{1}\d{9}$/',trim($mobile));
+			$res = preg_match('/^1[34578]{1}\d{9}$/',trim($mobile));
 		}
 		return $res;
 	}

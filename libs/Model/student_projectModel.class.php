@@ -9,11 +9,18 @@ class student_projectModel extends tableModel
     private static $student_project = array("id","projectId","stuId","assess","stuDescription","professional");
     private static $project         = array("projectId","projectName","courseId","teacherId","description","status","startTime","endTime","picUrl","url","people");
     
+    
+    public function getTabArr($name)
+    {
+        return self::${$name};
+    }
+    
+    
     public function fetchAll_byArrJoin($table,$arr,$where,$tableArr)
     {
         if(is_null($tableArr)){
             $tableArr[0] = self::${$table[0]};
-            $tableArr[1] = self::${$table[1]};
+            $tableArr[1] = parent::getArr($table[1]);
         }
         return DB::fetchAll_byArrJoin($table,$arr,$where,$tableArr);
     }
@@ -22,7 +29,7 @@ class student_projectModel extends tableModel
     {
         if(is_null($tableArr)){
             $tableArr[0] = self::${$table[0]};
-            $tableArr[1] = self::${$table[1]};
+            $tableArr[1] = parent::getArr($table[1]);
         }
         return DB::fetchOne_byArrJoin($table,$arr,$where,$tableArr);
     }
@@ -39,7 +46,7 @@ class student_projectModel extends tableModel
     {
         $tableArr = array();
         $tableArr[0] = self::${$table[0]};
-        $tableArr[1] = self::${$table[1]};
+        $tableArr[1] = parent::getArr($table[1]);
         return $tableArr;
     }
 }

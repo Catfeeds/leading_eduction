@@ -52,4 +52,17 @@ class teacherController extends baseController
         $data = $obj->setStuAssess();
         parent::ajaxReturn($data,'modify');
     }
+    //上传头像
+    public function uploadImg()
+    {
+        $obj  = new setTeacherModel();
+        $data = $obj->uploadImg();
+        parent::ajaxReturn($data,'modify');
+    }
+    public function getTeacherClass()
+    {
+        $obj  = new getTeacherModel();
+        $data = $obj->getTeacherClass();
+        parent::ajaxReturn($data,'modify');
+    }
 }

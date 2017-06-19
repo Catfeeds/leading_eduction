@@ -6,11 +6,10 @@ class teacher_coursewareModel extends tableModel
 {
     private static $table = 'teacher_courseware';
     
-    /**
-     *根据字段数组信息  获得多条信息
-     */
-    /* public function getInfoAll_byArr($arr,$where,$where2)
+    private static $teacher_courseware = array('id','teacherId','secCourseId','description','url','caseId','dateinto');
+    
+    public function getTabArr($name)
     {
-        return DB::fetchALL_byArr(self::$table,$arr,$where,$where2);
-    } */
+        return self::${$name};
+    }
 }
