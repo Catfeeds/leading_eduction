@@ -181,6 +181,67 @@ class editController extends baseController
         parent::ajaxReturn($data,'modify');
     }
     
+    public function getRegisterInfo()
+    {
+        $obj  = new getEditModel();
+        $data = $obj->getRegisterInfo();
+        parent::ajaxReturn($data,'modify');
+    }
+    public function addPhotoFigure()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->addPhotoFigure();
+        parent::ajaxReturn($data,'modify');
+    }
     
+    public function uploadPhoto()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->uploadPhoto();
+        parent::ajaxReturn($data,'modify');
+    }
     
+    public function modifyPhotoStatus()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->modifyPhotoStatus();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    public function addTuition()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->addTuition();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    public function showTuition()
+    {
+        $obj  = new getEditModel();
+        $data = $obj->showTuition();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    public function modifyTuitonById()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->modifyTuitonById();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    //添加视频信息
+    public function addVedioInfo()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->addVedioInfo();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    //为视频添加图片
+    public function addVedioPicUrl()
+    {
+        $obj  = new setEditModel();
+        $data = $obj->addVedioPicUrl();
+        parent::ajaxReturn($data,'modify');
+    }
 }

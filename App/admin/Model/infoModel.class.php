@@ -5,6 +5,13 @@ class infoModel
 {
     private $talbe = 'leading_student';
     
+    
+    public function index()
+    {
+        echo '方法错误';
+    }
+    
+    
     public function query($sql,$table){
         $table = is_null($table)?$this->table:$table;
         $obj   = M("{$table}");
@@ -101,6 +108,13 @@ class infoModel
         return $obj->getNum($table,$arr,$where,$tableArr);
     }
     
+    /**
+     * 验证信息是否安全
+     * @param array $arr
+     * @param array $all
+     * @param boolean $type 默认验证 $arr 中的字段是否在$all中，反之亦然
+     * @return number
+     */
     public function verifyCount($arr,$all,$type = true)
     {
         $count = 0;

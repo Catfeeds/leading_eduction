@@ -447,8 +447,8 @@ class setStudentModel extends infoModel
      */
     public function uploadImg()
     {
-        $data = array();
-        @$stuId  = $this->user['stuId'];
+        $data   = array();
+        @$stuId = $this->user['stuId'];
         if (!empty($stuId)) {
             $table = $this->stuInfoTable;
             $where = array('stuId' => $stuId);

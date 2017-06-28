@@ -357,22 +357,32 @@ class doActionModel extends infoModel
     }
     
     /**
-     * 上传图片，并生成149x185大小的缩略图
-     * @param string $table        用户表
-     * @param array $where         更新url条件
-     * @param string $destination  图片文件路径
+     * 上传图片，默认生成149x185大小的缩略图
+     * @param string $table 需要更新的数据表
+     * @param array $where  更新条件
+     * @param string $destination   存放地址
+     * @param string $urlName       更新字段                       默认为picUrl
+     * @param int $size     上传的文件不能超过该值                 默认为2M 单位为字节
+     * @param boolean $thumb        是否生成缩略图            默认生成149x185
+     * @param $dst_w 缩略图的宽
+     * @param $dst_h 缩略图的高
+     * @param $isReservedSource 是否保存原图资源
      * @return array
      */
-    public function uploadPic($table,$where,$destination,$urlName=null)
+    public function uploadPic($table,$where,$destination,$urlName=null,$size = null,$thumb = true,$dst_w = 149,$dst_h = 185,$isReservedSource = false)
     {
         $obj = new uploadFileModel();
-        $msg = $obj->uploadFileImg();
-        if (is_array($msg)) {
-            if (count($msg) > 0 ){
+        $msg = $obj->uploadFileImg($size);
+        if (is_array($msg)) {                               //文件上传成功
+            if (count($msg) > 0 ) {                         //且数量超过一个
                 $fileName    = './static/admin/images/uploads/'.$msg[0]['name'];
                 $destination = $destination.$msg[0]['name'];
-                $resource    = $obj->thumb($fileName,$destination,149,185,false);
-                $des         = preg_replace('/^[\.]/',' ',$destination);
+                if ($thumb) {
+                    $resource = $obj->thumb($fileName,$destination,$dst_w,$dst_h,$isReservedSource);
+                } else {
+                    $resource = $obj->thumb($fileName,$destination,null,null,$isReservedSource,1);  //不生成缩略图
+                }
+                $des         = preg_replace('/^[\.]/','',$destination);
                 $url         = 'http://'.$_SERVER['HTTP_HOST'].'/leading'.$des;
                 $urlName     = is_null($urlName)?'picUrl':$urlName;
                 $arr         = array("{$urlName}" => $url);
@@ -388,6 +398,31 @@ class doActionModel extends infoModel
         }
         return $data;
     }
+/*     public function uploadPic($table,$where,$destination,$urlName=null,$size = null,$thumb = true)
+    {
+        $obj = new uploadFileModel();
+        $msg = $obj->uploadFileImg($size);
+        if (is_array($msg)) {
+            if (count($msg) > 0 ){
+                $fileName    = './static/admin/images/uploads/'.$msg[0]['name'];
+                $destination = $destination.$msg[0]['name'];
+                $resource    = $obj->thumb($fileName,$destination,149,185,false);
+                $des         = preg_replace('/^[\.]/','',$destination);
+                $url         = 'http://'.$_SERVER['HTTP_HOST'].'/leading'.$des;
+                $urlName     = is_null($urlName)?'picUrl':$urlName;
+                $arr         = array("{$urlName}" => $url);
+                $res         = parent::update($table,$arr,$where); 
+                $data        = parent::formatResponse($res);
+            } else {
+                $data['status'] = 5;
+                $data['msg']    = '上传失败';
+            }
+        } else {
+            $data['status'] = 4;
+            $data['msg']    = $msg;
+        }
+        return $data;
+    } */
     
     
     

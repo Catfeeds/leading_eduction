@@ -43,7 +43,12 @@ class uploadFileModel{
 	/**
 	 * 上传文件
 	 */
-	public function uploadFileImg()
+	/**
+	 * 上传文件
+	 * @param int $size        能上传的最大文件大小
+	 * @return array
+	 */
+	public function uploadFileImg($size = null)
 	{
 		$i = 0;
 		if(!file_exists(self::$imgPath)){
@@ -63,17 +68,18 @@ class uploadFileModel{
 					}
 				}
 				//检验图片大小
-				if($file['size']>self::$imgMaxSize){
+				$size  = empty($size)?self::$imgMaxSize:$size;
+				if($file['size']>$size){
 					exit('上传文件过大');
 				}
 				if(!is_uploaded_file($file['tmp_name'])){
 					exit('不是通过HTTP POST方式上传的');
 				}
-				$uniName = getUniName();
-				$fileName = $uniName.".".$ext;
-				$destination = self::$imgPath."/".$fileName;
-				if(move_uploaded_file($file['tmp_name'],$destination)){
-					$file['name'] = $fileName;
+				$uniName     = getUniName();                            //生成唯一标识符
+				$fileName    = $uniName.".".$ext;                       //唯一标识符拼接后缀名
+				$destination = self::$imgPath."/".$fileName;            //文件存放地址
+				if(move_uploaded_file($file['tmp_name'],$destination)){ //临时文件移动到目的地
+					$file['name'] = $fileName;                          
 					unset($file['error'],$file['tmp_name'],$file['type']);
 					$uploadFiles[$i] = $file;
 					//$uploadFiles[$i] = $destination;
@@ -122,7 +128,7 @@ class uploadFileModel{
 			$dst_w = $src_w * $scale;
 			$dst_h = $src_h * $scale;
 		}
-		$mime = image_type_to_mime_type($imageType);
+		$mime = image_type_to_mime_type($imageType);      //获得的图像类型的 MIME 类型
 		$createFun = str_replace('/','createfrom',$mime);
 		$outFun = str_replace('/',null,$mime);
 		$src_image = $createFun($fileName);

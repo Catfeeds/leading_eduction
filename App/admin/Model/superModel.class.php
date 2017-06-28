@@ -3,6 +3,7 @@ namespace App\admin\Model;
 
 class superModel extends infoModel
 {
+    const USEREXPTIME = 21600;
     private $user = array();
     
     private $staff = 'leading_staff_info';
@@ -18,7 +19,7 @@ class superModel extends infoModel
     {
         $res = false;
         if(isset($this->user) && isset($this->user['accNumber']) && $this->user['accNumber'] == $accNumber){
-            if(($this->user['user_expTime'] + 60 * 60 * 6) > time()){
+            if(($this->user['user_expTime'] + self::USEREXPTIME) > time()){
                 $res = true;
             }
         }
@@ -79,6 +80,41 @@ class superModel extends infoModel
         $where = array('accNumber' => $accNumber);
         $table = $this->staff;
         return parent::update($table,$arr,$where);
+    }
+    
+    public function addAddress()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber  = $_LS['accNumber'];
+        @$addresssId = intval($_LS['addressId']);
+        @$addresss   = $_LS['address'];
+        if ($accNumber && $addresssId && $addresss) {
+            if ($this->verifyUser($accNumber)) {
+                 $table = 'leading_address';
+                 $where = array('addressId' => $addresssId);
+                 $res   = parent::fetchOne_byArr($table,array('address'),$where);
+                 if (count($res) == 0) {
+                     $resp  = parent::fetchOne_byArr($table,array('addressId'),array('address' => $addresss));
+                     if (count($resp) == 0) {
+                         $arr   = array('addressId' => $addresssId,'address' => $addresss);
+                         $res_2 = parent::insert($table,$arr,$where);
+                         $data  = parent::formatResponse($res_2);
+                     } else {
+                         $data['status'] = 5;
+                         $data['msg']    = '已存在该地址';
+                     }
+                 } else {
+                    $data['status'] = 4;
+                    $data['msg']    = '地址id已存在';
+                 }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
     }
     
 }

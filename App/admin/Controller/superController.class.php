@@ -9,4 +9,14 @@ class superController extends baseController
         $data = $obj->modifyCaseId();
         parent::ajaxReturn($data,'modify');
     }
+    
+    public function addAddress()
+    {
+        $obj  = new superModel();
+        $data = $obj->addAddress();
+        parent::ajaxReturn($data,'modify');
+    }
+    
+    
+    
 }

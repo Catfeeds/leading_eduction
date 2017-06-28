@@ -92,8 +92,8 @@ class mysqli
 	public function insertSql($sql)
 	{
 		$this->query($sql);
-		$inser_id = self::$link->insert_id;
-		$res      = empty($insert_id)?self::$link->affected_rows:$inser_id;
+		$insert_id = self::$link->insert_id;
+		$res      = empty($insert_id)?self::$link->affected_rows:$insert_id;
 		return $res;
 	}
 	
@@ -169,9 +169,9 @@ class mysqli
 	* @param: string $where2 查询条件
 	* @return:array
 	*/
-	public function fetchOne_byArr($table,$arr,$where)
+	public function fetchOne_byArr($table,$arr,$where,$distinct = false)
 	{
-		$sql = $this->createFetchSql($table,$arr,$where);
+		$sql = $this->createFetchSql($table,$arr,$where,$distinct);
 	    return $this->fetchOne($this->query($sql));
 	}
 	/**
@@ -184,7 +184,7 @@ class mysqli
 	 * @param: string $where2 查询条件
 	 * @return:array
 	 */
-	public function fetchAll_byArr($table,$arr,$where)
+	public function fetchAll_byArr($table,$arr,$where,$distinct = false)
 	{
 		$sql = $this->createFetchSql($table,$arr,$where,true);
 	    return $this->fetchAll($this->query($sql));
@@ -367,7 +367,7 @@ class mysqli
 	    $selectVals = $this->implodeArr($selectVal);
 	    $whereSql = $this->formatWhereSql($where);
 		if($distinct){
-			$selectVal = " DISTINCT {$selectVals} ";
+			$selectVals = " DISTINCT {$selectVals} ";
 		}
 		$sql = "SELECT {$selectVals} FROM `{$table}` where 1 = 1 {$whereSql}";//modified here
 		return $sql;
@@ -381,7 +381,7 @@ class mysqli
 	 *@param $tableArr array 二维数组 每一个数据表中的所有字段
 	 *@return string sql语句
 	 **/
-	public function createFetchSqlMore($table,$arr,$where,$tableArr)
+	public function createFetchSqlMore($table,$arr,$where,$tableArr,$distinct = false)
 	{
 		$sql = '';
 		$i = $j = 0;
@@ -398,6 +398,9 @@ class mysqli
             }
         }
 		$selectVals = $this->implodeArr($value);
+		if($distinct){
+		    $selectVals = " DISTINCT {$selectVals} ";
+		}
 		//获得表名
 		$tableVal   = $this->formatTable($table,$i,$j);
 		$whereSql   = is_string($where)?$where:$this->formatWhere($where,$tableArr,$i,$j);

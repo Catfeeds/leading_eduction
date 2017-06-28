@@ -9,18 +9,36 @@
 	原则上控制器的方法不能有参数
 	@return void
 	**/
+	/* function C($module,$name,$method)
+	{
+		$class = "App\\{$module}\\Controller\\$name".'Controller';
+		try {
+		    echo inverse(5) . "\n";
+		    echo inverse(0) . "\n";
+		} catch (error $e) {
+		    echo 'Caught exception: ',  $e->getMessage(), "\n";
+		}
+		exit();
+		try {
+		    $obj = new $class();//实例化
+		    throw new Exception($error);
+		} catch (Exception $e) {
+		    $obj = new App\admin\Controller\adminController;    
+		}
+		//$obj   = new $class();//实例化
+		try {
+		    $obj -> $method();
+		} catch (Exception $e) {
+		    $obj -> index();
+		}
+		
+	} */
 	function C($module,$name,$method)
 	{
 		$class = "App\\{$module}\\Controller\\$name".'Controller';
 		$obj   = new $class();//实例化
 		$obj   -> $method();
-	}
-	// function C($name,$method)
-	// {
-		// $class = "App\\{$name}\\Controller\\$name".'Controller';
-		// $obj   = new $class();//实例化
-		// $obj   -> $method();
-	// }
+	} 
 
 	
 	

@@ -13,6 +13,7 @@ class PC
 	private static $config;
 	private static $controllerArr;
 	private static $methodArr;
+	private static $url;
 	// private static $controllerArr = array('index','test');
 	// private static $methodArr = array('index','test','show');
 	//public static $link;
@@ -91,6 +92,12 @@ class PC
 	
 	public static function run($module,$config)
 	{
+	    //$res = $_SERVER['HTTP_HOST'];
+	    //$res = $_SERVER['DOCUMENT_ROOT'];
+	    //self::$url = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].$_SERVER['REQUEST_URI'];
+	    
+	    //var_dump(self::$url);
+	    //exit;
 	    global $_LS;
 	    $module       = (!empty($_GET['module']))?$_GET['module']:'index';
 		self::$config = $config;

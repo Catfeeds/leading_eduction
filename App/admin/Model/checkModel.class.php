@@ -316,7 +316,7 @@ class checkModel extends infoModel
         @$email  = $_LS['email'];
         @$caseId = intval($_LS['caseId']);
         if ($mobile && $email) {
-            $arr   = array('id','password','caseId','name');
+            $arr   = array('id','password','caseId','mobile');
             $where = array('mobile' => $mobile,'email' => $email);
             $table = empty($caseId)?$this->table:$this->table[$caseId];
             if (is_array($table)) {                                     //没有指定表
@@ -343,7 +343,7 @@ class checkModel extends infoModel
                     $where         = array('mobile' => $mobile);
                     $response      = $this->updateInfo($resp['caseId'],$arr,$where);
                     if ($response > 0) {
-                        $data      = $this->sendEMail($email,$resp['name'],$mobile,$resp['caseId'],$token); //发邮箱
+                        $data      = $this->sendEMail($email,$resp['mobile'],$mobile,$resp['caseId'],$token); //发邮箱
                     } else {
                         $data['status'] = 4;
                         $data['msg']    = '系统维修中';

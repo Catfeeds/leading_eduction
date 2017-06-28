@@ -1,6 +1,7 @@
 <?php
-    
 	header("Content-type:text/html;charset=utf-8");
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Methods:POST,GET");
 	session_start();
 	date_default_timezone_set('Asia/Shanghai');
 	require_once('framework/autoLoad.php');

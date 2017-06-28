@@ -5,36 +5,42 @@ class getEditModel extends infoModel
 {
     const PAGESIZE       = 8;                       //页容量
     const USEREXPTIME    = 21600;                   //登陆有效期，单位秒
+    const VIDIOPICPAGESIZE = 
     private $user = array();
     //数据表
-    private $staffInfoTab    = 'leading_staff_info';
-    private $tempTab         = 'temp_register';
-    private $stuTab          = 'leading_student';
-    private $stuInfoTab      = 'leading_student_info';
-    private $recomTab        = 'recommend';
-    private $compTab         = 'leading_company';
-    private $compInfoTab     = 'leading_company_info';
-    private $teachTab        = 'leading_teacher';
-    private $teachInfoTab    = 'leading_teacher_info';
-    private $courseTab       = 'course';
-    private $projectTab      = 'project';
-    private $courseConTab    = 'course_content';
-    private $classTab        = 'leading_class';
-    private $teacherClassTab = 'leading_class_teacher';
-    private $courseProTab    = 'course_project';
-    private $recommendTab    = 'recommend';
-    
+    private $staffInfoTab      = 'leading_staff_info';
+    private $tempTab           = 'temp_register';
+    private $stuTab            = 'leading_student';
+    private $stuInfoTab        = 'leading_student_info';
+    private $recomTab          = 'recommend';
+    private $compTab           = 'leading_company';
+    private $compInfoTab       = 'leading_company_info';
+    private $teachTab          = 'leading_teacher';
+    private $teachInfoTab      = 'leading_teacher_info';
+    private $courseTab         = 'course';
+    private $projectTab        = 'project';
+    private $courseConTab      = 'course_content';
+    private $classTab          = 'leading_class';
+    private $teacherClassTab   = 'leading_class_teacher';
+    private $courseProTab      = 'course_project';
+    private $recommendTab      = 'recommend';
+    private $carouselFigureTab = 'carousel_figure';
+    private $tuitionTab        = 'tuition';
+    private $vedioTab          = 'vedio';
     
     //表属性
     private $courseInfo      = array('courseName','description','status');
     private $classInfo       = array('className','courseId','masterId','startClassTime','endClassTime','classType','addressId','teacherId'); 
     private $projectInfo     = array('projectId','projectName','description','status','startTime','endTime','picUrl','url','people','type');
-    
+    private $tuitionInfo     = array('id','courseId','caseId','teaching','tuitionCase','tuitionMoney');
+    private $vedioInfo       = array('vedioName','description','vedioUrl','author','status','courseId','secCourseId','dateinto');
     public function __construct()
     {
         if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
             if (($_SESSION['user']['user_expTime'] + self::USEREXPTIME) > time()){
                 $this->user = $_SESSION['user'];
+            } else {
+                unset($_SESSION['user']);
             }
          }
     }
@@ -512,15 +518,99 @@ class getEditModel extends infoModel
         return $data;
     }
     
+    /**
+     * 获得报名试听信息
+     * @return array
+     */
+    public function getRegisterInfo()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        @$param     = $_LS['param'];
+        @$page      = intval($_LS['page']);
+        $page       = empty($page)?1:$page;
+        @$pageSize  = intval($_LS['pageSize']);
+        $pageSize   = empty($pageSize)?self::PAGESIZE:$pageSize;
+        
+        if ($accNumber && $param) {
+            if ($this->verifyUser($accNumber)) {
+                $res['info'] = $this->getRInfo_byParam($param,$page,$pageSize);
+                $data        = parent::formatResponse($res['info']);
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
     
+    /**
+     * 通过param值获得报名表中的信息
+     * @param string $param
+     * @param int $page
+     * @param int $pageSize
+     * @return array
+     */
+    public function getRInfo_byParam($param,$page,$pageSize)
+    {
+        $data = array();
+        switch ($param) {
+            case 'sign':
+                $data = $this->getRSignInfo($page,$pageSize);
+                break;
+        }
+        return $data;
+    }
     
+    public function getRSignInfo($page,$pageSize)
+    {
+        $table = 'leading_sign';
+        $where = array();
+        $arr   = array('id','name','mobile','qq','signTime','listenTime');
+        return page($table,$arr,$where,$page,$pageSize);
+    }
     
+    public function showTuition()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        @$courseId  = $_LS['courseId'];
+        if ($accNumber && $courseId) {
+            if ($this->verifyUser($accNumber)) {
+                $data['info'] = $this->getTuitions($courseId);                  //通过课程号获得其下的所有的学费
+                $data         = parent::formatResponse($data['info']);          //格式化信息
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
+        return $data;
+    }
     
+    public function getTuitions($courseId) 
+    {
+        $arr   = array('id','caseId','teaching','tuitionCase','tuitionMoney');
+        $where = array('courseId' => $courseId);
+        $table = $this->getTable('tuitionTab');
+        return parent::fetchAll_byArr($table,$arr,$where);
+    }
     
-    
-    
-    
-    
+    public function getVedioInfosByCourseId()
+    {
+        global $_LS;
+        $data = array();
+        @$accNumber = $_LS['accNumber'];
+        @$courseId  = intval($_LS['courseId']);
+        @$page      = intval($_LS['page']);
+        $page       = empty($page)?1:$page;
+        @$pageSize  = intval($_LS['pageSize']);
+        $pageSize   = empty($pageSize)?self::VIDIOPICPAGESIZE:$pageSize;
+        return $data;
+    }
     
     
     
