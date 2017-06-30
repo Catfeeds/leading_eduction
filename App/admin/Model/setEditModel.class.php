@@ -3,8 +3,9 @@ namespace App\admin\Model;
 
 class setEditModel extends infoModel
 {
-    const DESTINATION_CAROUSEL = './static/index/images/carousel/';
-    const DESTINATION_VEDIO    = './static/index/images/vedio/';
+    const DESTINATION_CAROUSEL  = './static/index/images/carousel/';             //轮播图地址
+    const DESTINATION_VEDIO     = './static/index/images/vedio/';                //视频地址
+    const HEAD_DESTINATION      = './static/admin/images/uploads/image_149/edit/';
     
     private $user = array();
     private $obj;
@@ -280,8 +281,15 @@ class setEditModel extends infoModel
                         if (count($res_2) > 0) {                                                            //课程号正确
                             $table = $this->obj->getTable('courseTab');
                             $where = array('courseId' => $courseId);
-                            $data  = parent::update($table,$arr,$where);                                    //修改信息
-                            $data  = parent::formatResponse($data);
+                            /**查看是否需要 **/
+                            $where_2 = array_merge($arr,array('courseId' => $courseId));
+                            $res_2   = parent::fetchOne_byArr($table,array('courseId'),$where_2);
+                            if (count($res_2) == 0) {
+                                $data  = parent::update($table,$arr,$where);                                    //修改信息
+                                $data  = parent::formatResponse($data);
+                            } else {
+                                $data['status'] = 16;
+                            }
                         } else {
                             $data['status'] = 14;
                             //$data['msg']    = '课程号不存在';
@@ -370,8 +378,15 @@ class setEditModel extends infoModel
                     if ($count == 0) {                                                      //要修改的信息安全
                         $where = array('id' => $id);
                         $table = $this->obj->getTable('courseConTab');
-                        $res   = parent::update($table,$arr,$where);                        //修改信息
-                        $data  = parent::formatResponse($res);                              //格式化结果集
+                        $where_2 = array_merge($arr,['id' => $id]);
+                        /**是否有必要修改信息**/
+                        @$res_2 = parent::fetchOne_byArr($table,array('id'),$where_2);
+                        if (count($res_2) == 0) {
+                            $res   = parent::update($table,$arr,$where);                        //修改信息
+                            $data  = parent::formatResponse($res);                              //格式化结果集
+                        } else {
+                            $data['status'] = 16;
+                        }
                     } else {
                         $data['status'] = 5;
                     }
@@ -456,8 +471,14 @@ class setEditModel extends infoModel
                         $count = parent::verifyCount($arr,$this->obj->getArr('classInfo'));
                         if ($count == 0) {                                                                  //操作信息安全
                             $table = $this->obj->getTable('classTab');
-                            $resp  = parent::insert($table,$arr);
-                            $data  = parent::formatResponse($resp);
+                            /**不能重复添加信息***/
+                            $res_2 = parent::fetchOne_byArr($table,array('classId'),$arr);
+                            if (count($res_2) == 0) {
+                                $resp  = parent::insert($table,$arr);
+                                $data  = parent::formatResponse($resp);
+                            } else {
+                                $data['status'] = 17;
+                            }
                         } else {
                             $data['status'] = 5;
                         }
@@ -629,8 +650,14 @@ class setEditModel extends infoModel
                         if ($count_2 == 0) {
                             $arr['type'] = 1;                                                   //教学项目
                             $table       = $this->obj->getTable('projectTab');
-                            $res         = parent::insert($table,$arr);
-                            $data        = parent::formatResponse($res);
+                            /**不能重复添加***/
+                            $res_2       = parent::fetchOne_byArr($table,array('projectId'),$arr);
+                            if (count($res_2) == 0) {
+                                $res         = parent::insert($table,$arr);
+                                $data        = parent::formatResponse($res);
+                            } else {
+                                $data['status'] = 17;
+                            }
                         } else {
                             $data['status'] = 5;
                         }
@@ -715,6 +742,22 @@ class setEditModel extends infoModel
             $data['status'] = 3;
         }
         
+        return $data;
+    }
+    
+    //上传头像
+    public function uploadImg()
+    {
+        $data = array();
+        @$accNumber  = $this->user['accNumber'];
+        if (!empty($accNumber)) {
+            $table = $this->obj->getTable('staffInfoTab');
+            $where = array('accNumber' => $accNumber);
+            $obj   = new doActionModel();
+            $data  = $obj->uploadPic($table,$where,self::HEAD_DESTINATION);
+        } else {
+            $data['status'] = 3;
+        }
         return $data;
     }
     

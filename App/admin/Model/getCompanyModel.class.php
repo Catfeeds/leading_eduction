@@ -190,8 +190,8 @@ class getCompanyModel extends infoModel
                     }
                     $data['info']['pages'] = $res['pages'];
                 } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '还没有职位信息，请到管理职位页面添加职位';
+                    $data['status'] = 61;
+                    //$data['msg']    = '还没有职位信息，请到管理职位页面添加职位';
                 }
             } else  {
                 $data['status'] = 3;
@@ -282,8 +282,8 @@ class getCompanyModel extends infoModel
                         $this->modifyRStatus($jobId,$stuId,$r_status);              //更改简历查看状态
                     }
                 } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '该学员没有投递贵公司简历的记录';
+                    $data['status'] = 62;
+                    //$data['msg']    = '该学员没有投递贵公司简历的记录';
                 }
             } else {
                 $data['status'] = 3;

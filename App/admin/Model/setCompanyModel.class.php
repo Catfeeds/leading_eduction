@@ -3,8 +3,9 @@ namespace App\admin\Model;
 
 class setCompanyModel extends infoModel
 {
-    const JOBNUM      = 15;                             //企业可以发布职位招聘次数
-    const DESTINATION = './static/admin/images/uploads/image_149/';
+    const JOBNUM            = 15;                                               //企业可以发布职位招聘次数
+    const HEAD_DESTINATION  = './static/admin/images/uploads/image_149/company/';
+    const LIC_DESTINATION   = './static/admin/images/uploads/image_149/company/license';
     
     private $user = array();
     private $obj;
@@ -94,9 +95,18 @@ class setCompanyModel extends infoModel
                 $arr = array_diff($_LS,array("accNumber"=>$accNumber,"jobId"=>$jobId));         //组成更改信息数组
                 if (count($arr) > 0) {
                     if (parent::verifyCount($arr,$this->getArr('jobArr')) == 0) {               //验证信息是否安全
-                        $where = array("compId"=>$accNumber,"jobId"=>$jobId);
-                        $data  = parent::update($this->getTable('jobTab'),$arr,$where);         //更新数据
-                        $data  = parent::formatResponse($data);                                 //格式化结果集
+                        $where   = array("compId"=>$accNumber,"jobId"=>$jobId);
+                        $table   = $this->getTable('jobTab');
+                        /*查看是否重复修改**/
+                        $where_2 = array_merge($arr,array('jobId' => $jobId));      
+                        $res_2   = parent::fetchOne_byArr($table,array('jobId'),$where_2);
+                        if (count($res_2) == 0) {
+                            /*更新数据**/
+                            $data    = parent::update($table,$arr,$where);                          //更新数据
+                            $data    = parent::formatResponse($data);                               //格式化结果集
+                        } else {
+                           $data['status'] = 16;
+                        }
                     } else {
                         $data['status'] = 5;
                     }
@@ -177,8 +187,8 @@ class setCompanyModel extends infoModel
                         $data = $this->modifyRStatus($l_id,$r_status);              //修改状态
                         $data = parent::formatResponse($data);
                     } else {
-                        $data['status'] = 6;
-                        $data['msg']    = '当前状态不用修改';
+                        $data['status'] = 16;
+                        //$data['msg']    = '当前状态不用修改';
                     }
                 } else {
                     $data['status'] = 5;
@@ -226,7 +236,7 @@ class setCompanyModel extends infoModel
             $table = $this->getTable('companyInfoTab');
             $where = array('compId' => $compId);
             $obj   = new doActionModel();
-            $data  = $obj->uploadPic($table,$where,self::DESTINATION);
+            $data  = $obj->uploadPic($table,$where,self::HEAD_DESTINATION);
         } else {
             $data['status'] = 3;
         }
@@ -235,14 +245,14 @@ class setCompanyModel extends infoModel
     //上传营业执照
     public function uploadLicenseUrl()
     {
-        $data = array();
+        $data     = array();
         @$compId  = $this->user['compId'];
         if (!empty($compId)) {
             $table = $this->getTable('companyInfoTab');
             $where = array('compId' => $compId);
             $obj   = new doActionModel();
             $arr   = array('');
-            $data  = $obj->uploadPic($table,$where,self::DESTINATION,'licenseUrl');
+            $data  = $obj->uploadPic($table,$where,self::LIC_DESTINATION,'licenseUrl',null,false);
         } else {
             $data['status'] = 3;
         }

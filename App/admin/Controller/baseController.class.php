@@ -25,8 +25,32 @@ class baseController
         18 => '手机号已注册',
         19 => '邮箱已注册',
         20 => '手机号或邮箱已注册',
+        21 => '',
+        22 => '手机格式不正确',
+        23 => '图片验证码错误',
+        24 => '手机验证码错误',
+        25 => '邮箱错误',
+        26 => '手机号未注册',
+        27 => '',
+        28 => '职位已招满',
+        29 => '不存在该职位',
+        30 => '该项目不能更改',
+        
+        40 => '新密码与旧密码一致，不用修改',
+        41 => '旧密码错误',
+        42 => '新密码与确认密码不一致',
+        43 => '密码长度不符合规定',
+        
+        51 => '上传失败',
+        61 => '还没有职位信息，请到管理职位页面添加职位',
+        62 => '该学员没有投递贵公司简历的记录',
+        71 => '不能更改自己的 权限',
+        
+        81 => '已达到每月投递次数的限额',
+        82 => '已达到每日投递次数的限额',
+        83 => '30天内不能重复投递同一岗位',
     );
-    public function ajaxReturn($data,$type = null)
+    public function ajaxReturn($data,$type = 'modify')
     {
         header('Content-type:application/json;charset=utf-8');
         $data = $this->formatResponse($data,$type);
@@ -51,64 +75,6 @@ class baseController
     public function formatMsg($status)
     {
         $msg = '';
-        /* switch ($status) {
-            case 0:
-                $msg = 'success';
-                break;
-            case 1:
-                $msg = 'failed';
-                break;
-            case 2:
-                $msg = '没有身份标示符';
-                break;
-            case 3:
-                $msg = '与登录信息不符、未登录或已失效';
-                break;
-            case 4:
-                $msg = '没有要修改的信息';
-                break;
-            case 5:
-                $msg = '要操作的信息不安全';
-                break;
-            case 6:
-                $msg = '已超过数额限制';
-                break;
-            case 7:
-                $msg = '未知错误';
-                break;
-            case 9:
-                $msg = '操作信息不集全';
-                break;
-            case 10:
-                $msg = '系统维修中';
-                break;
-            case 12:
-                $msg = '需要操作的信息不正确';
-                break;
-            case 13:
-                $msg = '身份信息不正确';
-            case 14:
-                $msg = '标识符错误';
-                break;
-            case 15:
-                $msg = '信息不唯一';//不满足唯一性
-                break;
-            case 16:
-                $msg = '不用重复修改';
-                break;
-            case 17:
-                $msg = '不能重复添加';
-                break;
-            case 18:
-                $msg = '手机号已注册';
-                break;
-            case 19:
-                $msg = '邮箱已注册';
-                break;
-            case 20:
-                $msg = '手机号或邮箱已注册';
-                break;
-        } */
         @$res = self::$msg[$status];
         if (!$res) {
             $res = '未知错误,系统需要维修';

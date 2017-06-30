@@ -4,3 +4,10 @@
 2017-06-27 11:09:13 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56801' AND `addressId` = '1'
 2017-06-28 10:47:43 SELECT  DISTINCT `id`,`tuition`  FROM `tuition` where 1 = 1  AND `courseId` = '56801'
 2017-06-28 10:50:08 SELECT  DISTINCT `id`,`tuition`  FROM `tuition` where 1 = 1  AND `courseId` = '56801'
+2017-06-29 09:28:27 SELECT  DISTINCT `id`,`courseName`,`picUrl`,`vedioUrl`,`status`  FROM `vedio` where 1 = 1  AND `courseId` = '56801'  ORDER BY id DESC  LIMIT 0,8
+2017-06-30 09:02:36 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1   order by id desc
+2017-06-30 09:05:49 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1   order by id desc
+2017-06-30 09:11:14 SELECT `accNumber`,`id` FROM `temp_register` where 1 = 1   order by id desc
+2017-06-30 14:50:57 SELECT `secCourseId` FROM `course_content` where 1 = 1  AND `content` = 'xxxx' AND `focus` = 'xxxxx' AND `secCourseId` = '1'
+2017-06-30 14:51:04 SELECT `secCourseId` FROM `course_content` where 1 = 1  AND `content` = 'xxxx' AND `focus` = 'xxxxx' AND `secCourseId` = '1'
+2017-06-30 14:53:29 SELECT `secCourseId` FROM `course_content` where 1 = 1  AND `content` = 'xxxx' AND `focus` = 'xxxxx' AND `secCourseId` = '1'

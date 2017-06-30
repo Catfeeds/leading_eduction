@@ -7,6 +7,9 @@ class discuzModel
     {
         $url           = "http://localhost:8066/discuz/upload/member.php?mod=register&inajax=1";
         $res['msg']    = $this->https_request($url,$data);
+        /* $obj = simplexml_load_string($res['msg'], 'SimpleXMLElement', LIBXML_NOCDATA);//把xml格式转换成对象
+        var_dump($obj);
+        exit; */
         $res['status'] = 0;
         return $res;
     }

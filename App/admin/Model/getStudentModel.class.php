@@ -342,7 +342,7 @@ class getStudentModel extends infoModel
             if ($this->verifyUser($accNumber)) {
                 $arr   = array('compId','jobId','jobName','r_status','resumeTime');
                 $time  = time() - $interval * 24 * 60 * 60;
-                $where = array("accNumber" => $accNumber,'where2' => " AND s.`jobId` = f.`jobId` AND resumeTime > $time");    //30天之内
+                $where = array("accNumber" => $accNumber,'where2' => " AND s.`jobId` = f.`jobId` AND resumeTime > $time ORDER BY resumeTime DESC ");    //30天之内
                 $table = array('leading_job','leading_resume_log');
                 $resp  = page($table,$arr,$where,$page,$pageSize);                      //获得投递信息
                 $count = count($resp);

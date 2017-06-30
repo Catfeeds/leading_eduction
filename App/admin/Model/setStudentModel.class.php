@@ -9,7 +9,7 @@ class setStudentModel extends infoModel
     const SENDMNUM        = 30;                             //每月最多投简历的数量
     const SENDDNUM        = 10;                             //每天最多投简历的数量
     const IMGURL          = '';
-    const DESTINATION     = './static/admin/images/uploads/image_149/';
+    const DESTINATION     = './static/admin/images/uploads/image_149/student/';
     
     private $user         = array();
     private $obj;
@@ -112,13 +112,19 @@ class setStudentModel extends infoModel
                 $where['id']        = $id;
                 $where['stuId']     = $accNumber;
                 $arr                = array_diff_assoc($_LS,array("id"=>$id,"accNumber"=>$accNumber));
-                
-                //更新
-                if(count($arr) > 0){
-                    $res  = parent::update('student_work',$arr,$where);
-                    $data = parent::formatResponse($res);
-                }else{
-                    $data['status'] = 4;
+                $table              = 'student_work';
+                $where_2            = array_diff($_LS,array('accNumber' => $accNumber));
+                $res_2              = parent::fetchOne_byArr($table,array('id','stuId'),$where_2);
+                if (count($res_2) == 0) {
+                    //更新
+                    if(count($arr) > 0){
+                        $res  = parent::update('student_work',$arr,$where);
+                        $data = parent::formatResponse($res);
+                    }else{
+                        $data['status'] = 4;
+                    }
+                } else {
+                    $data['status'] = 16;
                 }
             }else{
                 $data['status'] = 3;
@@ -150,15 +156,20 @@ class setStudentModel extends infoModel
                 $where['stuId']     = $accNumber;
                 $table              = array($this->stuProTable,$this->projectTable);
                 $arr                = array_diff_assoc($_LS,array("accNumber"=>$accNumber,"projectId"=>$projectId,"type"=>2));
-                if(count($arr) > 0){
-                    $res                = parent::update($table,$arr,$where);
-                    $data               = parent::formatResponse($res);
-                }else{
-                    $data['status'] = 4;
+                $where_2            = array_diff($_LS,array('accNumber' => $accNumber));
+                $res_2              = parent::fetchOne_byArrJoin($table,array('projectId'),$where_2);
+                if (count($res_2) == 0) {
+                    if(count($arr) > 0){
+                        $res                = parent::update($table,$arr,$where);
+                        $data               = parent::formatResponse($res);
+                    }else{
+                        $data['status'] = 4;
+                    }
+                } else {
+                    $data['status'] = 16;
                 }
             }else{
-                $data['status'] = 3;
-                $data['msg']    = '该项目不能修改';
+                $data['status'] = 30;
             }
             
         }else{
@@ -185,8 +196,14 @@ class setStudentModel extends infoModel
                     $table          = $this->stuEduTable;
                     $where['stuId'] = $accNumber;
                     $where['id']    = $id;
-                    $res            = parent::update($table,$arr,$where);
-                    $data           = parent::formatResponse($res);
+                    $where_2        = array_merge($arr,array('id' => $id));
+                    $res_2          = parent::fetchOne_byArr($table,array('id','stuId'),$where_2);
+                    if (count($res_2) == 0) {       //有更改的信息
+                        $res  = parent::update($table,$arr,$where);
+                        $data = parent::formatResponse($res);
+                    } else {
+                        $data['status'] = 16;
+                    }
                 }else{
                     $data['status'] = 4;
                 }
@@ -328,20 +345,18 @@ class setStudentModel extends infoModel
     {
         global $_LS;
         $data = array();
-        @$accNumber = $_LS['accNumber'];                                //学号
-        @$jobId     = $_LS['jobId'];                                    //职位号
+        @$accNumber = $_LS['accNumber'];                                        //学号
+        @$jobId     = $_LS['jobId'];                                            //职位号
         if ($accNumber && $jobId) {
             if ($this->verifyUser($accNumber)) {
-                if ($this->verifyJob($jobId)) {                         //存在该职位
+                if ($this->verifyJob($jobId)) {                                 //存在该职位 ****应该一次请求
                     if ($this->verifyJobStatus($jobId)) {                       //需要招人
                         $data = $this->sendResumeNum($accNumber,$jobId);        //验证或投递简历
                     } else {
-                        $data['status'] = 5;
-                        $data['msg']    = '职位已招满';
+                        $data['status'] = 28;
                     }
                 } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '不存在该职位';
+                    $data['status'] = 29;
                 }
             } else {
                 $data['status'] = 3;
@@ -405,8 +420,8 @@ class setStudentModel extends infoModel
                             $resp = parent::fetchOne_byArr($table,array('resumeTime'),$where_2); //获得之前投递此职位的信息
                             if (count($resp) > 0) {                                              //投递过
                                 if (verifyInterVal($resp['resumeTime'],30)) {                    //30天内投过该职位
-                                    $data['status'] = 6;
-                                    $data['msg']    = '30内不能重复投递相同职位';
+                                    $data['status'] = 83;
+                                    //$data['msg']    = '30内不能重复投递相同职位';
                                 } else {
                                     $arr_2['d_count'] = intval($res['d_count']) + 1;            //当天投递次数加1
                                     $arr_2['m_count'] = intval($res['m_count']) + 1;            //当月投递次数加1
@@ -416,16 +431,16 @@ class setStudentModel extends infoModel
                                 $arr_2['m_count'] = intval($res['m_count']) + 1;                //当月投递次数加1
                             }
                         } else {
-                            $data['status'] = 5;
-                            $data['msg']    = '今日投递简历已到达'.self::SENDDNUM.'次的限额';
+                            $data['status'] = 82;
+                            //$data['msg']    = '今日投递简历已到达'.self::SENDDNUM.'次的限额';
                         }
                     } else {                                                //不在同一天中
                         $arr_2['d_count'] = 1;                              //当天投递次数为1
                         $arr_2['m_count'] = intval($res['m_count']) + 1;    //当月投递次数加1
                     }
                 } else {                                                    //不能再投
-                    $data['status'] = 4;
-                    $data['msg']    = '本月投简历已达到'.self::SENDMNUM.'次的限额';
+                    $data['status'] = 81;
+                    //$data['msg']    = '本月投简历已达到'.self::SENDMNUM.'次的限额';
                 }
             } else {                                                        //不在同一个月中
                 $arr_2['d_count'] = 1;                                      //当天投递次数为1

@@ -5,7 +5,7 @@ class getEditModel extends infoModel
 {
     const PAGESIZE       = 8;                       //页容量
     const USEREXPTIME    = 21600;                   //登陆有效期，单位秒
-    const VIDIOPICPAGESIZE = 
+    const VIDIOPICPAGESIZE = 10;                    //每页视频数量
     private $user = array();
     //数据表
     private $staffInfoTab      = 'leading_staff_info';
@@ -609,6 +609,25 @@ class getEditModel extends infoModel
         $page       = empty($page)?1:$page;
         @$pageSize  = intval($_LS['pageSize']);
         $pageSize   = empty($pageSize)?self::VIDIOPICPAGESIZE:$pageSize;
+        if ($accNumber && $courseId) {
+            if ($this->verifyUser($accNumber)) {
+                $where = array('courseId' => $courseId);
+                $res   = parent::fetchOne_byArr($this->courseTab,array('courseName'),$where);
+                if (count($res) > 0) {
+                    $arr   = array('id','vedioName','picUrl','vedioUrl','status');
+                    $table = $this->vedioTab;
+                    $where['where2'] = ' ORDER BY id DESC ';
+                    $data['info']    = page($table,$arr,$where,$page,$pageSize);
+                    $data  = parent::formatResponse($data['info']);
+                } else {
+                    $data['status'] = 14;
+                }
+            } else {
+                $data['status'] = 3;
+            }
+        } else {
+            $data['status'] = 2;
+        }
         return $data;
     }
     

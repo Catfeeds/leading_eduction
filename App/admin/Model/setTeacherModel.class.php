@@ -3,7 +3,7 @@ namespace App\admin\Model;
 
 class setTeacherModel extends infoModel
 {
-    const DESTINATION              = './static/admin/images/uploads/image_149/';
+    const DESTINATION              = './static/admin/images/uploads/image_149/teacher/';
     
     private $user                  = array();
     //表名
@@ -78,14 +78,20 @@ class setTeacherModel extends infoModel
         @$accNumber = $_LS['accNumber'];
         @$stuId     = $_LS['stuId'];
         @$ls_assess = $_LS['ls_assess'];
-        if ($accNumber && $stuId && $ls_assess) {                               //post中参数集全
-            if ($this->verifyUser($accNumber)) {                                //符合登陆信息
-                if ($this->verifyTeacherAndStuId($accNumber,$stuId)) {          //验证该教师下是否有该学员
-                    $data = $this->setStuAssess_byStuId($stuId,$ls_assess);     //修改评价
-                    $data = parent::formatResponse($data);                      //格式化结果集
-                } else {
-                    $data['status'] = 4;
-                    $data['msg']    = '班级中没有改学生';
+        if ($accNumber && $stuId && $ls_assess) {                                   //post中参数集全
+            if ($this->verifyUser($accNumber)) {                                    //符合登陆信息
+                if ($this->verifyTeacherAndStuId($accNumber,$stuId)) {              //验证该教师下是否有该学员
+                    $where = array('stuId' => $stuId,'ls_assess' => $ls_assess);
+                    $res_2 = parent::fetchOne_byArr($this->teacherStudentInfoTab,array('stuId'),$where);
+                    if (count($res_2) == 0) {
+                        $data  = $this->setStuAssess_byStuId($stuId,$ls_assess);     //修改评价
+                        $data  = parent::formatResponse($data);                      //格式化结果集
+                    } else {
+                        $data['status'] = 16;
+                    }
+                    } else {
+                    $data['status'] = 14;
+                    //$data['msg']    = '班级中没有改学生';
                 }
             } else {
                 $data['status'] = 3;

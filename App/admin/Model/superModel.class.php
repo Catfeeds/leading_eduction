@@ -4,6 +4,7 @@ namespace App\admin\Model;
 class superModel extends infoModel
 {
     const USEREXPTIME = 21600;
+    const HEAD_DESTINATION  = './static/admin/images/uploads/image_149/admin/';
     private $user = array();
     
     private $staff = 'leading_staff_info';
@@ -42,12 +43,12 @@ class superModel extends infoModel
                        $resp = $this->update_byArr($staffId,array('rangeId' => $rangeId,'caseId' => $caseId));      //修改权限信息
                        $data = parent::formatResponse($resp);                                   //格式化结果集
                    } else { 
-                       $data['status'] = 5;
-                       $data['msg']    = '该账号已是该权限，不用再修改';
+                       $data['status'] = 16;
+                       //$data['msg']    = '该账号已是该权限，不用再修改';
                    }
                } else {
-                   $data['status'] = 4;
-                   $data['msg']    = '不能更改自己的权限';
+                   $data['status'] = 71;
+                   //$data['msg']    = '不能更改自己的权限';
                }
             } else {
                 $data['status'] = 3;

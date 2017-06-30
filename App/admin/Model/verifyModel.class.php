@@ -19,6 +19,7 @@ class verifyModel extends infoModel
      */
     public static function verifyMobile($mobile,$caseId = null)
     {
+        $res             = false;
         $arr             = array('id');
         $where['mobile'] = $mobile; 
         $table = !empty($caseId)?self::$table[$caseId]:array_unique(self::$table);

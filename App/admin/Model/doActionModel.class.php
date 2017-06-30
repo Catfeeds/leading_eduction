@@ -46,7 +46,7 @@ class doActionModel extends infoModel
         @$mobile     = $_LS['mobile'];
         @$password_1 = $_LS['password_1'];
         @$password_2 = $_LS['password_2'];
-        if($password_1 == $password_2){//两个密码一致
+        if ($password_1 == $password_2) {               //两个密码一致
             if (verifyLen($password_1, 6, 15)) {
                 if(verifyModel::verifyMobile($mobile)){                             //手机号是否注册
                     $resetPass = myMd5($password_1);
@@ -54,29 +54,30 @@ class doActionModel extends infoModel
                         if(isMobile($mobile)){
                             $arr             = array( "password" => $resetPass  );  // 要更新的字段和值
                             $where['mobile'] = $mobile;
+                            $where_2         = array('mobile' => $mobile,'password' => $resetPass);
                             $obj             = new checkModel();
                             $table           = $obj->getTable_byKey($caseId);       //获得相关表
-                            $res  = parent::update($table,$arr,$where);
-                            $data = parent::formatResponse($res);
+                            $res_2           = parent::fetchOne_byArr($table,array('id'),$where_2);
+                            if (count($res_2) == 0 ) {
+                                $res  = parent::update($table,$arr,$where);
+                                $data = parent::formatResponse($res);
+                            } else {
+                                $data['status'] = 16;
+                            }
                         }else{
-                            $data['status'] = 2;
-                            $data['msg']    = "手机格式不符";
+                            $data['status'] = 22;
                         }
                     }else{
-                        $data['status'] = 3;
-                        $data['msg']    = "数据不全";
+                        $data['status'] = 9;
                     }
                 }else{
-                    $data['status'] = 5;
-                    $data['msg']    = '手机号未注册';
+                    $data['status'] = 26;
                 }
             } else {
-                $data['status'] = 6;
-                $data['msg']    = '密码长度不符合规定';
+                $data['status'] = 43;
             }
-        }else{
-            $data['status'] = 4;
-            $data['msg']    = "修改密码与确认密码不一样，不能修改";
+        } else {
+            $data['status'] = 42;
         }
         return $data;
     }
@@ -187,12 +188,12 @@ class doActionModel extends infoModel
     public function productTempId()
     {
         $tempId          = '';
-        $arr             = array('accNumber','id');
+        $arr             = array('tmpId','id');
         //$where['caseId'] = 8;
         $where['where2'] = ' order by id desc';
         $res             = parent::fetchOne_byArr('temp_register',$arr,$where);
         if(count($res) > 0){
-            $last = substr($res['accNumber'],3);
+            $last = substr($res['tmpId'],3);
             $num  = $last + 1;
         }else{
             $num = '5680001';
@@ -248,28 +249,28 @@ class doActionModel extends infoModel
                                 }
                                 $data = parent::formatResponse($res);
                             } else {
-                                $data['status'] = 7;
-                                $data['msg'] = '密码长度不符合';
+                                $data['status'] = 43;
+                                //$data['msg'] = '密码长度不符合';
                             }
                         } else {
-                            $data['status'] = 5;
-                            $data['msg'] = '新密码与确认密码不一致';
+                            $data['status'] = 42;
+                            //$data['msg'] = '新密码与确认密码不一致';
                         }
                     } else {
-                        $data['status'] = 4;
-                        $data['msg'] = '新密码与旧密码一样，不用修改';
+                        $data['status'] = 40;
+                        //$data['msg'] = '新密码与旧密码一样，不用修改';
                     }
                 } else {
-                    $data['status'] = 8;
-                    $data['msg']    = '邮箱错误';
+                    $data['status'] = 25;
+                    //$data['msg']    = '邮箱错误';
                 }
             } else {
-                $data['status'] = 3;
-                $data['msg'] = '旧密码错误';
+                $data['status'] = 41;
+                //$data['msg'] = '旧密码错误';
             }
         } else{
-            $data['status'] = 6;
-            $data['msg']    = 'post传参不能为空';
+            $data['status'] = 4;
+            //$data['msg']    = 'post传参不能为空';
         }
         return $data;
     }
@@ -336,12 +337,12 @@ class doActionModel extends infoModel
                 @$mobile = $_LS['mobile'];
                 @$email  = $_LS['email'];
                 if ($mobile && verifyModel::verifyMobile($mobile)) {            //验证手机号是否注册
-                    $data['status'] = 8;
-                    $data['msg']    = '手机号已注册';
+                    $data['status'] = 18;
+                    //$data['msg']    = '手机号已注册';
                 } else {
                     if ($email && verifyModel::verifyEmail($email)) {           //验证邮箱是否注册
-                        $data['status'] = 9;
-                        $data['msg']    = '邮箱已注册';
+                        $data['status'] = 19;
+                        //$data['msg']    = '邮箱已注册';
                     } else {
                         $data  = parent::update($table,$arr,$where);            //更新数据
                         $data  = parent::formatResponse($data);                 //格式化结果集

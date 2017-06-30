@@ -244,4 +244,12 @@ class editController extends baseController
         $data = $obj->addVedioPicUrl();
         parent::ajaxReturn($data,'modify');
     }
+
+    //获得某个课程下的所有视频信息
+    public function getVedioInfosByCourseId()
+    {
+        $obj  = new getEditModel();
+        $data = $obj->getVedioInfosByCourseId();
+        parent::ajaxReturn($data,'modify');
+    }
 }
