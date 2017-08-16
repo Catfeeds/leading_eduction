@@ -1,1 +1,50 @@
-2017-06-30 15:07:21 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:01:44 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:01:44 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:02:12 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:12 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:12 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:02:28 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:28 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:28 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:02:41 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:41 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:02:41 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:03:45 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:03:45 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:03:45 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:05:12 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:05:12 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:05:12 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:05:42 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:05:42 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:05:42 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:06:04 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:04 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:04 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:06:23 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:23 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:23 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:06:29 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:29 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:06:29 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:12:40 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:12:40 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:12:40 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:12:44 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:12:44 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:12:44 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:13:38 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:13:38 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:13:38 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:14:14 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:14:14 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:14:14 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:14:35 SELECT  DISTINCT `id`,`picUrl`,`top`,`url`  FROM `carousel_figure` where 1 = 1  AND `pic_type` = '1'  ORDER BY id DESC LIMIT 8 
+2017-07-09 09:14:38 SELECT  DISTINCT `id`,`picUrl`,`top`,`url`  FROM `carousel_figure` where 1 = 1  AND `pic_type` = '1'  ORDER BY id DESC LIMIT 8 
+2017-07-09 09:14:40 SELECT  DISTINCT `courseId`,`courseName`,`status`  FROM `course` where 1 = 1 
+2017-07-09 09:15:13 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:15:13 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:15:13 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4
+2017-07-09 09:16:19 SELECT `courseName` FROM `course` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:16:19 SELECT  DISTINCT `addressId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802'
+2017-07-09 09:16:19 SELECT  DISTINCT `classType`,`startClassTime`,`classId`  FROM `leading_class` where 1 = 1  AND `courseId` = '56802' AND `addressId` = '2'  ORDER BY startClassTime DESC LIMIT 4

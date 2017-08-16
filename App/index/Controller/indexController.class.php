@@ -41,7 +41,7 @@ class indexController extends baseController
 	{
 	    $obj  = new indexModel();
 	    $data = $obj->getClassInfo();
-	    return parent::ajaxReturn($data,'modify');
+	    return parent::ajaxReturn($data);
 	}
 	public function getClassByAddress()
 	{

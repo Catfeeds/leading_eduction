@@ -127,7 +127,7 @@
 	    $page = ($page > 0)?$page:1;//page小于1时默认为1
 	    $offset = ($page -1)*$pageSize;//偏移量
 	    if($where1){//查询条件
-	        $where = 'where '.$where;
+	        $where = 'where '.$where1   ;
 	        if($where2){
 	            $where = $where.$where2;
 	        }
@@ -172,6 +172,7 @@
 	function getPages($table,$page,$pageSize=8,$where='')
 	{
 	    //$url .= "&table={$table}";
+        $p   = '';
 	    $sql = "select * from {$table}";
 	    $totalNums = DB::getNums($sql);//总条数
 	    $page = ($page > 0)?$page:1;//page小于1时默认为1
@@ -268,8 +269,14 @@
 		}
 		return $res;
 	}
+
+    /**
+     * 验证字符串是否符合是邮箱格式
+     * @param string $email
+     * @return bool 符合返回true
+     */
 	function isEmail($email)
 	{
-		$res = '';
-		
+		if (filter_var($email,FILTER_VALIDATE_EMAIL))
+		    return true;
 	}

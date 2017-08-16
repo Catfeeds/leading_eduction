@@ -115,7 +115,7 @@ class setStudentModel extends infoModel
                 $table              = 'student_work';
                 $where_2            = array_diff($_LS,array('accNumber' => $accNumber));
                 $res_2              = parent::fetchOne_byArr($table,array('id','stuId'),$where_2);
-                if (count($res_2) == 0) {
+                if (count($res_2) == 0) {                               //没有重复修改
                     //更新
                     if(count($arr) > 0){
                         $res  = parent::update('student_work',$arr,$where);
